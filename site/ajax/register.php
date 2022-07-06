@@ -44,16 +44,16 @@
         $passc = trim($_POST[$fields['pass-confirm']]);
 
         if( Str::is_empty($user) ) {
-            $assertionErrors[$fields['user']] = $language_config[$lang]['register-errors']['empty'];
+            $assertionErrors[$fields['user']] = $language_config[$lang]['register-errors']['empty-username'];
         }
         if( Str::is_empty($email) ) {
-            $assertionErrors[$fields['email']] = $language_config[$lang]['register-errors']['empty'];
+            $assertionErrors[$fields['email']] = $language_config[$lang]['register-errors']['empty-email'];
         }
         if( Str::is_empty($pass) ) {
-            $assertionErrors[$fields['pass']] = $language_config[$lang]['register-errors']['empty'];
+            $assertionErrors[$fields['pass']] = $language_config[$lang]['register-errors']['empty-password'];
         }
         if( Str::is_empty($passc) ) {
-            $assertionErrors[$fields['pass-confirm']] = $language_config[$lang]['register-errors']['empty'];
+            $assertionErrors[$fields['pass-confirm']] = $language_config[$lang]['register-errors']['empty-password-conf'];
         }
         return _Array::size($assertionErrors) > 0
             ? false : true;

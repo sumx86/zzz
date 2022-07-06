@@ -5,19 +5,19 @@
             '404' => '/chan/site/errors/404.php'
         ],
         'login-fields' => [
-            'user' => 'login-user-name',
-            'pass' => 'login-user-password'
+            'user' => 'login-username-field',
+            'pass' => 'login-password-field'
         ],
         'register-fields' => [
-            'user'  => 'register-user-name',
-            'email' => 'register-user-email',
-            'pass'  => 'register-user-password',
-            'pass-confirm' => 'register-user-confirm-password'
+            'user'  => 'register-username-field',
+            'email' => 'register-email-field',
+            'pass'  => 'register-password-field',
+            'pass-confirm' => 'register-password-confirmation-field'
         ],
         'reset-pass-fields' => [
-            'email' => 'user-reset-email'
+            'email' => 'reset-pass-field'
         ],
-        'password-min-length' => 8,
+        'password-min-length' => 10,
         'headers' => [
             'nonce-1' => "Content-Security-Policy: default-src 'self'; font-src *; img-src * data:; script-src 'self' 'nonce-{}'; style-src 'self' 'nonce-{}';"
         ],
