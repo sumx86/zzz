@@ -45,7 +45,6 @@
 
         if( Str::is_empty($email) ) {
             $assertionErrors[$fields['email']] = $language_config[$lang]['reset-pass-errors']['empty'];
-            $assertionErrors['circuit-1'] = '';
         }
         return _Array::size($assertionErrors) > 0
             ? false : true;

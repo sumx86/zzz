@@ -143,7 +143,7 @@
                     }
                 ?>
             </div>
-            <div class='pagination-container' data-platform='<?php echo $platform; ?>'>
+            <div class='pagination-container' data-action='collection' data-platform='<?php echo $platform; ?>'>
                 <div id='inner'>
                     <div class='page-item'><span>1</span></div>
                     <div class='page-item'><span>2</span></div>

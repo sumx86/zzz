@@ -4,9 +4,10 @@
     require_once "cookie.php";
     require_once "helpers/string.php";
     require_once "helpers/array.php";
+    require_once "http/response.php";
     
     if( Server::is_active_session('user') ) {
-        header("Location: /");
+        Response::include_header("Location", "/");
     }
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
 ?>
@@ -78,6 +79,7 @@
                     <button class='multilang' name='submit-reset-pass' id='submit-reset-pass'><?php echo $language_config[$lang]['submit']; ?></button>
                 </form>
             </div>
+            <i class='fa fa-spinner fa-spin' id='spinner' style='position: absolute; display: none; top: 38%; left: 4%; font-size: 1.4em; color: white;'></i>
         </div>
 
         <div id='lang-container'>

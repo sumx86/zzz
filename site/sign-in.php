@@ -80,6 +80,7 @@
                 <div id='bottom-container'>
                     <a href='/reset-password' id='reset-password-link'>".$language_config[$lang]['account-access-problem']."</a>
                 </div>
+                <i class='fa fa-spinner fa-spin' id='spinner' style='position: absolute; display: none; top: 40%; left: 4%; font-size: 1.4em; color: white;'></i>
             </div>";
             }
         ?>

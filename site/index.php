@@ -6,10 +6,14 @@
     require_once "helpers/string.php";
     require_once "helpers/array.php";
     require_once "db/db.php";
+    require_once "http/response.php";
     
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
-    //Server::destroy_session('user');
+    /*if($isLogin) {
+        Server::destroy_session('user');
+        Response::include_header("Location", "/");
+    }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,6 +144,7 @@
                         <span>&bull; ".$language_config[$lang]['pass-digit']."</span><br>
                     </div>
                 </div>
+                <i class='fa fa-spinner fa-spin' id='spinner' style='position: absolute; display: none; top: 79%; left: 4%; font-size: 1.4em; color: white;'></i>
             </div>";
             echo "<div id='sign-up-errors-container'>
                 <div class='error' id='register-username-field-error'></div>

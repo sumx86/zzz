@@ -97,6 +97,33 @@
             </div>
         </div>
 
+        <div id='users-listing-container'>
+            <div id='listing'>
+                <div class='member-listing-item'>
+                    <div class='member-picture'>
+                        <img src='\ps-classics\img\oth\pngegg.png'>
+                    </div>
+                    <div class='member-info'>
+                        <div class='username'>
+                            <span class='multilang'>Roberto98</span>
+                        </div>
+                        <div class='following'>
+                            <span class='multilang'>Following: 90</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='pagination-container' data-action='members'>
+                <div id='inner'>
+                    <div class='page-item'><span>1</span></div>
+                    <div class='page-item'><span>2</span></div>
+                    <div class='page-item'><span>3</span></div>
+                    <div class='page-item no-redirect'><span>...</span></div>
+                    <div class='page-item'><span>5</span></div>
+                </div>
+            </div>
+        </div>
+
         <div id='lang-container'>
             <div id='inner'>
                 <div id='en' class='lang-img-container' data-lang='en'>
