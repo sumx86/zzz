@@ -114,13 +114,13 @@
                     $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
                     if(_Array::size($arrayResult) > 0) {
                         foreach($arrayResult as $item) {
-                            echo "<div class='collection-item'>
+                            echo "<div class='collection-item' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."'>
                             <div class='cover'>
                                 <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                             </div>
                             <div class='collection-item-slider'>
                                 <div class='game-name'>
-                                    <span>".Str::truncate($item['name'], 19)."</span>
+                                    <span>".htmlentities(Str::truncate($item['name'], 19), ENT_QUOTES, 'UTF-8')."</span>
                                 </div>
                                 <div class='uploader-name'>
                                     <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>

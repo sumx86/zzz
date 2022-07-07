@@ -207,8 +207,10 @@ var SimpleModalEvents = {
                 $(self._exitElement).click(function() {
                     $(self._previewContainer).css('display', 'none');
                 });
-                $(self._previewItem).click(function(){
-                    console.log(this);
+                $(self._previewItem).click(function() {
+                    // request data about the preview item
+                    $(self._previewContainer + " > #top > #inner > span").text($(this).attr('data-name'));
+                    $(self._previewContainer).css('display', 'block');
                 });
             });
         }
