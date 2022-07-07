@@ -153,6 +153,17 @@
                 </div>
             </div>
         </div>
+        <div id='game-preview-container'>
+            <div id='top'>
+                <div id='inner'>
+                    <span>Midnight Club 3 Dub Edition Remix</span>
+                </div>
+                <div id='exit-preview'>
+                    <i class='fa fa-times'></i>
+                </div>
+            </div>
+            <div id='preview'></div>
+        </div>
     </div>
 </body>
 <script type='text/javascript'>

@@ -194,6 +194,26 @@ var SimpleModalEvents = {
         }
     });
 })(jQuery);
+(function($) {
+    // ps1 ps2 ps3
+    $.initCall('game-preview-control', {
+        _exitElement: '#exit-preview',
+        _previewItem: '.collection-item',
+        _previewContainer: '#game-preview-container',
+
+        initialize: function() {
+            var self = this;
+            $(document).ready(function() {
+                $(self._exitElement).click(function() {
+                    $(self._previewContainer).css('display', 'none');
+                });
+                $(self._previewItem).click(function(){
+                    console.log(this);
+                });
+            });
+        }
+    });
+})(jQuery);
 (function($){
     $.initCall('user-settings', {
         _modal: '#settings-container',
