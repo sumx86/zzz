@@ -168,7 +168,7 @@ body {
 
 #site-name > #logo {
     position: absolute;
-    width: 33%;
+    width: 31%;
     height: 100%;
     background-color: transparent;
 }
@@ -905,7 +905,7 @@ body {
     width: 35%;
     height: 23%;
     left: 32.5%;
-    top: 10%;
+    top: 9%;
     background-color: transparent;
 }
 
@@ -928,6 +928,114 @@ body {
     -o-user-select: none;
     user-select: none;
 }
+
+#users-listing-container {
+    position: absolute;
+    display: block;
+    width: 90%;
+    height: 80%;
+    left: 5%;
+    top: 20%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#users-listing-container > #listing {
+    position: absolute;
+    width: 93%;
+    height: 94%;
+    left: 3.5%;
+    top: 0.5%;
+    background-color: transparent;
+}
+
+#users-listing-container > #listing > .member-listing-item {
+    position: relative;
+    display: inline-block;
+    width: 10%;
+    height: 30%;
+    margin-left: 7px;
+    margin-top: 5px;
+    left: 0.5%;
+    top: 3%;
+    border-radius: 3px;
+    background-color: #cd002f;
+    cursor: pointer;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-picture {
+    position: absolute;
+    width: 91%;
+    height: 65%;
+    margin-left: 4.5%;
+    background-color: white;
+    border-radius: 100%;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-picture > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-info {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 35%;
+    top: 65%;
+    background-color: transparent;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-info > .username {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 50%;
+    background-color: transparent;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-info > .username > span {
+    position: absolute;
+    top: 30%;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    font-size: 1.1em;
+    color: #b2c7e4;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-info > .following {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 50%;
+    top: 50%;
+    background-color: transparent;
+}
+
+#users-listing-container > #listing > .member-listing-item > .member-info > .following > span {
+    position: absolute;
+    top: 10%;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    font-size: 0.9em;
+    color: #b2c7e4;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 
 #search-member {
     position: absolute;
@@ -1288,7 +1396,7 @@ body {
     background-color: transparent;
 }
 
-.collection-container > .pagination-container {
+.pagination-container {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -1298,7 +1406,7 @@ body {
     background-color: transparent;
 }
 
-.collection-container > .pagination-container > #inner {
+.pagination-container > #inner {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -1307,7 +1415,7 @@ body {
     background-color: transparent;
 }
 
-.collection-container > .pagination-container > #inner > .page-item {
+.pagination-container > #inner > .page-item {
     position: relative;
     display: inline-block;
     text-align: center;
@@ -1319,11 +1427,11 @@ body {
     cursor: pointer;
 }
 
-.collection-container > .pagination-container > #inner > .page-item:nth-child(4) {
+.pagination-container > #inner > .page-item:nth-child(4) {
     cursor: auto;
 }
 
-.collection-container > .pagination-container > #inner > .page-item > span {
+.pagination-container > #inner > .page-item > span {
     position: relative;
     top: 20%;
     font-size: 1em;
@@ -1447,6 +1555,10 @@ footer {
     font-family: 'prototype';
     color: #b6c6e0;
     margin-top: 1.9%;
+}
+
+#spinner {
+    /* position: absolute; display: none; top: 79%; left: 4%; font-size: 1.4em; color: white; */
 }
 
 ::-webkit-scrollbar { width: 10px;}
