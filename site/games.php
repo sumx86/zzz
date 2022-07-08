@@ -158,17 +158,35 @@
             </div>
             <div id='game-preview-container'>
                 <div id='top'>
-                    <div id='inner'>
-                        <span>Midnight Club 3 Dub Edition Remix</span>
-                    </div>
                     <div id='exit-preview'>
                         <i class='fa fa-times'></i>
                     </div>
                 </div>
                 <!-- #preview expands the #game-preview-container which expands #mid-section -->
                 <div id='preview'>
+                    <div id='top'>
+                        <div id='inner'>
+                            <span>Midnight Club 3 Dub Edition Remix</span>
+                        </div>
+                    </div>
                     <div id='game-cover'>
                         <img src=''>
+                    </div>
+                    <div id='item-actions'>
+                        <div id='give-like' class='action-button'><i class='fa fa-thumbs-up'></i></div>
+                        <div id='give-fav'  class='action-button'><i class='fa fa-heart'></i></div>
+                    </div>
+                    <div id='item-information'>
+                        <div id='inner'>
+                            <div id='uploader'>
+                                <div id='image' class='uploader-data'>
+                                    <img src='\ps-classics\img\artworks-000616474873-i3mr2m-t500x500.jpg'>
+                                </div>
+                                <div id='display-name' class='uploader-data'>
+                                    <span>Robert98</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

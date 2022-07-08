@@ -210,7 +210,7 @@ var SimpleModalEvents = {
                 $(self._previewItem).click(function() {
                     // request data about the preview item
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
-                    $(self._previewContainer + " > #top > #inner > span").text($(this).attr('data-name'));
+                    $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
                     $(self._previewContainer).css('display', 'block');
                 });
             });
