@@ -179,15 +179,16 @@
                     <div id='item-information'>
                         <div id='inner'>
                             <div id='uploader'>
-                                <div id='image' class='uploader-data'>
+                                <div id='image' class='uploader-data' data-uid='1' data-acc>
                                     <img src='\ps-classics\img\artworks-000616474873-i3mr2m-t500x500.jpg'>
                                 </div>
-                                <div id='display-name' class='uploader-data'>
+                                <div id='display-name' class='uploader-data' data-uid='1' data-acc>
                                     <span>Robert98</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div id='comment-section'></div>
                 </div>
             </div>
         </section>

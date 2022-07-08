@@ -97,7 +97,7 @@
                 </div>";
                 } else {
                     echo "<div id='login-success-container'>
-                        <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."'>
+                        <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
                             <div id='image'>
                                 <img src='\ps-classics\img\oth\pngegg.png'>
                             </div>

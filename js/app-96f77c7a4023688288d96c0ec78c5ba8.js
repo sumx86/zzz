@@ -160,7 +160,7 @@ var SimpleModalEvents = {
         $('#login-button').click(function() {
             $.redirect('/sign-in');
         });
-        $('#account-info').click(function() {
+        $('[data-acc]').click(function() {
             $.redirect(globalSettings.routes['acc'] + parseInt($(this).attr('data-uid')));
         });
         $('.page-item').click(function() {
