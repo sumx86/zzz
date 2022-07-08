@@ -63,121 +63,130 @@
 </head>
 <body id="bodyy">
     <div id='main-container'>
-        <div id='navbar'>
-            <a href='/' id='site-name'>
-                <div id='logo'>
-                    <img src='\ps-classics\img\logo\pngegg.png'>
-                </div>
-                <span id='name-text'>ps-classics</span>
-            </a>
-            <?php
-                if(!$isLogin) {
-                    echo "<div id='login-button'>
-                    <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
-                </div>";
-                }
-            ?>
-        </div>
-
-        <div id='lang-container'>
-            <div id='inner'>
-                <div id='en' class='lang-img-container' data-lang='en'>
-                    <img src='\ps-classics\img\enz.png'>
-                </div>
-                <div id='bg' class='lang-img-container' data-lang='bg'>
-                    <img src='\ps-classics\img\bgz.png'>
-                </div>
-            </div>
-        </div>
-        
-        <div id='search-game-container'>
-            <div id='top'>
-                <span><?php echo $language_config[$lang]['find-game']; ?></span>
-            </div>
-            <form id='search-form' action='' method='get'>
-                <input id='search-game' type='text' name='search-game' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
-            </form>
-            <div id='search-game-icon'>
-                <i class='fa fa-search'></i>
-            </div>
-        </div>
-        
-        <div id='game-platforms'>
-            <div class='platform' id='ps1'><span>PS1</span></div>
-            <div class='platform' id='ps2'><span>PS2</span></div>
-            <div class='platform' id='ps3'><span>PS3</span></div>
-        </div>
-        <div class='collection-container'>
-            <div id='collection'>
+        <section id='top-section' class='sections'>
+            <div id='navbar'>
+                <a href='/' id='site-name'>
+                    <div id='logo'>
+                        <img src='\ps-classics\img\logo\pngegg.png'>
+                    </div>
+                    <span id='name-text'>ps-classics</span>
+                </a>
                 <?php
-                    // Query games data from database based on CURRENT PAGE NUMBER and PLATFORM
-                    $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
-                    if(_Array::size($arrayResult) > 0) {
-                        foreach($arrayResult as $item) {
-                            echo "<div class='collection-item' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."'>
-                            <div class='cover'>
-                                <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
-                            </div>
-                            <div class='collection-item-slider'>
-                                <div class='game-name'>
-                                    <span>".htmlentities(Str::truncate($item['name'], 19), ENT_QUOTES, 'UTF-8')."</span>
-                                </div>
-                                <div class='uploader-name'>
-                                    <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>
-                                </div>
-                                <div class='likes'>
-                                    <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['likes'])."</span>
-                                </div>
-                                <div class='favourited'>
-                                    <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['favourited'])."</span>
-                                </div>
-                                <div class='comments'>
-                                    <span><i class='fa fa-comments' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['comments'])."</span>
-                                </div>
-                                <div class='views'>
-                                    <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['views'])."</span>
-                                </div>
-                            </div>
-                        </div>";
-                        }
+                    if(!$isLogin) {
+                        echo "<div id='login-button'>
+                        <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                    </div>";
                     }
                 ?>
             </div>
-            <div class='pagination-container' data-action='collection' data-platform='<?php echo $platform; ?>'>
+        </section>
+
+        <section id='mid-section' class='sections'>
+            <div id='lang-container'>
                 <div id='inner'>
-                    <div class='page-item'><span>1</span></div>
-                    <div class='page-item'><span>2</span></div>
-                    <div class='page-item'><span>3</span></div>
-                    <div class='page-item no-redirect'><span>...</span></div>
-                    <div class='page-item'><span>5</span></div>
+                    <div id='en' class='lang-img-container' data-lang='en'>
+                        <img src='\ps-classics\img\enz.png'>
+                    </div>
+                    <div id='bg' class='lang-img-container' data-lang='bg'>
+                        <img src='\ps-classics\img\bgz.png'>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id='game-preview-container'>
-            <div id='top'>
-                <div id='inner'>
-                    <span>Midnight Club 3 Dub Edition Remix</span>
+        
+            <div id='search-game-container'>
+                <div id='top'>
+                    <span><?php echo $language_config[$lang]['find-game']; ?></span>
                 </div>
-                <div id='exit-preview'>
-                    <i class='fa fa-times'></i>
+                <form id='search-form' action='' method='get'>
+                    <input id='search-game' type='text' name='search-game' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
+                </form>
+                <div id='search-game-icon'>
+                    <i class='fa fa-search'></i>
                 </div>
             </div>
-            <div id='preview'></div>
-        </div>
+        
+            <div id='game-platforms'>
+                <div class='platform' id='ps1'><span>PS1</span></div>
+                <div class='platform' id='ps2'><span>PS2</span></div>
+                <div class='platform' id='ps3'><span>PS3</span></div>
+            </div>
+            <div class='collection-container'>
+                <div id='collection'>
+                    <?php
+                        // Query games data from database based on CURRENT PAGE NUMBER and PLATFORM
+                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
+                        if(_Array::size($arrayResult) > 0) {
+                            foreach($arrayResult as $item) {
+                                echo "<div class='collection-item' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."'>
+                                <div class='cover'>
+                                    <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
+                                </div>
+                                <div class='collection-item-slider'>
+                                    <div class='game-name'>
+                                        <span>".htmlentities(Str::truncate($item['name'], 19), ENT_QUOTES, 'UTF-8')."</span>
+                                    </div>
+                                    <div class='uploader-name'>
+                                        <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>
+                                    </div>
+                                    <div class='likes'>
+                                        <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['likes'])."</span>
+                                    </div>
+                                    <div class='favourited'>
+                                        <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['favourited'])."</span>
+                                    </div>
+                                    <div class='comments'>
+                                        <span><i class='fa fa-comments' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['comments'])."</span>
+                                    </div>
+                                    <div class='views'>
+                                        <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['views'])."</span>
+                                    </div>
+                                </div>
+                            </div>";
+                            }
+                        }
+                    ?>
+                </div>
+                <div class='pagination-container' data-action='collection' data-platform='<?php echo $platform; ?>'>
+                    <div id='inner'>
+                        <div class='page-item'><span>1</span></div>
+                        <div class='page-item'><span>2</span></div>
+                        <div class='page-item'><span>3</span></div>
+                        <div class='page-item no-redirect'><span>...</span></div>
+                        <div class='page-item'><span>5</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id='game-preview-container'>
+                <div id='top'>
+                    <div id='inner'>
+                        <span>Midnight Club 3 Dub Edition Remix</span>
+                    </div>
+                    <div id='exit-preview'>
+                        <i class='fa fa-times'></i>
+                    </div>
+                </div>
+                <!-- #preview expands the #game-preview-container which expands #mid-section -->
+                <div id='preview'>
+                    <div id='game-cover'>
+                        <img src=''>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class='sections'>
+            <div id='footer-inner'>
+                <span>© 2022 ps-classics.com. All rights reserved.</span>
+            </div>
+        </footer>
     </div>
 </body>
 <script type='text/javascript'>
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('.multilang').each(function(i, e) {
             var element = $(e);
             var text = element.text();
-            if( (/[\u0400-\u04FF]+/).test(text) ){element.css('font-weight', 'bold');}
+            if( (/[\u0400-\u04FF]+/).test(text) ) {element.css('font-weight', 'bold');}
         });
     });
 </script>
-<footer>
-    <div id='footer-inner'>
-        <span>© 2022 ps-classics.com. All rights reserved.</span>
-    </div>
-</footer>
 </html>
