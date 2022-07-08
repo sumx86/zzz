@@ -1428,7 +1428,8 @@ body {
     height: 90%;
     left: 7.5%;
     top: 10%;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     background-color: #04070a;
 }
 
@@ -1530,7 +1531,7 @@ body {
     width: 90%;
     height: 100%;
     left: 5%;
-    background-color: rgb(175, 45, 45); /* rgb(167, 77, 167) */
+    background-color: transparent; /* rgb(167, 77, 167) */
 }
 
 #game-preview-container > #preview > #item-information > #inner > #uploader {
@@ -1538,7 +1539,7 @@ body {
     width: 100%;
     height: 23%;
     top: 4.5%;
-    background-color: red;
+    background-color: transparent;
 }
 
 #game-preview-container > #preview > #item-information > #inner > #uploader > #image {
@@ -1565,7 +1566,7 @@ body {
     width: 80%;
     height: 90%;
     top: 5%;
-    left: 17%;
+    left: 15%;
     background-color: transparent;
 }
 
@@ -1584,6 +1585,53 @@ body {
     cursor: pointer;
 }
 
+#game-preview-container > #preview > #write-comment {
+    position: absolute;
+    width: 40%;
+    height: 21%;
+    left: 43.5%;
+    top: 67%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #write-comment > form > #comment-input-field {
+    position: absolute;
+    width: 80%;
+    resize: none;
+    padding-bottom: 90px;
+    padding-left: 13px;
+    left: 5%;
+    top: 20%;
+    color: white;
+    background-color: black;
+    outline: none;
+    border: 1px solid #738399;
+    border-radius: 5px;
+    font-size: 1.3em;
+}
+
+#game-preview-container > #preview > #write-comment > #top {
+    position: absolute;
+    width: 40%;
+    height: 19%;
+    left: 9%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #write-comment > #top > span {
+    position: absolute;
+    left: 5%;
+    top: 10%;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 
 /* COLLECTION PAGE START */
 #top-section {
@@ -1596,6 +1644,20 @@ body {
     width: 100%;
     height: 91%;
     background-color: transparent;
+}
+
+#comment-section {
+    width: 100%;
+    height: 200px;
+    background-color: black;
+}
+
+#comment-section > #inner {
+    position: relative;
+    width: 85%;
+    height: 100px;
+    left: 7.5%;
+    background-color: red; /* #04070a */
 }
 /* COLLECTION PAGE END */
 
