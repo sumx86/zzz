@@ -20,7 +20,8 @@ var globalSettings = {
         'register': '/ajax/register',
         'reset-pass': '/ajax/reset-pass',
         'search': '/ajax/search',
-        'update': '/ajax/update'
+        'update': '/ajax/update',
+        'comment': '/ajax/comment'
     },
     routes : {
         'home': '/',
@@ -316,7 +317,7 @@ var SimpleModalEvents = {
     $.initCall('form-handling', {
         initialize: function() {
             $(window).on('load', this._initializeInputErrors.bind(this));
-            $._on(document, '#login-form, #registration-form, #reset-pass-form', {
+            $._on(document, '#login-form, #registration-form, #reset-pass-form, #comment-form', {
                 submit: this._formSubmit,
             }, this);
         },

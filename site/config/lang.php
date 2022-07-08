@@ -44,6 +44,7 @@
             'total' => 'Общо',
             'by' => 'От: ',
             'welcome' => 'Добре дошли, ',
+            'write-comment' => 'Напиши коментар',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -120,6 +121,7 @@
             'total' => 'Total',
             'by' => 'By: ',
             'welcome' => 'Welcome, ',
+            'write-comment' => 'Post a comment',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

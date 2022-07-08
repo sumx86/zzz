@@ -183,13 +183,25 @@
                                     <img src='\ps-classics\img\artworks-000616474873-i3mr2m-t500x500.jpg'>
                                 </div>
                                 <div id='display-name' class='uploader-data' data-uid='1' data-acc>
-                                    <span>Robert98</span>
+                                    <span>RobertoRicardo2000</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id='comment-section'></div>
+                    <div id='write-comment'>
+                        <div id='top'>
+                            <span><?php echo $language_config[$lang]['write-comment']; ?></span>
+                        </div>
+                        <form id='comment-form' action='' method='' data-action='comment'>
+                            <textarea name='comment-input-field' id='comment-input-field' autocomplete='off'></textarea>
+                        </form>
+                    </div>
                 </div>
+            </div>
+        </section>
+        <section id='comment-section'>
+            <div id='inner'>
+
             </div>
         </section>
         <footer class='sections'>
