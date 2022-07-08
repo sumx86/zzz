@@ -186,6 +186,13 @@
                                     <span>RobertoRicardo2000</span>
                                 </div>
                             </div>
+                            <div id='game-info'>
+                                <div id='release-date' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Release dates: October 30, 2006</span></div>
+                                <div id='genre' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Genres: Action, Adventure</span></div>
+                                <div id='platforms' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Platforms: Playstation 2, Xbox 360</span></div>
+                                <div id='developers' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Developers: HappyCitizens</span></div>
+                                <div id='publishers' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Publishers: HappyCitizens</span></div>
+                            </div>
                         </div>
                     </div>
                     <div id='write-comment'>
