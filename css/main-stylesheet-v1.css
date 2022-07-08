@@ -81,6 +81,13 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+#top-section > #navbar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 #navbar > #login-success-container {
     position: absolute;
     width: 14%;
@@ -1421,7 +1428,6 @@ body {
     height: 100%;
     padding-left: 2%;
     padding-right: 2%;
-    border-bottom: 2px dotted white;
     background-color: transparent;
 }
 
@@ -1448,12 +1454,47 @@ body {
 
 #game-preview-container > #preview {
     position: absolute;
-    width: 90%;
+    width: 85%;
     height: 90%;
-    left: 5%;
+    left: 7.5%;
     top: 10%;
+    border-radius: 10px;
+    background-color: #04070a;
+}
+
+#game-preview-container > #preview > #game-cover {
+    position: absolute;
+    width: 24%;
+    height: 70%;
+    left: 25%;
+    top: 5%;
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: rgb(46, 15, 46);
+}
+
+#game-preview-container > #preview > #game-cover > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
+
+/* COLLECTION PAGE START */
+#top-section {
+    width: 100%;
+    height: 9%;
     background-color: transparent;
 }
+
+#mid-section {
+    width: 100%;
+    height: 91%;
+    background-color: transparent;
+}
+/* COLLECTION PAGE END */
 
 
 
