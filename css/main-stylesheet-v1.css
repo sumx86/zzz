@@ -1585,6 +1585,44 @@ body {
     cursor: pointer;
 }
 
+#game-preview-container > #preview > #item-information > #inner > #game-info {
+    position: absolute;
+    width: 90%;
+    height: 70%;
+    left: 2%;
+    top: 29%;
+    background-color: transparent; /* rgb(167, 77, 167) */
+}
+
+
+
+
+.game-info-text {
+    width: 100%;
+    height: 15%;
+    background-color: transparent;
+}
+
+.game-info-text:nth-child(1) {
+    margin-top: 15px;
+}
+
+.game-info-text > span {
+    position: relative;
+    top: 30%;
+    left: 5%;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+
 #game-preview-container > #preview > #write-comment {
     position: absolute;
     width: 40%;
