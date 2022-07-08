@@ -1412,36 +1412,6 @@ body {
     background-color: rgb(0, 0, 0);
 }
 
-#game-preview-container > #top {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 5%;
-    top: 5%;
-    background-color: transparent;
-}
-
-#game-preview-container > #top > #inner {
-    position: absolute;
-    width: auto;
-    height: 100%;
-    padding-left: 2%;
-    padding-right: 2%;
-    background-color: transparent;
-}
-
-#game-preview-container > #top > #inner > span {
-    font-size: 1.9em;
-    font-family: 'prototype', 'Jura-Bold', sans-serif;
-    color: white;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-
 #game-preview-container > #top > #exit-preview {
     position: absolute;
     color: white;
@@ -1462,11 +1432,75 @@ body {
     background-color: #04070a;
 }
 
+
+#game-preview-container > #preview > #top {
+    position: absolute;
+    width: 52%;
+    left: 42%;
+    top: 9%;
+    height: 5%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #top > #inner {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #top > #inner > span {
+    font-size: 2.4em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#game-preview-container > #preview > #item-actions {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 24%;
+    height: 6.5%;
+    left: 16%;
+    top: 75.7%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #item-actions > .action-button {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+    height: 100%;
+    margin-left: 3px;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #item-actions > .action-button > i {
+    margin-top: 10%;
+    font-size: 2em;
+    color: #c8dfff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+
 #game-preview-container > #preview > #game-cover {
     position: absolute;
     width: 24%;
     height: 70%;
-    left: 25%;
+    left: 16%;
     top: 5%;
     border: 2px solid white;
     border-radius: 5px;
@@ -1480,6 +1514,73 @@ body {
     border-radius: 5px;
 }
 
+#game-preview-container > #preview > #item-information {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 45%;
+    height: 50%;
+    left: 41%;
+    top: 16%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #item-information > #inner {
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    left: 5%;
+    background-color: transparent; /* rgb(167, 77, 167) */
+}
+
+#game-preview-container > #preview > #item-information > #inner > #uploader {
+    position: absolute;
+    width: 100%;
+    height: 23%;
+    top: 4.5%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #item-information > #inner > #uploader > #image {
+    position: absolute;
+    width: 11.5%;
+    height: 81%;
+    top: 7%;
+    left: 2%;
+    border-radius: 9px;
+    border: 2px solid white;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #item-information > #inner > #uploader > #image > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 9px;
+}
+
+#game-preview-container > #preview > #item-information > #inner > #uploader > #display-name {
+    position: absolute;
+    width: 80%;
+    height: 90%;
+    top: 5%;
+    left: 17%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview > #item-information > #inner > #uploader > #display-name > span {
+    position: absolute;
+    top: 30%;
+    left: 2%;
+    font-size: 1.4em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
 
 
 /* COLLECTION PAGE START */
