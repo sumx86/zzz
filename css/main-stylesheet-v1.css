@@ -1530,7 +1530,7 @@ body {
     width: 90%;
     height: 100%;
     left: 5%;
-    background-color: transparent; /* rgb(167, 77, 167) */
+    background-color: rgb(175, 45, 45); /* rgb(167, 77, 167) */
 }
 
 #game-preview-container > #preview > #item-information > #inner > #uploader {
@@ -1538,7 +1538,7 @@ body {
     width: 100%;
     height: 23%;
     top: 4.5%;
-    background-color: transparent;
+    background-color: red;
 }
 
 #game-preview-container > #preview > #item-information > #inner > #uploader > #image {
@@ -1550,6 +1550,7 @@ body {
     border-radius: 9px;
     border: 2px solid white;
     background-color: transparent;
+    cursor: pointer;
 }
 
 #game-preview-container > #preview > #item-information > #inner > #uploader > #image > img {
@@ -1580,6 +1581,7 @@ body {
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    cursor: pointer;
 }
 
 
