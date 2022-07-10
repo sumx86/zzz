@@ -213,12 +213,61 @@ var SimpleModalEvents = {
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
                     $(self._previewContainer).css('display', 'block');
+                    $('#lang-container').css('z-index', '5');
                 });
             });
         }
     });
 })(jQuery);
-(function($){
+(function() {
+    $.initCall('collection-item-action-buttons', {
+        initialize: function() {
+            var self = this;
+            $(document).ready(function() {
+                $('.action-button > span').find('i:first').click(function(e) {
+                    self._doUpdate(e);
+                });
+            });
+        },
+        _doUpdate: function(e) {
+            var parent = $(e.currentTarget).parent().parent();
+            $.doAjax({
+                url: globalSettings.ajax['update'],
+                data: {}
+            }, false).done(function(jqXHR, status, req) {
+                this._updateData(jqXHR);
+            }).bind(this);
+        },
+        _updateData: function(data) {
+            
+        }
+    });
+})();
+(function() {
+    $.initCall('collection-item-post-comment', {
+        initialize: function() {
+            var self = this;
+            $(document).ready(function() {
+                $._on('#comment-submit', null, {
+                    'mousedown' : function(e) {
+                        $(e.currentTarget).find('i:first').css('color', 'white');
+                    },
+                    'mouseup' : function(e) {
+                        $(e.currentTarget).find('i:first').css('color', '#fc5603');
+                        $.doAjax({
+                            url: globalSettings.ajax['comment'],
+                            data: 'target=collection-item&data=' + $('#collection-item-comment-input-field').val()
+                        }, false)
+                        .done(function(jqXHR, status, req) {
+                            console.log(jqXHR + ' -- ' + status + ' -- ' + req);
+                        });
+                    }
+                }, self);
+            });
+        }
+    });
+})();
+(function($) {
     $.initCall('user-settings', {
         _modal: '#settings-container',
         _data: null,

@@ -166,15 +166,25 @@
                 <div id='preview'>
                     <div id='top'>
                         <div id='inner'>
-                            <span>Midnight Club 3 Dub Edition Remix</span>
+                            <span></span>
                         </div>
                     </div>
                     <div id='game-cover'>
                         <img src=''>
                     </div>
                     <div id='item-actions'>
-                        <div id='give-like' class='action-button'><i class='fa fa-thumbs-up'></i></div>
-                        <div id='give-fav'  class='action-button'><i class='fa fa-heart'></i></div>
+                        <div id='likes' class='action-button'>
+                            <span><i class='fa fa-thumbs-up'></i> &nbsp;100</span>
+                        </div>
+                        <div id='favourited' class='action-button'>
+                            <span><i class='fa fa-heart'></i> &nbsp;100</span>
+                        </div>
+                        <div id='comments' class='action-button'>
+                            <span><i class='fa fa-comments'></i> &nbsp;100</span>
+                        </div>
+                        <div id='views' class='action-button'>
+                            <span><i class='fa fa-eye'></i> &nbsp;100</span>
+                        </div>
                     </div>
                     <div id='item-information'>
                         <div id='inner'>
@@ -192,6 +202,7 @@
                                 <div id='platforms' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Platforms: Playstation 2, Xbox 360</span></div>
                                 <div id='developers' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Developers: HappyCitizens</span></div>
                                 <div id='publishers' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Publishers: HappyCitizens</span></div>
+                                <div id='iso' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Iso: <a href='https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/' target="_blank">link</a></span></div>
                             </div>
                         </div>
                     </div>
@@ -200,17 +211,83 @@
                             <span><?php echo $language_config[$lang]['write-comment']; ?></span>
                         </div>
                         <form id='comment-form' action='' method='' data-action='comment'>
-                            <textarea name='comment-input-field' id='comment-input-field' autocomplete='off'></textarea>
+                            <textarea name='comment-input-field' id='collection-item-comment-input-field' autocomplete='off'></textarea>
+                            <div id='comment-submit'>
+                                <i class='fa fa-check'></i>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-        <section id='comment-section'>
-            <div id='inner'>
-
-            </div>
-        </section>
+        <?php
+            if(!$isLogin) {
+                echo "<section id='comment-section'>
+                        <div id='inner'>
+                            <div class='comment-box'>
+                                <div class='inner'>
+                                    <div class='user-pic'>
+                                        <img src='\ps-classics\img\images.jfif'>
+                                    </div>
+                                    <div class='comment-info-top'>
+                                        <div class='username info'>
+                                            <span>what is that maaaaan?</span>
+                                        </div>
+                                        <div class='comment-date info'>
+                                            <span>20/15/2022</span>
+                                        </div>
+                                    </div>
+                                    <div class='comment'>
+                                        <div class='inner'>
+                                            <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='comment-box'>
+                                <div class='inner'>
+                                    <div class='user-pic'>
+                                        <img src='\ps-classics\img\images.jfif'>
+                                    </div>
+                                    <div class='comment-info-top'>
+                                        <div class='username info'>
+                                            <span>what is that maaaaan?</span>
+                                        </div>
+                                        <div class='comment-date info'>
+                                            <span>20/15/2022</span>
+                                        </div>
+                                    </div>
+                                    <div class='comment'>
+                                        <div class='inner'>
+                                            <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='comment-box'>
+                                <div class='inner'>
+                                    <div class='user-pic'>
+                                        <img src='\ps-classics\img\images.jfif'>
+                                    </div>
+                                    <div class='comment-info-top'>
+                                        <div class='username info'>
+                                            <span>what is that maaaaan?</span>
+                                        </div>
+                                        <div class='comment-date info'>
+                                            <span>20/15/2022</span>
+                                        </div>
+                                    </div>
+                                    <div class='comment'>
+                                        <div class='inner'>
+                                            <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>";
+            }
+        ?>
         <footer class='sections'>
             <div id='footer-inner'>
                 <span>© 2022 ps-classics.com. All rights reserved.</span>
