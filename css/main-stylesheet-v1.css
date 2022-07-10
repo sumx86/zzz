@@ -1476,17 +1476,28 @@ body {
 
 #game-preview-container > #preview > #item-actions > .action-button {
     position: relative;
-    display: inline-block;
     text-align: center;
     width: 20%;
     height: 100%;
     margin-left: 3px;
-    background-color: transparent;
+    background-color: transparent; /* rgb(141, 11, 68) */
 }
 
-#game-preview-container > #preview > #item-actions > .action-button > i {
+#game-preview-container > #preview > #item-actions > .action-button > span {
     margin-top: 10%;
-    font-size: 2em;
+    font-size: 0.9em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #c8dfff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#game-preview-container > #preview > #item-actions > .action-button > span > i {
+    margin-top: 10%;
+    font-size: 1.4em;
     color: #c8dfff;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1594,6 +1605,10 @@ body {
     background-color: transparent; /* rgb(167, 77, 167) */
 }
 
+#game-preview-container > #preview > #item-information > #inner > #game-info > #iso > span:nth-child(2) > a {
+    text-decoration: none;
+    color: #ff2c49;
+}
 
 
 
@@ -1632,7 +1647,7 @@ body {
     background-color: transparent;
 }
 
-#game-preview-container > #preview > #write-comment > form > #comment-input-field {
+#game-preview-container > #preview > #write-comment > form > #collection-item-comment-input-field {
     position: absolute;
     width: 80%;
     resize: none;
@@ -1670,6 +1685,31 @@ body {
     user-select: none;
 }
 
+#game-preview-container > #preview > #write-comment > form > #comment-submit {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 5%;
+    height: 18%;
+    left: 90%;
+    top: 45%;
+    border-radius: 7px;
+    background-color: #1b3146;
+    cursor: pointer;
+}
+
+#game-preview-container > #preview > #write-comment > form > #comment-submit > i {
+    position: absolute;
+    top: 15%;
+    font-size: 1.3em;
+    color: #fc5603;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 
 /* COLLECTION PAGE START */
 #top-section {
@@ -1686,16 +1726,123 @@ body {
 
 #comment-section {
     width: 100%;
-    height: 200px;
+    height: auto;
     background-color: black;
 }
 
 #comment-section > #inner {
     position: relative;
     width: 85%;
-    height: 100px;
+    height: auto;
     left: 7.5%;
-    background-color: red; /* #04070a */
+    background-color: #04070a; /* #04070a #cd002f #315272 */
+}
+
+.comment-box {
+    margin-left: 13%;
+    width: 55%;
+    height: 220px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    background-color: transparent;
+}
+
+.comment-box > .inner {
+    margin-left: 5%;
+    width: 90%;
+    height: 80%;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    border-right: 1px solid #476f9c;
+    background-color: #0a0e12;
+}
+
+.comment-box > .inner > .user-pic {
+    position: relative;
+    width: 13%;
+    height: 105px;
+    left: 1%;
+    border-radius: 5px;
+    background-color: black;
+}
+
+.comment-box > .inner > .user-pic > img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.comment-box > .inner > .comment-info-top {
+    position: relative;
+    width: 45%;
+    height: 35px;
+    left: 17%;
+    top: -60%;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info {
+    position: relative;
+    display: inline-block;
+    width: 45%;
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info:nth-child(1) {
+    width: auto;
+}
+
+.comment-box > .inner > .comment-info-top > .info:nth-child(2) > span {
+    font-family: 'Roboto-Regular', 'Jura-Bold', sans-serif;
+    font-size: 0.9em;
+}
+
+.comment-box > .inner > .comment-info-top > .info > span {
+    position: relative;
+    top: 10%;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.comment-box > .inner > .comment {
+    position: relative;
+    width: 83%;
+    height: 70%;
+    top: -63%;
+    left: 15%;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: 1px solid #476f9c;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment > .inner {
+    position: relative;
+    width: 97%;
+    height: 95%;
+    top: 2.5%;
+    left: 0.9%;
+    padding-right: 15px;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment > .inner > span {
+    position: absolute;
+    top: 10%;
+    font-size: 0.9em;
+    font-family: 'Roboto-Regular', 'Jura-Bold', sans-serif;
+    color: white;
 }
 /* COLLECTION PAGE END */
 
