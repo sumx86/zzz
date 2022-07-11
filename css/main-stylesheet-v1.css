@@ -1407,6 +1407,7 @@ body {
 
 #game-preview-container {
     position: absolute;
+    display: none;
     width: 100%;
     height: 91%;
     background-color: rgb(0, 0, 0);
@@ -1507,6 +1508,10 @@ body {
     cursor: pointer;
 }
 
+#game-preview-container > #preview > #item-actions > .no-action > span > i {
+    cursor: auto;
+}
+
 
 #game-preview-container > #preview > #game-cover {
     position: absolute;
@@ -1514,7 +1519,7 @@ body {
     height: 70%;
     left: 16%;
     top: 5%;
-    border: 2px solid white;
+    border: 2px solid #cd002f;
     border-radius: 5px;
     background-color: rgb(46, 15, 46);
 }
@@ -1753,29 +1758,34 @@ body {
     height: 80%;
     padding: 5px 5px 5px 5px;
     border-radius: 5px;
-    border-right: 1px solid #476f9c;
+    border-right: 1px solid #cd002f;
     background-color: #0a0e12;
 }
 
 .comment-box > .inner > .user-pic {
     position: relative;
     width: 13%;
-    height: 105px;
+    height: 100px;
     left: 1%;
-    border-radius: 5px;
-    background-color: black;
+    border-radius: 15px;
+    background-color: transparent;
 }
 
 .comment-box > .inner > .user-pic > img {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 15px;
 }
+
+
+
+
+
 
 .comment-box > .inner > .comment-info-top {
     position: relative;
-    width: 45%;
+    width: 75%;
     height: 35px;
     left: 17%;
     top: -60%;
@@ -1793,14 +1803,86 @@ body {
     background-color: transparent;
 }
 
+/* ========= clearfix start ========= */
+.comment-box > .inner > .comment-info-top > .info::after {
+    content: "";
+    clear: both;
+    display: inline-block;
+}
+/* ========= clearfix end ========= */
+
 .comment-box > .inner > .comment-info-top > .info:nth-child(1) {
     width: auto;
+}
+
+.comment-box > .inner > .comment-info-top > .info:nth-child(2) {
+    width: 15%;
 }
 
 .comment-box > .inner > .comment-info-top > .info:nth-child(2) > span {
     font-family: 'Roboto-Regular', 'Jura-Bold', sans-serif;
     font-size: 0.9em;
 }
+
+.comment-box > .inner > .comment-info-top > .info:nth-child(3) {
+    left: 14%;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .like {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+    left: 22%;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .like > span {
+    position: absolute;
+    top: 10%;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #b2c7e4;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .like > span > i {
+    cursor: pointer;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .reply {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+    left: 60%;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .reply > span {
+    position: absolute;
+    top: 10%;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #ff2c49;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .reply > span > i {
+    cursor: pointer;
+}
+
 
 .comment-box > .inner > .comment-info-top > .info > span {
     position: relative;
