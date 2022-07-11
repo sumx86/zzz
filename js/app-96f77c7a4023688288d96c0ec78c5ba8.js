@@ -210,8 +210,11 @@ var SimpleModalEvents = {
                 });
                 $(self._previewItem).click(function() {
                     // request data about the preview item
+                    //   - information like -> likes, views, release date, iso, etc...
+                    //   - comments
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
+                    $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + $(this).attr('class').split(" ")[1]);
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
                 });
@@ -223,23 +226,28 @@ var SimpleModalEvents = {
     $.initCall('collection-item-action-buttons', {
         initialize: function() {
             var self = this;
+            $(document).on('collection-item-stats-update', this.updateContent.bind(this));
             $(document).ready(function() {
-                $('.action-button > span').find('i:first').click(function(e) {
+                $('.action-button:not(".no-action") > span').find('i:first').click(function(e) {
                     self._doUpdate(e);
                 });
             });
         },
         _doUpdate: function(e) {
-            var parent = $(e.currentTarget).parent().parent();
+            var target = $(e.currentTarget);
+            var parent = target.parent().parent();
             $.doAjax({
                 url: globalSettings.ajax['update'],
-                data: {}
-            }, false).done(function(jqXHR, status, req) {
-                this._updateData(jqXHR);
-            }).bind(this);
+                data: 'action='+parent.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(parent.attr('class').split(" ")[1])})
+            }, false)
+            .done(function(jqXHR, status, req) {
+                //var response = $.parseJSON(jqXHR);
+                //$(document).trigger('collection-item-stats-update', [{response, target}]);
+                console.log(jqXHR);
+            });
         },
-        _updateData: function(data) {
-            
+        updateContent: function(event, data) {
+            //console.log(event + ' -- ' + data);
         }
     });
 })();

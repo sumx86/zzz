@@ -45,6 +45,7 @@
             'by' => 'От: ',
             'welcome' => 'Добре дошли, ',
             'write-comment' => 'Напиши коментар',
+            'reply' => 'Отговор',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -122,6 +123,7 @@
             'by' => 'By: ',
             'welcome' => 'Welcome, ',
             'write-comment' => 'Post a comment',
+            'reply' => 'Reply',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

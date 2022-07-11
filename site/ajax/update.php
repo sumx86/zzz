@@ -13,6 +13,22 @@
         return;
     }
 
+    $actionTypes = [
+        'like',
+        'favourite',
+        'user'
+    ];
+    $action = trim($_POST['action']);
+    $data   = $_POST['data'];
+
+    if(!Str::is_in($action, $actionTypes)) {
+        return;
+    }
+
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     $assertionErrors = [];
+
+    $db = new DB(false);
+    UserCP::setDB($db);
+    echo $action . " -- " . $data;
 ?>

@@ -117,7 +117,7 @@
                         $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
                         if(_Array::size($arrayResult) > 0) {
                             foreach($arrayResult as $item) {
-                                echo "<div class='collection-item' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."'>
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."'>
                                 <div class='cover'>
                                     <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                                 </div>
@@ -173,16 +173,16 @@
                         <img src=''>
                     </div>
                     <div id='item-actions'>
-                        <div id='likes' class='action-button'>
+                        <div id='likes' class='action-button' data-action='like'>
                             <span><i class='fa fa-thumbs-up'></i> &nbsp;100</span>
                         </div>
-                        <div id='favourited' class='action-button'>
+                        <div id='favourited' class='action-button' data-action='favourite'>
                             <span><i class='fa fa-heart'></i> &nbsp;100</span>
                         </div>
-                        <div id='comments' class='action-button'>
+                        <div id='comments' class='action-button no-action'>
                             <span><i class='fa fa-comments'></i> &nbsp;100</span>
                         </div>
-                        <div id='views' class='action-button'>
+                        <div id='views' class='action-button no-action'>
                             <span><i class='fa fa-eye'></i> &nbsp;100</span>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                             <div class='comment-box'>
                                 <div class='inner'>
                                     <div class='user-pic'>
-                                        <img src='\ps-classics\img\images.jfif'>
+                                        <img src='\ps-classics\img\93401019.jfif'>
                                     </div>
                                     <div class='comment-info-top'>
                                         <div class='username info'>
@@ -235,6 +235,14 @@
                                         </div>
                                         <div class='comment-date info'>
                                             <span>20/15/2022</span>
+                                        </div>
+                                        <div class='comment-actions info'>
+                                            <div class='like'>
+                                                <span><i class='fa fa-thumbs-up'></i> 10000</span>
+                                            </div>
+                                            <div class='reply'>
+                                                <span>".$language_config[$lang]['reply']."</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class='comment'>
@@ -247,7 +255,7 @@
                             <div class='comment-box'>
                                 <div class='inner'>
                                     <div class='user-pic'>
-                                        <img src='\ps-classics\img\images.jfif'>
+                                        <img src='\ps-classics\img\93401019.jfif'>
                                     </div>
                                     <div class='comment-info-top'>
                                         <div class='username info'>
@@ -255,6 +263,14 @@
                                         </div>
                                         <div class='comment-date info'>
                                             <span>20/15/2022</span>
+                                        </div>
+                                        <div class='comment-actions info'>
+                                            <div class='like'>
+                                                <span><i class='fa fa-thumbs-up'></i> 10000</span>
+                                            </div>
+                                            <div class='reply'>
+                                                <span>".$language_config[$lang]['reply']."</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class='comment'>
@@ -267,7 +283,7 @@
                             <div class='comment-box'>
                                 <div class='inner'>
                                     <div class='user-pic'>
-                                        <img src='\ps-classics\img\images.jfif'>
+                                        <img src='\ps-classics\img\93401019.jfif'>
                                     </div>
                                     <div class='comment-info-top'>
                                         <div class='username info'>
@@ -275,6 +291,14 @@
                                         </div>
                                         <div class='comment-date info'>
                                             <span>20/15/2022</span>
+                                        </div>
+                                        <div class='comment-actions info'>
+                                            <div class='like'>
+                                                <span><i class='fa fa-thumbs-up'></i> 10000</span>
+                                            </div>
+                                            <div class='reply'>
+                                                <span>".$language_config[$lang]['reply']."</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class='comment'>
