@@ -156,5 +156,43 @@
             }
             return true;
         }
+
+        /*
+         * Check if a $userId has rated (liked or favourited) a $gameID
+         */
+        public static function hasRatedGame($userId, $gameID, $type) {
+            switch($type) {
+                case 'like':
+                    $query = "select id from rated_games where liked_by_user_id=? and game_id=?";
+                    break;
+                case 'favourite':
+                    $query = "select id from rated_games where favourited_by_user_id=? and game_id=?";
+                    break;
+            }
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$userId, $gameID], true, DB::ALL_ROWS);
+            return _Array::size($result) > 0;
+        }
+
+        /*
+         * Like / Favourite a game
+         */
+        public static function rateGame($userId, $gameID, $type) {
+            switch($type) {
+                case 'like':
+                    $query = "update games set likes=likes+1 where id=?; insert into rated_games (game_id, liked_by_user_id) values (?, ?)";
+                    break;
+                case 'favourite':
+                    $query = "update games set favourited=favourited+1 where id=?; insert into rated_games (game_id, favourited_by_user_id) values (?, ?)";
+                    break;
+            }
+            self::$dbInstance->rawQuery($query, [$gameID, $gameID, $userId], false, false);
+        }
+
+        /*
+         * Give like to a comment
+         */
+        public static function rateComment($userId, $commentID) {
+            self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes+1 where comment_id=?; insert into rated_comments (comment_id, liked_by_user_id) values (?, ?)", [$commentID, $commentID, $userId], false, false);
+        }
     }
 ?>
