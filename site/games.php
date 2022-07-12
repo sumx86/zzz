@@ -238,10 +238,10 @@
                                         </div>
                                         <div class='comment-actions info'>
                                             <div class='like'>
-                                                <span><i class='fa fa-thumbs-up'></i> 10000</span>
+                                                <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
                                             </div>
                                             <div class='reply'>
-                                                <span>".$language_config[$lang]['reply']."</span>
+                                                <span class='clickable'>".$language_config[$lang]['reply']."</span>
                                             </div>
                                         </div>
                                     </div>
@@ -266,10 +266,10 @@
                                         </div>
                                         <div class='comment-actions info'>
                                             <div class='like'>
-                                                <span><i class='fa fa-thumbs-up'></i> 10000</span>
+                                                <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
                                             </div>
                                             <div class='reply'>
-                                                <span>".$language_config[$lang]['reply']."</span>
+                                                <span class='clickable'>".$language_config[$lang]['reply']."</span>
                                             </div>
                                         </div>
                                     </div>
@@ -294,10 +294,10 @@
                                         </div>
                                         <div class='comment-actions info'>
                                             <div class='like'>
-                                                <span><i class='fa fa-thumbs-up'></i> 10000</span>
+                                                <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
                                             </div>
                                             <div class='reply'>
-                                                <span>".$language_config[$lang]['reply']."</span>
+                                                <span class='clickable'>".$language_config[$lang]['reply']."</span>
                                             </div>
                                         </div>
                                     </div>

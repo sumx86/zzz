@@ -222,7 +222,7 @@ var SimpleModalEvents = {
         }
     });
 })(jQuery);
-(function() {
+(function($) {
     $.initCall('collection-item-action-buttons', {
         initialize: function() {
             var self = this;
@@ -238,7 +238,7 @@ var SimpleModalEvents = {
             var parent = target.parent().parent();
             $.doAjax({
                 url: globalSettings.ajax['update'],
-                data: 'action='+parent.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(parent.attr('class').split(" ")[1])})
+                data: 'action='+parent.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(parent.attr('class').split(" ")[1]),'item_type':'game'})
             }, false)
             .done(function(jqXHR, status, req) {
                 //var response = $.parseJSON(jqXHR);
@@ -250,8 +250,8 @@ var SimpleModalEvents = {
             //console.log(event + ' -- ' + data);
         }
     });
-})();
-(function() {
+})(jQuery);
+(function($) {
     $.initCall('collection-item-post-comment', {
         initialize: function() {
             var self = this;
@@ -274,7 +274,18 @@ var SimpleModalEvents = {
             });
         }
     });
-})();
+})(jQuery);
+(function($) {
+    $.initCall('comment-actions', {
+        initialize: function() {
+            $(document).ready(function() {
+                $('.comment-actions').find('.clickable').click(function(e) {
+                    console.log(e.currentTarget);
+                });
+            });
+        }
+    });
+})(jQuery);
 (function($) {
     $.initCall('user-settings', {
         _modal: '#settings-container',

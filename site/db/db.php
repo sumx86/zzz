@@ -140,7 +140,9 @@
          */
         public function bindValuesAndExecute($values) {
             $this->bindValues($values);
-            $this->setMode();
+            if(!is_null($this->_fetchMode)) {
+                $this->setMode();
+            }
             $this->stmt->execute();
         }
 
