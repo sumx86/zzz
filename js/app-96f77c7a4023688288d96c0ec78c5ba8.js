@@ -207,6 +207,7 @@ var SimpleModalEvents = {
             $(document).ready(function() {
                 $(self._exitElement).click(function() {
                     $(self._previewContainer).css('display', 'none');
+                    $('#comment-section').css('display', 'none');
                 });
                 $(self._previewItem).click(function() {
                     // request data about the preview item
@@ -217,6 +218,7 @@ var SimpleModalEvents = {
                     $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + $(this).attr('class').split(" ")[1]);
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
+                    $('#comment-section').css('display', 'block');
                 });
             });
         }

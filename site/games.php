@@ -220,98 +220,94 @@
                 </div>
             </div>
         </section>
-        <?php
-            if($isLogin) {
-                echo "<section id='comment-section'>
-                        <div id='inner'>
-                            <div class='comment-box'>
-                                <div class='inner'>
-                                    <div class='user-pic'>
-                                        <img src='\ps-classics\img\93401019.jfif'>
+        <section id='comment-section'>
+                <div id='inner'>
+                    <div class='comment-box'>
+                        <div class='inner'>
+                            <div class='user-pic'>
+                                <img src='\ps-classics\img\93401019.jfif'>
+                            </div>
+                            <div class='comment-info-top'>
+                                <div class='username info'>
+                                    <span>what is that maaaaan?</span>
+                                </div>
+                                <div class='comment-date info'>
+                                    <span>20/15/2022</span>
+                                </div>
+                                <div class='comment-actions info'>
+                                    <div class='like'>
+                                        <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
                                     </div>
-                                    <div class='comment-info-top'>
-                                        <div class='username info'>
-                                            <span>what is that maaaaan?</span>
-                                        </div>
-                                        <div class='comment-date info'>
-                                            <span>20/15/2022</span>
-                                        </div>
-                                        <div class='comment-actions info'>
-                                            <div class='like'>
-                                                <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
-                                            </div>
-                                            <div class='reply'>
-                                                <span class='clickable'>".$language_config[$lang]['reply']."</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class='comment'>
-                                        <div class='inner'>
-                                            <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
-                                        </div>
+                                    <div class='reply'>
+                                        <span class='clickable'><?php echo $language_config[$lang]['reply']; ?></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class='comment-box'>
+                            <div class='comment'>
                                 <div class='inner'>
-                                    <div class='user-pic'>
-                                        <img src='\ps-classics\img\93401019.jfif'>
-                                    </div>
-                                    <div class='comment-info-top'>
-                                        <div class='username info'>
-                                            <span>what is that maaaaan?</span>
-                                        </div>
-                                        <div class='comment-date info'>
-                                            <span>20/15/2022</span>
-                                        </div>
-                                        <div class='comment-actions info'>
-                                            <div class='like'>
-                                                <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
-                                            </div>
-                                            <div class='reply'>
-                                                <span class='clickable'>".$language_config[$lang]['reply']."</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class='comment'>
-                                        <div class='inner'>
-                                            <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='comment-box'>
-                                <div class='inner'>
-                                    <div class='user-pic'>
-                                        <img src='\ps-classics\img\93401019.jfif'>
-                                    </div>
-                                    <div class='comment-info-top'>
-                                        <div class='username info'>
-                                            <span>what is that maaaaan?</span>
-                                        </div>
-                                        <div class='comment-date info'>
-                                            <span>20/15/2022</span>
-                                        </div>
-                                        <div class='comment-actions info'>
-                                            <div class='like'>
-                                                <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
-                                            </div>
-                                            <div class='reply'>
-                                                <span class='clickable'>".$language_config[$lang]['reply']."</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class='comment'>
-                                        <div class='inner'>
-                                            <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
-                                        </div>
-                                    </div>
+                                    <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
                                 </div>
                             </div>
                         </div>
-                    </section>";
-            }
-        ?>
+                    </div>
+                    <div class='comment-box'>
+                        <div class='inner'>
+                            <div class='user-pic'>
+                                <img src='\ps-classics\img\93401019.jfif'>
+                            </div>
+                            <div class='comment-info-top'>
+                                <div class='username info'>
+                                    <span>what is that maaaaan?</span>
+                                </div>
+                                <div class='comment-date info'>
+                                    <span>20/15/2022</span>
+                                </div>
+                                <div class='comment-actions info'>
+                                    <div class='like'>
+                                        <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
+                                    </div>
+                                    <div class='reply'>
+                                        <span class='clickable'><?php echo $language_config[$lang]['reply']; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='comment'>
+                                <div class='inner'>
+                                    <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='comment-box'>
+                        <div class='inner'>
+                            <div class='user-pic'>
+                                <img src='\ps-classics\img\93401019.jfif'>
+                            </div>
+                            <div class='comment-info-top'>
+                                <div class='username info'>
+                                    <span>what is that maaaaan?</span>
+                                </div>
+                                <div class='comment-date info'>
+                                    <span>20/15/2022</span>
+                                </div>
+                                <div class='comment-actions info'>
+                                    <div class='like'>
+                                        <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
+                                    </div>
+                                    <div class='reply'>
+                                        <span class='clickable'><?php echo $language_config[$lang]['reply']; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='comment'>
+                                <div class='inner'>
+                                    <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         <footer class='sections'>
             <div id='footer-inner'>
                 <span>© 2022 ps-classics.com. All rights reserved.</span>
