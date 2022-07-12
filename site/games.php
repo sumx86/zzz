@@ -221,7 +221,7 @@
             </div>
         </section>
         <?php
-            if(!$isLogin) {
+            if($isLogin) {
                 echo "<section id='comment-section'>
                         <div id='inner'>
                             <div class='comment-box'>

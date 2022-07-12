@@ -52,7 +52,7 @@
             case "game":
                 $userID = intval(Server::retrieve_session('user', 'id'));
                 $gameID = intval($data->item);
-                if(!UserCP::hasRatedGame(1, $gameID, 'like')) {
+                if(!UserCP::hasRatedGame($userID, $gameID, 'like')) {
                     UserCP::rateGame($userID, $gameID, 'like');
                     $successData['item_type'] = 'game';
                 }
