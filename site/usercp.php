@@ -189,6 +189,15 @@
         }
 
         /*
+         * Check if a $userId has liked a $commentID
+         */
+        public static function hasRatedComment($userId, $commentID) {
+            $query = "select id from rated_comments where liked_by_user_id=? and comment_id=?";
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$userId, $commentID], true, DB::ALL_ROWS);
+            return _Array::size($result) > 0;
+        }
+
+        /*
          * Give like to a comment
          */
         public static function rateComment($userId, $commentID) {

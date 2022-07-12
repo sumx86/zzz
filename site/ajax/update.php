@@ -45,7 +45,7 @@
         'action' => '',
         'result' => ''
     ];
-    // LIKE
+    // LIKE GAME or COMMENT
     ////////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'like')) {
         switch($data->item_type) {
@@ -58,12 +58,12 @@
                 }
                 break;
             case "comment":
-                $userID    = intval(Server::retrieve_session('user', 'id'));
+                /*$userID  = intval(Server::retrieve_session('user', 'id'));
                 $commentID = intval($data->item);
                 if(!UserCP::hasRatedComment(1, $commentID)) {
                     UserCP::rateComment($userID, $commentID);
                     $successData['item_type'] = 'comment';
-                }
+                }*/
                 break;
         }
         $successData['action'] = 'like';
@@ -73,32 +73,30 @@
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    // FAVOURITE
+    // FAVOURITE GAME
     ////////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'favourite')) {
         if($data->item_type == 'game') {
-            if(!UserCP::hasRatedGame(1, intval($data->item), 'favourite')) {
-                $queryData['query']  = "update games set favourited=favourited+1 where id=?";
-                $queryData['params'] = [intval($data->item)];
+            $userID = intval(Server::retrieve_session('user', 'id'));
+            $gameID = intval($data->item);
+            if(!UserCP::hasRatedGame(1, $gameID, 'favourite')) {
+                UserCP::rateGame($userID, $gameID, 'favourite');
+                $successData['item_type'] = 'game';
             }
         }
-        $db->rawQuery($queryData['query'], $queryData['params'], false, false);
         $successData['action'] = 'favourite';
         $successData['item'] = $data->item;
-        Response::throw_json_string(
-            ["success" => $successData]
-        );
+        Response::throw_json_string(["success" => $successData]);
         return;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    // USER
+    // UPDATE USER INFORMATION
     ////////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'user')) {
         return;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-
 
     function isProperData($data) {
         if(!is_object($data)) {
