@@ -76,6 +76,30 @@ INSERT INTO `games` VALUES (1,'Midnight Club 3 Dub Edition Remix','ps2','71OruZv
 UNLOCK TABLES;
 
 --
+-- Table structure for table `rated_comments`
+--
+
+DROP TABLE IF EXISTS `rated_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rated_comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `comment_id` int NOT NULL DEFAULT '0',
+  `liked_by_user_id` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rated_comments`
+--
+
+LOCK TABLES `rated_comments` WRITE;
+/*!40000 ALTER TABLE `rated_comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rated_comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rated_games`
 --
 
@@ -140,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-12  8:29:39
+-- Dump completed on 2022-07-12  8:59:16
