@@ -60,8 +60,10 @@
                 $gameID = intval($data->item);
                 if(!UserCP::hasRatedGame($userID, $gameID, 'like')) {
                     UserCP::rateGame($userID, $gameID, 'like');
-                    $successData['item_type'] = 'game';
+                } else {
+                    UserCP::unrateGame($userID, $gameID, 'like');
                 }
+                $successData['item_type'] = 'game';
                 break;
             case "comment":
                 /*$userID  = intval(Server::retrieve_session('user', 'id'));

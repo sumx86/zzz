@@ -34,7 +34,7 @@
         private $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => true,
+            PDO::ATTR_EMULATE_PREPARES   => false,
         ];
 
         public function __construct($debugMode) {
@@ -86,8 +86,9 @@
         /*
          * Execute a raw query
          */
-        public function rawQuery($query, $params, $expectResult, $numRows = -1) {
+        public function rawQuery($query, $params, $expectResult, $numRows = -1, $emulatePrepares = false) {
             if(!Str::is_empty($query)) {
+                $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, $emulatePrepares);
                 $this->stmt = $this->pdo->prepare($query);
                 if( Str::contains($query, '?') ) {
                     $this->bindValuesAndExecute($params);

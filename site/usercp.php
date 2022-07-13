@@ -185,7 +185,22 @@
                     $query = "update games set favourited=favourited+1 where id=?; insert into rated_games (game_id, favourited_by_user_id) values (?, ?)";
                     break;
             }
-            self::$dbInstance->rawQuery($query, [$gameID, $gameID, $userId], false, false);
+            self::$dbInstance->rawQuery($query, [$gameID, $gameID, $userId], false, false, true);
+        }
+
+        /*
+         * Remove a like / favourite for a game
+         */
+        public static function unrateGame($userId, $gameID, $type) {
+            switch($type) {
+                case 'like':
+                    $query = "update games set likes=likes-1 where id=? and likes > 0; delete from rated_games where game_id=? and liked_by_user_id=?";
+                    break;
+                case 'favourite':
+                    $query = "update games set favourited=favourited-1 where id=? and favourited > 0; delete from rated_games where game_id=? and favourited_by_user_id=?";
+                    break;
+            }
+            self::$dbInstance->rawQuery($query, [$gameID, $gameID, $userId], false, false, true);
         }
 
         /*
