@@ -71,7 +71,7 @@ CREATE TABLE `games` (
 
 LOCK TABLES `games` WRITE;
 /*!40000 ALTER TABLE `games` DISABLE KEYS */;
-INSERT INTO `games` VALUES (1,'Midnight Club 3 Dub Edition Remix','ps2','71OruZvHa4L._SL1415_.jpg','RobertoRicardo2000',0,0,0,0,''),(2,'Midnight Club 2','ps2','Midnight_Club_2_PAL(de)-Front.jpg','RobertoRicardo2000',0,0,0,0,''),(3,'Juiced 2 Hot Import Nights','ps2','51zETZEerpL._SY445_.jpg','RobertoRicardo2000',0,0,0,0,''),(4,'Grand Theft Auto San Andreas','ps2','51SV62HXM1L._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(5,'Grand Theft Auto Vice City','ps2','61F2X96DR9L._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(6,'Batman Begins 2005','ps2','51QVCS4XCVL._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(7,'Need For Speed Carbon','ps2','AC_sneufesefse.jpg','RobertoRicardo2000',1,5,0,0,'https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/'),(8,'Need For Speed Most Wanted','ps2','AC_NFSMW_swedsne.jpg','RobertoRicardo2000',0,0,0,0,''),(9,'Tomb Raider Legend','ps2','51DG31T4PDL._SY445_.jpg','RobertoRicardo2000',0,0,0,0,''),(10,'Tomb Raider Anniversary','ps2','51GCi6BnCXL._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(11,'Without Warning','ps2','51Y6VCAVHPL._AC_.jpg','RobertoRicardo2000',0,0,0,0,'');
+INSERT INTO `games` VALUES (1,'Midnight Club 3 Dub Edition Remix','ps2','71OruZvHa4L._SL1415_.jpg','RobertoRicardo2000',0,0,0,0,''),(2,'Midnight Club 2','ps2','Midnight_Club_2_PAL(de)-Front.jpg','RobertoRicardo2000',0,0,0,0,''),(3,'Juiced 2 Hot Import Nights','ps2','51zETZEerpL._SY445_.jpg','RobertoRicardo2000',0,0,0,0,''),(4,'Grand Theft Auto San Andreas','ps2','51SV62HXM1L._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(5,'Grand Theft Auto Vice City','ps2','61F2X96DR9L._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(6,'Batman Begins 2005','ps2','51QVCS4XCVL._AC_.jpg','RobertoRicardo2000',1,0,0,0,''),(7,'Need For Speed Carbon','ps2','AC_sneufesefse.jpg','RobertoRicardo2000',1,0,0,0,'https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/'),(8,'Need For Speed Most Wanted','ps2','AC_NFSMW_swedsne.jpg','RobertoRicardo2000',1,0,0,0,''),(9,'Tomb Raider Legend','ps2','51DG31T4PDL._SY445_.jpg','RobertoRicardo2000',0,0,0,0,''),(10,'Tomb Raider Anniversary','ps2','51GCi6BnCXL._AC_.jpg','RobertoRicardo2000',0,0,0,0,''),(11,'Without Warning','ps2','51Y6VCAVHPL._AC_.jpg','RobertoRicardo2000',0,0,0,0,'');
 /*!40000 ALTER TABLE `games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,7 +112,7 @@ CREATE TABLE `rated_games` (
   `liked_by_user_id` int NOT NULL DEFAULT '0',
   `favourited_by_user_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `rated_games` (
 
 LOCK TABLES `rated_games` WRITE;
 /*!40000 ALTER TABLE `rated_games` DISABLE KEYS */;
-INSERT INTO `rated_games` VALUES (3,7,1,0);
+INSERT INTO `rated_games` VALUES (17,6,1,0),(11,7,1,0),(10,8,1,0);
 /*!40000 ALTER TABLE `rated_games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-12 10:56:47
+-- Dump completed on 2022-07-13  0:09:34
