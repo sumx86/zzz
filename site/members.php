@@ -115,7 +115,7 @@
                     } else {
                         $offset = 0;
                     }
-                    $usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset 0", [], true, DB::ALL_ROWS);
+                    $usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset " . $offset, [], true, DB::ALL_ROWS);
                     if(_Array::size($usersList) > 0) {
                         foreach($usersList as $user) {
                             echo "<div class='member-listing-item'>
@@ -124,10 +124,10 @@
                                 </div>
                                 <div class='member-info'>
                                     <div class='username'>
-                                        <span class='multilang'>Roberto98</span>
+                                        <span class='multilang'>".htmlentities(Str::truncate($user['username'], 9), ENT_QUOTES, 'UTF-8')."</span>
                                     </div>
                                     <div class='following'>
-                                        <span class='multilang'>Following: 90</span>
+                                        <span>".$language_config[$lang]['following'].": ".intval($user['following'])."</span>
                                     </div>
                                 </div>
                             </div>";
