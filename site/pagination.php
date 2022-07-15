@@ -100,5 +100,12 @@
         public function GetMaxPageLinks() {
             return $this->max_page_links;
         }
+
+        /*
+         * Retrieve the current page
+         */
+        public function GetCurrentPage() {
+            return $this->current_page;
+        }
     }
 ?>

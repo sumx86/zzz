@@ -110,21 +110,30 @@
         <div id='users-listing-container'>
             <div id='listing'>
                 <?php
-                    //$usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset ".$pagination->current_page * 27."");
+                    if($pagination->Last() > 1) {
+                        $offset = $pagination->GetCurrentPage() * 27;
+                    } else {
+                        $offset = 0;
+                    }
+                    $usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset 0", [], true, DB::ALL_ROWS);
+                    if(_Array::size($usersList) > 0) {
+                        foreach($usersList as $user) {
+                            echo "<div class='member-listing-item'>
+                                <div class='member-picture'>
+                                    <img src='\ps-classics\img\oth\pngegg.png'>
+                                </div>
+                                <div class='member-info'>
+                                    <div class='username'>
+                                        <span class='multilang'>Roberto98</span>
+                                    </div>
+                                    <div class='following'>
+                                        <span class='multilang'>Following: 90</span>
+                                    </div>
+                                </div>
+                            </div>";
+                        }
+                    }
                 ?>
-                <div class='member-listing-item'>
-                    <div class='member-picture'>
-                        <img src='\ps-classics\img\oth\pngegg.png'>
-                    </div>
-                    <div class='member-info'>
-                        <div class='username'>
-                            <span class='multilang'>Roberto98</span>
-                        </div>
-                        <div class='following'>
-                            <span class='multilang'>Following: 90</span>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class='pagination-container' data-action='members'>
                 <div id='inner'>
