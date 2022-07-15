@@ -244,14 +244,43 @@
                     <?php
                         $comments = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where item_id=?", [intval(Server::GetParam('item'))], true, DB::ALL_ROWS);
                         if(_Array::size($comments) > 0) {
-                            // display all comments
+                            foreach($comments as $comment) {
+                                echo "<div class='comment-box'>
+                                    <div class='inner'>
+                                        <div class='user-pic'>
+                                            <img src='\ps-classics\img\93401019.jfif'>
+                                        </div>
+                                        <div class='comment-info-top'>
+                                            <div class='username info'>
+                                                <span>".htmlentities(Str::truncate($comment['comment_by'], 10), ENT_QUOTES, 'UTF-8')."</span>
+                                            </div>
+                                            <div class='comment-date info'>
+                                                <span>".$comment['comment_date']."</span>
+                                            </div>
+                                            <div class='comment-actions info'>
+                                                <div class='like'>
+                                                    <span><i class='fa fa-thumbs-up clickable'></i> 10000</span>
+                                                </div>
+                                                <div class='reply'>
+                                                    <span class='clickable'>".$language_config[$lang]['reply']."</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='comment'>
+                                            <div class='inner'>
+                                                <span>Curious why you allowed jokers that do shoot bullets, but banned turrets and AI? While people are bringing up flamethrowers, Grenade launchers and bows I understand why you'd ban them despite not firing bullets as it would defeat the point of the challenge and make it trivial.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>";
+                            }
                         } else {
                             echo "
-                            <div id='no-comments'>
-                                <div id='inner'>
-                                    <span>".$language_config[$lang]['no-comments']."</span>
-                                </div>
-                            </div>";
+                                <div id='no-comments'>
+                                    <div id='inner'>
+                                        <span>".$language_config[$lang]['no-comments']."</span>
+                                    </div>
+                                </div>";
                         }
                     ?>
                     <div class='comment-box'>

@@ -204,6 +204,8 @@ var SimpleModalEvents = {
 
         initialize: function() {
             var self = this;
+            $(document).on('preview-comments-load', this._loadComments.bind(this));
+            $(document).on('preview-comments-loaded', this._updateCommentsSection.bind(this));
             $(document).ready(function() {
                 $(self._exitElement).click(function() {
                     $(self._previewContainer).css('display', 'none');
@@ -213,9 +215,10 @@ var SimpleModalEvents = {
                     // request data about the preview item
                     //   - information like -> likes, views, release date, iso, etc...
                     //   - comments
+                    var id = $(this).attr('class').split(" ")[1];
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
-                    $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + $(this).attr('class').split(" ")[1]);
+                    $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + id);
 
                     $('#item-actions > #likes > span > span:first').text($(this).find('.collection-item-slider > .likes').attr('data-count'));
                     $('#item-actions > #favourited > span > span:first').text($(this).find('.collection-item-slider > .favourited').attr('data-count'));
@@ -224,9 +227,30 @@ var SimpleModalEvents = {
 
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
+                    $(document).trigger('preview-comments-load', [{'load-target':'#comments-section', 'item':id}]);
                     $('#comment-section').css('display', 'block');
                 });
             });
+        },
+        _loadComments: function(event, data) {
+            var self = this;
+            $.doAjax({
+                url: globalSettings.ajax['comment'],
+                data: 'action=load&data=' + JSON.stringify({'item':data.item})
+            }, false)
+            .done(function(jqXHR, status, req) {
+                if(status == 'success') {
+                    if(jqXHR.indexOf('{') == 0) {
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success')) {
+                            self._updateCommentsSection(data['load-target']);
+                        }
+                    }
+                }
+            });
+        },
+        _updateCommentsSection: function(event, data) {
+            console.log(event + ' -- ' + data);
         }
     });
 })(jQuery);
@@ -286,7 +310,7 @@ var SimpleModalEvents = {
                         $(e.currentTarget).find('i:first').css('color', '#fc5603');
                         $.doAjax({
                             url: globalSettings.ajax['comment'],
-                            data: 'target=collection-item&data=' + $('#collection-item-comment-input-field').val()
+                            data: 'action=post&target=collection-item&data=' + $('#collection-item-comment-input-field').val()
                         }, false)
                         .done(function(jqXHR, status, req) {
                             console.log(jqXHR + ' -- ' + status + ' -- ' + req);
@@ -303,6 +327,7 @@ var SimpleModalEvents = {
             $(document).ready(function() {
                 $('.comment-actions').find('.clickable').click(function(e) {
                     console.log(e.currentTarget);
+                    // ajax/update
                 });
             });
         }
