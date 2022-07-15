@@ -46,6 +46,8 @@
             'welcome' => 'Добре дошли, ',
             'write-comment' => 'Напиши коментар',
             'reply' => 'Отговор',
+            'no-comments' => 'Все още няма коментари',
+            'account-first' => 'Трябва да влезеш в акаунта си',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -124,6 +126,8 @@
             'welcome' => 'Welcome, ',
             'write-comment' => 'Post a comment',
             'reply' => 'Reply',
+            'no-comments' => 'No comments yet',
+            'account-first' => 'Login in to your account first',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

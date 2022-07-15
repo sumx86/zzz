@@ -16,6 +16,7 @@
 
     // check if user is logged in
     if(!Server::is_active_session('user')) {
+        Response::throw_json_string(["error" => "login"]);
         return;
     }
 
@@ -64,6 +65,7 @@
                     UserCP::unrateGame($userID, $gameID, 'like');
                 }
                 $successData['item_type'] = 'game';
+                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where id = ?", [$gameID], true, DB::ALL_ROWS);
                 break;
             case "comment":
                 /*$userID  = intval(Server::retrieve_session('user', 'id'));
@@ -88,10 +90,12 @@
         if($data->item_type == 'game') {
             $userID = intval(Server::retrieve_session('user', 'id'));
             $gameID = intval($data->item);
-            if(!UserCP::hasRatedGame(1, $gameID, 'favourite')) {
+            if(!UserCP::hasRatedGame($userID, $gameID, 'favourite')) {
                 UserCP::rateGame($userID, $gameID, 'favourite');
-                $successData['item_type'] = 'game';
+            } else {
+                UserCP::unrateGame($userID, $gameID, 'favourite');
             }
+            $successData['item_type'] = 'game';
         }
         $successData['action'] = 'favourite';
         $successData['item'] = $data->item;

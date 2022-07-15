@@ -8,16 +8,18 @@
     require_once "db/db.php";
     require_once "pagination.php";
 
-    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
 
     $platform   = Str::getstr(Server::GetParam('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
+    $db         = new DB(false);
     $pagination = new Pagination([
-        'max-pages' => 5,
-        'max-items' => 27,
-        'current-page' => intval(Server::GetParam('page'))
+        'max-page-links' => 5,
+        'max-page-items' => 27,
+        'current-page' => intval(Server::GetParam('page')),
+        'table' => 'games',
+        'db' => $db
     ]);
-    $db = new DB(false);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,12 +74,26 @@
                     <span id='name-text'>ps-classics</span>
                 </a>
                 <?php
-                    if(!$isLogin) {
-                        echo "<div id='login-button'>
-                        <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                if(!$isLogin) {
+                    echo "<div id='login-button'>
+                    <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                </div>";
+                } else {
+                    echo "<div id='login-success-container'>
+                        <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
+                            <div id='image'>
+                                <img src='\ps-classics\img\oth\pngegg.png'>
+                            </div>
+                            <div id='username'>
+                                <span>".htmlentities(Str::truncate(Server::retrieve_session('user', 'username'), 9), ENT_QUOTES, 'UTF-8')."</span>
+                            </div>
+                        </div>
+                        <div id='dropdown-menu-switch'>
+                            <i class='fa fa-bars'></i>
+                        </div>
                     </div>";
-                    }
-                ?>
+                }
+            ?>
             </div>
         </section>
 
@@ -128,16 +144,16 @@
                                     <div class='uploader-name'>
                                         <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>
                                     </div>
-                                    <div class='likes'>
+                                    <div class='likes' data-count='".intval($item['likes'])."'>
                                         <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['likes'])."</span>
                                     </div>
-                                    <div class='favourited'>
+                                    <div class='favourited' data-count='".intval($item['favourited'])."'>
                                         <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['favourited'])."</span>
                                     </div>
-                                    <div class='comments'>
+                                    <div class='comments' data-count='".intval($item['comments'])."'>
                                         <span><i class='fa fa-comments' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['comments'])."</span>
                                     </div>
-                                    <div class='views'>
+                                    <div class='views' data-count='".intval($item['views'])."'>
                                         <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['views'])."</span>
                                     </div>
                                 </div>
@@ -174,17 +190,20 @@
                     </div>
                     <div id='item-actions'>
                         <div id='likes' class='action-button' data-action='like'>
-                            <span><i class='fa fa-thumbs-up'></i> &nbsp;100</span>
+                            <span><i class='fa fa-thumbs-up'></i> &nbsp;<span>100</span></span>
                         </div>
                         <div id='favourited' class='action-button' data-action='favourite'>
-                            <span><i class='fa fa-heart'></i> &nbsp;100</span>
+                            <span><i class='fa fa-heart'></i> &nbsp;<span>100</span></span>
                         </div>
                         <div id='comments' class='action-button no-action'>
-                            <span><i class='fa fa-comments'></i> &nbsp;100</span>
+                            <span><i class='fa fa-comments'></i> &nbsp;<span>100</span></span>
                         </div>
                         <div id='views' class='action-button no-action'>
-                            <span><i class='fa fa-eye'></i> &nbsp;100</span>
+                            <span><i class='fa fa-eye'></i> &nbsp;<span>100</span></span>
                         </div>
+                    </div>
+                    <div id='account-login-first'>
+                        <span class='multilang'><?php echo $language_config[$lang]['account-first']; ?></span>
                     </div>
                     <div id='item-information'>
                         <div id='inner'>
@@ -222,6 +241,19 @@
         </section>
         <section id='comment-section'>
                 <div id='inner'>
+                    <?php
+                        $comments = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where item_id=?", [intval(Server::GetParam('item'))], true, DB::ALL_ROWS);
+                        if(_Array::size($comments) > 0) {
+                            // display all comments
+                        } else {
+                            echo "
+                            <div id='no-comments'>
+                                <div id='inner'>
+                                    <span>".$language_config[$lang]['no-comments']."</span>
+                                </div>
+                            </div>";
+                        }
+                    ?>
                     <div class='comment-box'>
                         <div class='inner'>
                             <div class='user-pic'>

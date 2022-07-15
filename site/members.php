@@ -6,9 +6,19 @@
     require_once "helpers/string.php";
     require_once "helpers/array.php";
     require_once "db/db.php";
+    require_once "pagination.php";
     
-    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
+    
+    $db         = new DB(false);
+    $pagination = new Pagination([
+        'max-page-links' => 5,
+        'max-page-items' => 27,
+        'current-page' => intval(Server::GetParam('page')),
+        'table' => 'users',
+        'db' => $db
+    ]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,6 +109,9 @@
 
         <div id='users-listing-container'>
             <div id='listing'>
+                <?php
+                    //$usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset ".$pagination->current_page * 27."");
+                ?>
                 <div class='member-listing-item'>
                     <div class='member-picture'>
                         <img src='\ps-classics\img\oth\pngegg.png'>
@@ -115,11 +128,19 @@
             </div>
             <div class='pagination-container' data-action='members'>
                 <div id='inner'>
-                    <div class='page-item'><span>1</span></div>
-                    <div class='page-item'><span>2</span></div>
-                    <div class='page-item'><span>3</span></div>
-                    <div class='page-item no-redirect'><span>...</span></div>
-                    <div class='page-item'><span>5</span></div>
+                    <?php
+                        $maxPageLinks = $pagination->GetMaxPageLinks();
+                        $lastPage     = $pagination->Last();
+                        $count        = $lastPage >= $maxPageLinks ? $maxPageLinks : $lastPage;
+
+                        for($i = 0; $i < $count; $i++) {
+                            if($i == 3) {
+                                echo "<div class='page-item no-redirect'><span>...</span></div>";
+                            } else {
+                                echo "<div class='page-item'><span>".$pagination->Next()."</span></div>";
+                            }
+                        }
+                    ?>
                 </div>
             </div>
         </div>

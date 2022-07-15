@@ -216,6 +216,12 @@ var SimpleModalEvents = {
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
                     $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + $(this).attr('class').split(" ")[1]);
+
+                    $('#item-actions > #likes > span > span:first').text($(this).find('.collection-item-slider > .likes').attr('data-count'));
+                    $('#item-actions > #favourited > span > span:first').text($(this).find('.collection-item-slider > .favourited').attr('data-count'));
+                    $('#item-actions > #comments > span > span:first').text($(this).find('.collection-item-slider > .comments').attr('data-count'));
+                    $('#item-actions > #views > span > span:first').text($(this).find('.collection-item-slider > .views').attr('data-count'));
+
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
                     $('#comment-section').css('display', 'block');
@@ -228,7 +234,8 @@ var SimpleModalEvents = {
     $.initCall('collection-item-action-buttons', {
         initialize: function() {
             var self = this;
-            $(document).on('collection-item-stats-update', this.updateContent.bind(this));
+            $(document).on('collection-item-stats-update', this._updateContent.bind(this));
+            $(document).on('collection-item-stats-error', this._handleError.bind(this));
             $(document).ready(function() {
                 $('.action-button:not(".no-action") > span').find('i:first').click(function(e) {
                     self._doUpdate(e);
@@ -243,13 +250,26 @@ var SimpleModalEvents = {
                 data: 'action='+parent.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(parent.attr('class').split(" ")[1]),'item_type':'game'})
             }, false)
             .done(function(jqXHR, status, req) {
-                //var response = $.parseJSON(jqXHR);
-                //$(document).trigger('collection-item-stats-update', [{response, target}]);
-                console.log(jqXHR);
+                if(status == 'success') {
+                    if(jqXHR.indexOf('{') == 0) {
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success')) {
+                            $(document).trigger('collection-item-stats-update', [{response, target}]);
+                        } else {
+                            $(document).trigger('collection-item-stats-error', [{response, target}]);
+                        }
+                    }
+                }
             });
         },
-        updateContent: function(event, data) {
+        _updateContent: function(event, data) {
             //console.log(event + ' -- ' + data);
+        },
+        _handleError: function(event, data) {
+            var error = data.response.error;
+            if(error == 'login') {
+                $('#account-login-first').css('display', 'flex').delay(2000).hide('fast');
+            }
         }
     });
 })(jQuery);

@@ -75,6 +75,20 @@
                     echo "<div id='login-button'>
                     <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
                 </div>";
+                } else {
+                    echo "<div id='login-success-container'>
+                        <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
+                            <div id='image'>
+                                <img src='\ps-classics\img\oth\pngegg.png'>
+                            </div>
+                            <div id='username'>
+                                <span>".htmlentities(Str::truncate(Server::retrieve_session('user', 'username'), 9), ENT_QUOTES, 'UTF-8')."</span>
+                            </div>
+                        </div>
+                        <div id='dropdown-menu-switch'>
+                            <i class='fa fa-bars'></i>
+                        </div>
+                    </div>";
                 }
             ?>
         </div>
