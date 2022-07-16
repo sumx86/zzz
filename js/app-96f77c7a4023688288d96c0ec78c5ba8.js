@@ -325,7 +325,7 @@ var SimpleModalEvents = {
             });
         },
         _updateContent: function(event, data) {
-            //console.log(event + ' -- ' + data);
+           console.log(event + ' -- ' + data);
         },
         _handleError: function(event, data) {
             var error = data.response.error;

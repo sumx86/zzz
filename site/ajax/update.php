@@ -65,7 +65,7 @@
                     UserCP::unrateGame($userID, $gameID, 'like');
                 }
                 $successData['item_type'] = 'game';
-                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where id = ?", [$gameID], true, DB::ALL_ROWS);
+                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select likes from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
                 break;
             case "comment":
                 /*$userID  = intval(Server::retrieve_session('user', 'id'));
@@ -77,7 +77,7 @@
                 break;
         }
         $successData['action'] = 'like';
-        $successData['item'] = $data->item;
+        $successData['item'] = intval($data->item);
         Response::throw_json_string(["success" => $successData]);
         return;
     }
