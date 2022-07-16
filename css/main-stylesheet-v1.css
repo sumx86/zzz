@@ -1770,7 +1770,17 @@ body {
     background-color: #04070a; /* #04070a #cd002f #315272 */
 }
 
+#comment-section > #inner > #spinner {
+    display: none;
+    width: 100%;
+    height: 50px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    background-color: transparent;
+}
+
 #no-comments {
+    display: none;
     width: 100%;
     height: 120px;
     padding-top: 13px;
@@ -1801,6 +1811,7 @@ body {
 }
 
 .comment-box {
+    display: none;
     margin-left: 13%;
     width: 55%;
     height: 220px;
