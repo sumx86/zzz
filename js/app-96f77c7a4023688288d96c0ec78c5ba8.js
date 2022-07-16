@@ -229,6 +229,7 @@ var SimpleModalEvents = {
                     $('#lang-container').css('z-index', '5');
                     $(document).trigger('preview-comments-load', [{'load-target':'#comments-section', 'item':id}]);
                     $('#comment-section').css('display', 'block');
+                    $('#comment-submit').attr('data-item', id)
                 });
             });
         },
@@ -344,10 +345,11 @@ var SimpleModalEvents = {
                         $(e.currentTarget).find('i:first').css('color', 'white');
                     },
                     'mouseup' : function(e) {
-                        $(e.currentTarget).find('i:first').css('color', '#fc5603');
+                        var target = $(e.currentTarget);
+                        target.find('i:first').css('color', '#fc5603');
                         $.doAjax({
                             url: globalSettings.ajax['comment'],
-                            data: 'action=post&target=collection-item&data=' + $('#collection-item-comment-input-field').val()
+                            data: 'action=post&data=' + JSON.stringify({'item':target.attr('data-item'),'text':$('#collection-item-comment-input-field').val()})
                         }, false)
                         .done(function(jqXHR, status, req) {
                             console.log(jqXHR + ' -- ' + status + ' -- ' + req);

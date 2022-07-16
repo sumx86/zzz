@@ -60,6 +60,11 @@
     if(Str::equal($action, 'post')) {
         // split comment if it exceeds 200 characters
         // generate unique id for the group of strings
+        if(property_exists($data, 'item') && property_exists($data, 'text')) {
+            $itemID  = $data->item;
+            $comment = $data->text;
+            echo $itemID . " -- " . "yeaah" . " -- " . $comment;
+        }
     }
     //////////////////////////////////////////////////////////////////////////////////////
 
