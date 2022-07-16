@@ -48,6 +48,10 @@
             'reply' => 'Отговор',
             'no-comments' => 'Все още няма коментари',
             'account-first' => 'Трябва да влезеш в акаунта си',
+            'stats' => 'Статистики',
+            'games' => 'Игри',
+            'likes' => 'Харесвания',
+            'comments' => 'Коментари',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -128,6 +132,10 @@
             'reply' => 'Reply',
             'no-comments' => 'No comments yet',
             'account-first' => 'Login in to your account first',
+            'stats' => 'Statistics',
+            'games' => 'Games',
+            'likes' => 'Likes',
+            'comments' => 'Comments',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

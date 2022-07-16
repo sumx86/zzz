@@ -205,10 +205,10 @@ var SimpleModalEvents = {
         initialize: function() {
             var self = this;
             $(document).on('preview-comments-load', this._loadComments.bind(this));
-            $(document).on('preview-comments-loaded', this._updateCommentsSection.bind(this));
             $(document).ready(function() {
                 $(self._exitElement).click(function() {
                     $(self._previewContainer).css('display', 'none');
+                    $('.comment-box').css('display', 'none');
                     $('#comment-section').css('display', 'none');
                 });
                 $(self._previewItem).click(function() {
@@ -237,20 +237,57 @@ var SimpleModalEvents = {
             $.doAjax({
                 url: globalSettings.ajax['comment'],
                 data: 'action=load&data=' + JSON.stringify({'item':data.item})
-            }, false)
+            }, true)
             .done(function(jqXHR, status, req) {
                 if(status == 'success') {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
                         if(response.hasOwnProperty('success')) {
-                            self._updateCommentsSection(data['load-target']);
+                            self._updateCommentsSection(data, response);
+                            $('#spinner').css('display', 'none');
                         }
                     }
                 }
+                console.log(jqXHR);
             });
         },
-        _updateCommentsSection: function(event, data) {
-            console.log(event + ' -- ' + data);
+        _updateCommentsSection: function(data, response) {
+            var commentsData = response.success;
+            if(commentsData.length <= 0){
+                $('#no-comments').css('display', 'block');
+                return;
+            }
+            var html = $.parseHTML("<div class='comment-box'>\
+                    <div class='inner'>\
+                        <div class='user-pic'>\
+                            <img src='\\ps-classics\\img\\93401019.jfif'>\
+                        </div>\
+                        <div class='comment-info-top'>\
+                            <div class='username info'>\
+                                <span>"+commentsData.comment.username+"</span>\
+                            </div>\
+                            <div class='comment-date info'>\
+                                <span>"+commentsData.comment.date+"</span>\
+                            </div>\
+                            <div class='comment-actions info'>\
+                                <div class='like'>\
+                                    <span><i class='fa fa-thumbs-up clickable'></i> "+commentsData.comment.likes+"</span>\
+                                </div>\
+                                <div class='reply'>\
+                                    <span class='clickable'>"+commentsData.comment['reply-meta']+"</span>\
+                                </div>\
+                            </div>\
+                        </div>\
+                        <div class='comment'>\
+                            <div class='inner'>\
+                                <span>"+commentsData.comment.text+"</span>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>");
+            $(html).css('display', 'block');
+            $('#comment-section > #inner').append(html);
+            $(document).trigger('preview-comments-loaded', []);
         }
     });
 })(jQuery);
@@ -324,11 +361,12 @@ var SimpleModalEvents = {
 (function($) {
     $.initCall('comment-actions', {
         initialize: function() {
-            $(document).ready(function() {
-                $('.comment-actions').find('.clickable').click(function(e) {
-                    console.log(e.currentTarget);
-                    // ajax/update
-                });
+            $(document).on('preview-comments-loaded', this._registerEvents.bind(this));
+        },
+        _registerEvents: function() {
+            $('.comment-actions').find('.clickable').click(function(e) {
+                console.log(e.currentTarget);
+                // ajax/update
             });
         }
     });

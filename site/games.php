@@ -241,6 +241,9 @@
         </section>
         <section id='comment-section'>
                 <div id='inner'>
+                    <div id='spinner'>
+                        <i class='fa fa-spinner fa-spin' style='position: relative; top: 75%; left: 49%; font-size: 1.9em; color: white;'></i>
+                    </div>
                     <?php
                         $comments = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where item_id=?", [intval(Server::GetParam('item'))], true, DB::ALL_ROWS);
                         if(_Array::size($comments) > 0) {
