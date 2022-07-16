@@ -40,6 +40,11 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     // initialize database object
     $db = new DB(false);
+    
+    //if(!ItemExists($data->item)) {
+    //    return;
+    //}
+
     UserCP::setDB($db);
     // run queries
     $queryData = ['query' => '','params' => []];
@@ -96,6 +101,7 @@
                 UserCP::unrateGame($userID, $gameID, 'favourite');
             }
             $successData['item_type'] = 'game';
+            $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select favourited from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
         }
         $successData['action'] = 'favourite';
         $successData['item'] = $data->item;
@@ -111,6 +117,10 @@
         return;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
+
+    function ItemExists($itemID) {
+
+    }
 
     function isProperData($data) {
         if(!is_object($data)) {

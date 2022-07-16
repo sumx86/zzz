@@ -324,8 +324,19 @@ var SimpleModalEvents = {
                 }
             });
         },
-        _updateContent: function(event, data) {
-           console.log(event + ' -- ' + data);
+        _updateContent: function(e, data) {
+            var response = data.response.success;
+            console.log(response);
+            switch(response.action) {
+                case "like":
+                    $('#item-actions > #likes > span > span:first').text(response.result[0]['likes']);
+                    break;
+                case "favourite":
+                    $('#item-actions > #favourited > span > span:first').text(response.result[0]['favourited']);
+                    break;
+                default:
+                    break;
+            }
         },
         _handleError: function(event, data) {
             var error = data.response.error;
