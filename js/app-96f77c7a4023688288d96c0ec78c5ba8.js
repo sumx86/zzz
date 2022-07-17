@@ -227,7 +227,7 @@ var SimpleModalEvents = {
 
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
-                    $(document).trigger('preview-comments-load', [{'load-target':'#comments-section', 'item':id}]);
+                    $(document).trigger('preview-comments-load', [{'item':id}]);
                     $('#comment-section').css('display', 'block');
                     $('#comment-submit').attr('data-item', id);
                 });
@@ -240,54 +240,70 @@ var SimpleModalEvents = {
                 data: 'action=load&data=' + JSON.stringify({'item':data.item})
             }, true)
             .done(function(jqXHR, status, req) {
+                console.log(jqXHR);
                 if(status == 'success') {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
                         if(response.hasOwnProperty('success')) {
-                            self._updateCommentsSection(data['load-target'], data['item'], response);
-                            $('#spinner').css('display', 'none');
+                            self._updateCommentsSection(response);
                         }
                     }
                 }
+                $('#spinner').css('display', 'none');
             });
         },
-        _updateCommentsSection: function(target, item, response) {
+        _updateCommentsSection: function(response) {
             var commentsData = response.success;
-            if(commentsData.length <= 0){
+            if(commentsData.length <= 0) {
                 $('#no-comments').css('display', 'block');
                 return;
             }
-            var html = $.parseHTML("<div class='comment-box'>\
+            for(var i = 0; i < commentsData.length; i++) {
+                var html = $.parseHTML("<div class='comment-box'>\
                     <div class='inner'>\
                         <div class='user-pic'>\
                             <img src='\\ps-classics\\img\\93401019.jfif'>\
                         </div>\
                         <div class='comment-info-top'>\
                             <div class='username info'>\
-                                <span>"+commentsData.comment.username+"</span>\
+                                <span>"+commentsData[i]['comment']['username']+"</span>\
                             </div>\
                             <div class='comment-date info'>\
-                                <span>"+commentsData.comment.date+"</span>\
+                                <span>"+commentsData[i]['comment']['date']+"</span>\
                             </div>\
                             <div class='comment-actions info'>\
                                 <div class='like'>\
-                                    <span><i class='fa fa-thumbs-up clickable'></i> "+commentsData.comment.likes+"</span>\
+                                    <span><i class='fa fa-thumbs-up clickable'></i> "+commentsData[i]['comment']['likes']+"</span>\
                                 </div>\
                                 <div class='reply'>\
-                                    <span class='clickable'>"+commentsData.comment['reply-meta']+"</span>\
+                                    <span class='clickable'>"+commentsData[i]['comment']['reply-meta']+"</span>\
                                 </div>\
                             </div>\
                         </div>\
                         <div class='comment'>\
                             <div class='inner'>\
-                                <span>"+commentsData.comment.text+"</span>\
+                                <span>"+commentsData[i]['comment']['text']+"</span>\
                             </div>\
                         </div>\
                     </div>\
                 </div>");
-            $(html).css('display', 'block');
-            $('#comment-section > #inner').append(html);
+                $(html).css('display', 'block');
+                $('#comment-section > #inner').append(html);
+            }
             $(document).trigger('preview-comments-loaded', []);
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('comment-actions', {
+        initialize: function() {
+            $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
+        },
+        _registerCommentActions: function() {
+            $('.comment-actions').find('.clickable').click(function(e) {
+                console.log(e.currentTarget);
+                // ajax/update
+            });
         }
     });
 })(jQuery);
@@ -366,19 +382,6 @@ var SimpleModalEvents = {
                         });
                     }
                 }, self);
-            });
-        }
-    });
-})(jQuery);
-(function($) {
-    $.initCall('comment-actions', {
-        initialize: function() {
-            $(document).on('preview-comments-loaded', this._registerEvents.bind(this));
-        },
-        _registerEvents: function() {
-            $('.comment-actions').find('.clickable').click(function(e) {
-                console.log(e.currentTarget);
-                // ajax/update
             });
         }
     });

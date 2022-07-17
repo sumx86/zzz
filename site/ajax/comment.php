@@ -41,7 +41,7 @@
             $commentsGroupResult = GetCommentsGroupResult($commentsDBResult);
         }
         Response::throw_json_string(
-            ["success" => [$commentsGroupResult]]
+            ["success" => $commentsGroupResult]
         );
         return;
     }
