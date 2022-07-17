@@ -31,25 +31,17 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     // initialize database object
     $db = new DB(false);
-
+    $commentsGroupResult = [];
     // LOAD COMMENT
     //////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'load')) {
         $itemID = intval($data->item);
         $commentsDBResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where item_id=?", [$itemID], true, DB::ALL_ROWS);
         if(_Array::size($commentsDBResult) > 0) {
-            $comments = GroupComments($commentsDBResult);
+            $commentsGroupResult = GetCommentsGroupResult($commentsDBResult);
         }
         Response::throw_json_string(
-            ["success" => [
-                'comment' => [
-                    'text' => 'This comment is fucking awesome yo! pff hahaaah',
-                    'username' => 'SomeUser98',
-                    'likes' => '1000',
-                    'date'  => '20/10/2022',
-                    'reply-meta' => $language_config[$lang]['reply']
-                ]
-            ]]
+            ["success" => [$commentsGroupResult]]
         );
         return;
     }
@@ -60,18 +52,55 @@
     if(Str::equal($action, 'post')) {
         // split comment if it exceeds 200 characters
         // generate unique id for the group of strings
+        // replace newline character with <br>
         if(property_exists($data, 'item') && property_exists($data, 'text')) {
-            $itemID  = $data->item;
+            $itemID  = intval($data->item);
             $comment = $data->text;
             echo $itemID . " -- " . "yeaah" . " -- " . $comment;
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////
+    
+    function GetCommentsGroupResult($commentsDBResult) {
+        global $language_config;
+        global $lang;
+        $result = [];
+        // push the blueprint to $result (that makes a whole comment)
+        $commentBluePrint = [
+            'comment' => [
+                'text' => '',
+                'username' => '',
+                'likes' => '',
+                'date'  => '',
+                'reply-meta' => $language_config[$lang]['reply']
+            ]
+        ];
 
-    function GroupComments($commentsDBResult) {
+        $commentIDList = [];
         foreach($commentsDBResult as $comment) {
-            ;
+            $commentID = $comment['comment_id'];
+            $commentUsername = $comment['comment_by'];
+            $commentDate  = $comment['comment_date'];
+            $commentLikes = $comment['comment_likes'];
+
+            // Store the $commendID in the $commentIDList to now in the future that it was already processed
+            if(!in_array($commentID, $commentIDList)) {
+
+                array_push($commentIDList, $commentID);
+
+                foreach($commentsDBResult as $_comment) {
+                    if($_comment['comment_id'] == $commentID) {
+                        $commentBluePrint['comment']['text'] .= $_comment['comment'];
+                        $commentBluePrint['comment']['username'] = htmlentities($commentUsername, ENT_QUOTES, 'UTF-8');
+                        $commentBluePrint['comment']['likes'] = intval($commentLikes);
+                        $commentBluePrint['comment']['date']  = htmlentities($commentDate, ENT_QUOTES, 'UTF-8');
+                    }
+                }
+                array_push($result, $commentBluePrint);
+                $commentBluePrint['comment']['text'] = '';
+            }
         }
+        return $result;
     }
 
     function isProperData($data) {

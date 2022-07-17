@@ -229,7 +229,7 @@ var SimpleModalEvents = {
                     $('#lang-container').css('z-index', '5');
                     $(document).trigger('preview-comments-load', [{'load-target':'#comments-section', 'item':id}]);
                     $('#comment-section').css('display', 'block');
-                    $('#comment-submit').attr('data-item', id)
+                    $('#comment-submit').attr('data-item', id);
                 });
             });
         },
@@ -244,15 +244,14 @@ var SimpleModalEvents = {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
                         if(response.hasOwnProperty('success')) {
-                            self._updateCommentsSection(data, response);
+                            self._updateCommentsSection(data['load-target'], data['item'], response);
                             $('#spinner').css('display', 'none');
                         }
                     }
                 }
-                console.log(jqXHR);
             });
         },
-        _updateCommentsSection: function(data, response) {
+        _updateCommentsSection: function(target, item, response) {
             var commentsData = response.success;
             if(commentsData.length <= 0){
                 $('#no-comments').css('display', 'block');

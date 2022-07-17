@@ -40,14 +40,12 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     // initialize database object
     $db = new DB(false);
-    
-    //if(!ItemExists($data->item)) {
-    //    return;
-    //}
+
+    if(!ItemExists($data->item, $data->item_type, $db)) {
+        return;
+    }
 
     UserCP::setDB($db);
-    // run queries
-    $queryData = ['query' => '','params' => []];
     $successData = [
         'item' => '',
         'item_type' => '',
@@ -104,7 +102,7 @@
             $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select favourited from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
         }
         $successData['action'] = 'favourite';
-        $successData['item'] = $data->item;
+        $successData['item'] = intval($data->item);
         Response::throw_json_string(["success" => $successData]);
         return;
     }
@@ -118,8 +116,19 @@
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    function ItemExists($itemID) {
-
+    function ItemExists($itemID, $itemType, $db) {
+        $result = [];
+        switch($itemType) {
+            case "game":
+                $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where id = ?", [$itemID], true, DB::ALL_ROWS, false);
+                break;
+            case "comment":
+                $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where comment_id = ?", [$itemID], true, DB::ALL_ROWS, false);
+                break;
+            default:
+                break;
+        }
+        return _Array::size($result) > 0;
     }
 
     function isProperData($data) {
