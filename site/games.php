@@ -226,31 +226,40 @@
                         </div>
                     </div>
                     <div id='write-comment'>
-                        <div id='top'>
-                            <span><?php echo $language_config[$lang]['write-comment']; ?></span>
-                        </div>
-                        <form id='comment-form' action='' method='' data-action='comment'>
-                            <textarea name='comment-input-field' id='collection-item-comment-input-field' autocomplete='off'></textarea>
-                            <div id='comment-submit'>
-                                <i class='fa fa-check'></i>
-                            </div>
-                        </form>
+                        <?php
+                            if($isLogin) {
+                                echo "
+                                    <div id='top'>
+                                        <span>".$language_config[$lang]['write-comment']."</span>
+                                    </div>
+                                    <form id='comment-form' action='' method='' data-action='comment'>
+                                        <textarea name='comment-input-field' id='collection-item-comment-input-field' autocomplete='off'></textarea>
+                                        <div id='comment-submit'>
+                                            <i class='fa fa-check'></i>
+                                        </div>
+                                    </form>";
+                            } else {
+                                echo "<div id='top'>
+                                        <span>".$language_config[$lang]['login-to-comment']."</span>
+                                    </div>";
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
         </section>
         <section id='comment-section'>
-                <div id='inner'>
-                    <div id='spinner'>
-                        <i class='fa fa-spinner fa-spin' style='position: relative; top: 75%; left: 49%; font-size: 1.9em; color: white;'></i>
-                    </div>
-                    <div id='no-comments'>
-                        <div id='inner'>
-                            <span><?php echo $language_config[$lang]['no-comments']; ?></span>
-                        </div>
+            <div id='inner'>
+                <div id='spinner'>
+                    <i class='fa fa-spinner fa-spin' style='position: relative; top: 75%; left: 49%; font-size: 1.9em; color: white;'></i>
+                </div>
+                <div id='no-comments'>
+                    <div id='inner'>
+                        <span><?php echo $language_config[$lang]['no-comments']; ?></span>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         <footer class='sections'>
             <div id='footer-inner'>
                 <span>© 2022 ps-classics.com. All rights reserved.</span>

@@ -10,13 +10,6 @@
 
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
-
-    $platform   = Str::getstr(Server::GetParam('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
-    $pagination = new Pagination([
-        'max-pages' => 5,
-        'max-items' => 27,
-        'current-page' => intval(Server::GetParam('page'))
-    ]);
     $db = new DB(false);
 ?>
 <!DOCTYPE html>

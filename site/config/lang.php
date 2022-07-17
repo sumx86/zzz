@@ -52,6 +52,7 @@
             'games' => 'Игри',
             'likes' => 'Харесвания',
             'comments' => 'Коментари',
+            'login-to-comment' => 'Влез в акаунта си за да напишеш коментар',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -136,6 +137,7 @@
             'games' => 'Games',
             'likes' => 'Likes',
             'comments' => 'Comments',
+            'login-to-comment' => 'You need to login to post a comment',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

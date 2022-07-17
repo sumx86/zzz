@@ -72,6 +72,7 @@
                 'username' => '',
                 'likes' => '',
                 'date'  => '',
+                'item_id' => 0,
                 'reply-meta' => $language_config[$lang]['reply']
             ]
         ];
@@ -80,8 +81,9 @@
         foreach($commentsDBResult as $comment) {
             $commentID = $comment['comment_id'];
             $commentUsername = $comment['comment_by'];
-            $commentDate  = $comment['comment_date'];
-            $commentLikes = $comment['comment_likes'];
+            $commentDate   = $comment['comment_date'];
+            $commentLikes  = $comment['comment_likes'];
+            $commentItemID = $comment['item_id'];
 
             // Store the $commendID in the $commentIDList to now in the future that it was already processed
             if(!in_array($commentID, $commentIDList)) {
@@ -92,7 +94,8 @@
                     if($_comment['comment_id'] == $commentID) {
                         $commentBluePrint['comment']['text'] .= $_comment['comment'];
                         $commentBluePrint['comment']['username'] = htmlentities($commentUsername, ENT_QUOTES, 'UTF-8');
-                        $commentBluePrint['comment']['likes'] = intval($commentLikes);
+                        $commentBluePrint['comment']['likes']   = intval($commentLikes);
+                        $commentBluePrint['comment']['item_id'] = intval($commentItemID);
                         $commentBluePrint['comment']['date']  = htmlentities($commentDate, ENT_QUOTES, 'UTF-8');
                     }
                 }

@@ -227,8 +227,8 @@ var SimpleModalEvents = {
 
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
-                    $(document).trigger('preview-comments-load', [{'item':id}]);
                     $('#comment-section').css('display', 'block');
+                    $(document).trigger('preview-comments-load', [{'item':id}]);
                     $('#comment-submit').attr('data-item', id);
                 });
             });
@@ -273,10 +273,10 @@ var SimpleModalEvents = {
                             </div>\
                             <div class='comment-actions info'>\
                                 <div class='like'>\
-                                    <span><i class='fa fa-thumbs-up clickable'></i> "+commentsData[i]['comment']['likes']+"</span>\
+                                    <span><i class='fa fa-thumbs-up clickable "+commentsData[i]['comment']['item_id']+"'></i> "+commentsData[i]['comment']['likes']+"</span>\
                                 </div>\
                                 <div class='reply'>\
-                                    <span class='clickable'>"+commentsData[i]['comment']['reply-meta']+"</span>\
+                                    <span class='clickable "+commentsData[i]['comment']['item_id']+"'>"+commentsData[i]['comment']['reply-meta']+"</span>\
                                 </div>\
                             </div>\
                         </div>\
