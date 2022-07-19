@@ -25,6 +25,7 @@
     $actionTypes = [
         'like',
         'favourite',
+        'reply',     // reply to a comment
         'user'       // update information about a user
     ];
     $action = trim($_POST['action']);

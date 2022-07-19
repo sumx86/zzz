@@ -273,10 +273,10 @@ var SimpleModalEvents = {
                             </div>\
                             <div class='comment-actions info'>\
                                 <div class='like'>\
-                                    <span><i class='fa fa-thumbs-up clickable "+commentsData[i]['comment']['item_id']+"'></i> "+commentsData[i]['comment']['likes']+"</span>\
+                                    <span><i class='fa fa-thumbs-up clickable "+commentsData[i]['comment']['comment_id']+"' data-action='like'></i> "+commentsData[i]['comment']['likes']+"</span>\
                                 </div>\
                                 <div class='reply'>\
-                                    <span class='clickable "+commentsData[i]['comment']['item_id']+"'>"+commentsData[i]['comment']['reply-meta']+"</span>\
+                                    <span class='clickable "+commentsData[i]['comment']['comment_id']+"' data-action='reply'>"+commentsData[i]['comment']['reply-meta']+"</span>\
                                 </div>\
                             </div>\
                         </div>\
@@ -298,12 +298,40 @@ var SimpleModalEvents = {
     $.initCall('comment-actions', {
         initialize: function() {
             $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
+            $(document).on('comment-action-update', this._updateContent.bind(this));
+            $(document).on('comment-action-error', this._handleError.bind(this));
         },
         _registerCommentActions: function() {
+            var self = this;
             $('.comment-actions').find('.clickable').click(function(e) {
-                console.log(e.currentTarget);
-                // ajax/update
+                self._doUpdate(e);
             });
+        },
+        _doUpdate: function(e) {
+            var target = $(e.currentTarget);
+            var _class = target.attr('class').split(" ");
+            $.doAjax({
+                url: globalSettings.ajax['update'],
+                data: 'action='+target.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(_class[_class.length - 1]),'item_type':'comment'})
+            }, false)
+            .done(function(jqXHR, status, req) {
+                if(status == 'success') {
+                    if(jqXHR.indexOf('{') == 0) {
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success')) {
+                            $(document).trigger('comment-action-update', [{response, target}]);
+                        } else {
+                            $(document).trigger('comment-action-error', [{response, target}]);
+                        }
+                    }
+                }
+            });
+        },
+        _updateContent: function(e) {
+
+        },
+        _handleError: function(e) {
+            
         }
     });
 })(jQuery);

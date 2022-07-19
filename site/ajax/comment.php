@@ -73,6 +73,7 @@
                 'likes' => '',
                 'date'  => '',
                 'item_id' => 0,
+                'comment_id' => 0,
                 'reply-meta' => $language_config[$lang]['reply']
             ]
         ];
@@ -93,10 +94,11 @@
                 foreach($commentsDBResult as $_comment) {
                     if($_comment['comment_id'] == $commentID) {
                         $commentBluePrint['comment']['text'] .= $_comment['comment'];
-                        $commentBluePrint['comment']['username'] = htmlentities($commentUsername, ENT_QUOTES, 'UTF-8');
-                        $commentBluePrint['comment']['likes']   = intval($commentLikes);
-                        $commentBluePrint['comment']['item_id'] = intval($commentItemID);
-                        $commentBluePrint['comment']['date']  = htmlentities($commentDate, ENT_QUOTES, 'UTF-8');
+                        $commentBluePrint['comment']['username']   = htmlentities($commentUsername, ENT_QUOTES, 'UTF-8');
+                        $commentBluePrint['comment']['likes']      = intval($commentLikes);
+                        $commentBluePrint['comment']['item_id']    = intval($commentItemID);
+                        $commentBluePrint['comment']['comment_id'] = intval($commentID);
+                        $commentBluePrint['comment']['date'] = htmlentities($commentDate, ENT_QUOTES, 'UTF-8');
                     }
                 }
                 array_push($result, $commentBluePrint);
