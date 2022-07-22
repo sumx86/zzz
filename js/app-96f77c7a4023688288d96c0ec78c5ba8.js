@@ -217,7 +217,7 @@ var SimpleModalEvents = {
                 data: 'action=like&data=' + JSON.stringify({'item':parseInt(_class[_class.length - 1]),'item_type':'comment'})
             }, false)
             .done(function(jqXHR, status, req) {
-                console.log(jqXHR);
+                console.log('[COMMENT-LIKE-HANDLING-MODULE] -> ' + jqXHR);
                 if(status == 'success') {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
@@ -262,7 +262,25 @@ var SimpleModalEvents = {
             $(document).on('preview-update-views', this._updateViews.bind(this));
         },
         _updateViews: function(e, data) {
-            console.log('yeah loaded now update views :) ' + ' -- ' + data.item);
+            //console.log('yeah loaded now update views :) ' + ' -- ' + data.item);
+            $.doAjax({
+                url: globalSettings.ajax['update'],
+                data: 'action=view&data=' + JSON.stringify({'item':parseInt(data.item),'item_type':'game'})
+            }, false)
+            .done(function(jqXHR, status, req) {
+                console.log('[PREVIEW-VIEWS-HANDLING-MODULE] -> ' + jqXHR);
+                if(status == 'success') {
+                    if(jqXHR.indexOf('{') == 0) {
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success')) {
+                            _self._updateContent(response, target);
+                        }
+                    }
+                }
+            });
+        },
+        _updateContent: function(resp, target) {
+            
         }
     });
 })(jQuery);
@@ -313,7 +331,7 @@ var SimpleModalEvents = {
                 data: 'action=load&data=' + JSON.stringify({'item':data.item})
             }, true)
             .done(function(jqXHR, status, req) {
-                console.log(jqXHR);
+                console.log('[GAME-PREVIEW-CONTROL-MODULE] -> ' + jqXHR);
                 if(status == 'success') {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
