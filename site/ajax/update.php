@@ -25,7 +25,7 @@
     $actionTypes = [
         'like',
         'favourite',
-        'reply',     // reply to a comment
+        'view',
         'user'       // update information about a user
     ];
     $action = trim($_POST['action']);
@@ -42,6 +42,7 @@
     // initialize database object
     $db = new DB(false);
 
+    // Check if the given item exists
     if(!ItemExists($data->item, $data->item_type, $db)) {
         return;
     }
@@ -70,19 +71,26 @@
                 }
                 $successData['item_type'] = 'game';
                 $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select likes from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
+                $successData['action'] = 'like';
+                $successData['item']   = intval($data->item);
+                Response::throw_json_string(["success" => $successData]);
                 break;
+
             case "comment":
-                /*$userID  = intval(Server::retrieve_session('user', 'id'));
+                $userID    = intval(Server::retrieve_session('user', 'id'));
                 $commentID = intval($data->item);
-                if(!UserCP::hasRatedComment(1, $commentID)) {
+                if(!UserCP::hasRatedComment($userID, $commentID)) {
                     UserCP::rateComment($userID, $commentID);
-                    $successData['item_type'] = 'comment';
-                }*/
+                } else {
+                    UserCP::unrateComment($userID, $commentID);
+                }
+                $successData['item_type'] = 'comment';
+                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select comment_likes from comments where comment_id = ?", [$commentID], true, DB::ALL_ROWS, true);
+                $successData['action'] = 'like';
+                $successData['item']   = intval($data->item);
+                Response::throw_json_string(["success" => $successData]);
                 break;
         }
-        $successData['action'] = 'like';
-        $successData['item'] = intval($data->item);
-        Response::throw_json_string(["success" => $successData]);
         return;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -101,15 +109,35 @@
             }
             $successData['item_type'] = 'game';
             $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select favourited from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
+            $successData['action'] = 'favourite';
+            $successData['item']   = intval($data->item);
+            Response::throw_json_string(["success" => $successData]);
         }
-        $successData['action'] = 'favourite';
-        $successData['item'] = intval($data->item);
-        Response::throw_json_string(["success" => $successData]);
+        return;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+    
+
+    // UPDATE GAME VIEW
+    ////////////////////////////////////////////////////////////////////////////////////////
+    if(Str::equal($action, 'view')) {
+        $userID = intval(Server::retrieve_session('user', 'id'));
+        $gameID = intval($data->item);
+
+        if(!UserCP::hasViewedGame($userID, $gameID)) {
+            UserCP::updateViews($userID, $gameID);
+
+            $successData['item_type'] = 'game';
+            $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select views from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
+            $successData['action'] = 'view';
+            $successData['item']   = $gameID;
+            Response::throw_json_string(["success" => $successData]);
+        }
         return;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    
+
     // UPDATE USER INFORMATION
     ////////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'user')) {
@@ -118,17 +146,17 @@
     ////////////////////////////////////////////////////////////////////////////////////////
 
     function ItemExists($itemID, $itemType, $db) {
+        $query  = '';
         $result = [];
         switch($itemType) {
             case "game":
-                $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where id = ?", [$itemID], true, DB::ALL_ROWS, false);
+                $query = "select * from games where id = ?";
                 break;
             case "comment":
-                $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where comment_id = ?", [$itemID], true, DB::ALL_ROWS, false);
-                break;
-            default:
+                $query = "select * from comments where comment_id = ?";
                 break;
         }
+        $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery($query, [$itemID], true, DB::ALL_ROWS, false);
         return _Array::size($result) > 0;
     }
 

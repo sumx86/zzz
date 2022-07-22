@@ -216,7 +216,30 @@
          * Give like to a comment
          */
         public static function rateComment($userId, $commentID) {
-            self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes+1 where comment_id=?; insert into rated_comments (comment_id, liked_by_user_id) values (?, ?)", [$commentID, $commentID, $userId], false, false);
+            self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes+1 where comment_id=?; insert into rated_comments (comment_id, liked_by_user_id) values (?, ?)", [$commentID, $commentID, $userId], false, false, true);
+        }
+
+        /*
+         * Remove a like / favourite for a game
+         */
+        public static function unrateComment($userId, $commentID) {
+            self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes-1 where comment_id=?; delete from rated_comments where comment_id=? and liked_by_user_id=?", [$commentID, $commentID, $userId], false, false, true);
+        }
+
+        /*
+         * Increment the views count for a $gameID
+         */
+        public static function updateViews($userID, $gameID) {
+            self::$dbInstance->rawQuery("update games set views=views+1 where id = ?; insert into viewed_games (game_id, viewed_by_user_id) values (?, ?)", [$gameID, $gameID, $userID], false, false, true);
+        }
+
+        /*
+         * Check if the user has already viewed the game
+         */
+        public static function hasViewedGame($userID, $gameID) {
+            $query = "select id from viewed_games where viewed_by_user_id=? and game_id=?";
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$userID, $gameID], true, DB::ALL_ROWS);
+            return _Array::size($result) > 0;
         }
     }
 ?>

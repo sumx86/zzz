@@ -196,6 +196,77 @@ var SimpleModalEvents = {
     });
 })(jQuery);
 (function($) {
+    $.initCall('comment-like-handling', {
+        initialize: function() {
+            $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
+            $(document).on('comment-action-update', this._updateContent.bind(this));
+            $(document).on('comment-action-error', this._handleError.bind(this));
+        },
+        _registerCommentActions: function() {
+            var self = this;
+            $('.comment-actions').find('.like-comment').click(function(e) {
+                self._doUpdate(e);
+            });
+        },
+        _doUpdate: function(e) {
+            var _self  = this;
+            var target = $(e.currentTarget);
+            var _class = target.attr('class').split(" ");
+            $.doAjax({
+                url: globalSettings.ajax['update'],
+                data: 'action=like&data=' + JSON.stringify({'item':parseInt(_class[_class.length - 1]),'item_type':'comment'})
+            }, false)
+            .done(function(jqXHR, status, req) {
+                console.log(jqXHR);
+                if(status == 'success') {
+                    if(jqXHR.indexOf('{') == 0) {
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success')) {
+                            _self._updateContent(response, target);
+                        } else {
+                            $(document).trigger('comment-action-error', [{response, target}]);
+                        }
+                    }
+                }
+            });
+        },
+        _updateContent: function(resp, target) {
+            var response = resp.success;
+            var parent   = target.parent();
+            $(parent).html(target.clone().prop('outerHTML') + ' ' + response.result[0]['comment_likes']);
+        },
+        _handleError: function(e) {
+            $("html, body").animate({scrollTop: 0}, "slow").promise().done(function() {
+                $('#comment-rate-warning').css('display', 'flex').delay(2000).hide('fast');
+            });
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('comment-reply-handling', {
+        initialize: function() {
+            var self = this;
+            $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
+        },
+        _registerCommentActions: function(e) {
+            $('.comment-actions').find('.reply > span:first').click(function(e) {
+                console.log(e.currentTarget);
+            });
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('preview-views-handling', {
+        initialize: function() {
+            var self = this;
+            $(document).on('preview-update-views', this._updateViews.bind(this));
+        },
+        _updateViews: function(e, data) {
+            console.log('yeah loaded now update views :) ' + ' -- ' + data.item);
+        }
+    });
+})(jQuery);
+(function($) {
     // ps1 ps2 ps3
     $.initCall('game-preview-control', {
         _exitElement: '#exit-preview',
@@ -218,8 +289,8 @@ var SimpleModalEvents = {
                     var id = $(this).attr('class').split(" ")[1];
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
-                    $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + id);
 
+                    $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + id);
                     $('#item-actions > #likes > span > span:first').text($(this).find('.collection-item-slider > .likes').attr('data-count'));
                     $('#item-actions > #favourited > span > span:first').text($(this).find('.collection-item-slider > .favourited').attr('data-count'));
                     $('#item-actions > #comments > span > span:first').text($(this).find('.collection-item-slider > .comments').attr('data-count'));
@@ -228,7 +299,9 @@ var SimpleModalEvents = {
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
                     $('#comment-section').css('display', 'block');
+                    
                     $(document).trigger('preview-comments-load', [{'item':id}]);
+                    $(document).trigger('preview-update-views',  [{'item':id}]);
                     $('#comment-submit').attr('data-item', id);
                 });
             });
@@ -273,10 +346,10 @@ var SimpleModalEvents = {
                             </div>\
                             <div class='comment-actions info'>\
                                 <div class='like'>\
-                                    <span><i class='fa fa-thumbs-up clickable "+commentsData[i]['comment']['comment_id']+"' data-action='like'></i> "+commentsData[i]['comment']['likes']+"</span>\
+                                    <span><i class='fa fa-thumbs-up like-comment "+commentsData[i]['comment']['comment_id']+"' data-action='like' data-url='update'></i> "+commentsData[i]['comment']['likes']+"</span>\
                                 </div>\
                                 <div class='reply'>\
-                                    <span class='clickable "+commentsData[i]['comment']['comment_id']+"' data-action='reply'>"+commentsData[i]['comment']['reply-meta']+"</span>\
+                                    <span>"+commentsData[i]['comment']['reply-meta']+"</span>\
                                 </div>\
                             </div>\
                         </div>\
@@ -291,47 +364,6 @@ var SimpleModalEvents = {
                 $('#comment-section > #inner').append(html);
             }
             $(document).trigger('preview-comments-loaded', []);
-        }
-    });
-})(jQuery);
-(function($) {
-    $.initCall('comment-actions', {
-        initialize: function() {
-            $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
-            $(document).on('comment-action-update', this._updateContent.bind(this));
-            $(document).on('comment-action-error', this._handleError.bind(this));
-        },
-        _registerCommentActions: function() {
-            var self = this;
-            $('.comment-actions').find('.clickable').click(function(e) {
-                self._doUpdate(e);
-            });
-        },
-        _doUpdate: function(e) {
-            var target = $(e.currentTarget);
-            var _class = target.attr('class').split(" ");
-            $.doAjax({
-                url: globalSettings.ajax['update'],
-                data: 'action='+target.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(_class[_class.length - 1]),'item_type':'comment'})
-            }, false)
-            .done(function(jqXHR, status, req) {
-                if(status == 'success') {
-                    if(jqXHR.indexOf('{') == 0) {
-                        var response = $.parseJSON(jqXHR);
-                        if(response.hasOwnProperty('success')) {
-                            $(document).trigger('comment-action-update', [{response, target}]);
-                        } else {
-                            $(document).trigger('comment-action-error', [{response, target}]);
-                        }
-                    }
-                }
-            });
-        },
-        _updateContent: function(e) {
-
-        },
-        _handleError: function(e) {
-            
         }
     });
 })(jQuery);

@@ -16,12 +16,16 @@
 
     // PREPARE AND VALIDATE DATA
     ///////////////////////////////////////////////////////////////////////////////////////
-    $actionTypes = ['load', 'post'];
+    $actionTypes = ['load', 'post', 'reply'];
     $action      = trim($_POST['action']);
     $data        = json_decode($_POST['data']);
-
     if(!Str::is_in($action, $actionTypes) || !isProperData($data)) {
-        echo "what";
+        return;
+    }
+
+    // If we're trying to post a comment or reply and we're not logged in throw error
+    if((Str::equal($action, 'post') || Str::equal($action, 'reply')) && !Server::is_active_session('user')) {
+        Response::throw_json_string(["error" => "login"]);
         return;
     }
     //////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +36,10 @@
     // initialize database object
     $db = new DB(false);
     $commentsGroupResult = [];
-    // LOAD COMMENT
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+
+    // LOAD COMMENTS
     //////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'load')) {
         $itemID = intval($data->item);
@@ -47,6 +54,7 @@
     }
     //////////////////////////////////////////////////////////////////////////////////////
 
+
     // POST COMMENT
     //////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'post')) {
@@ -54,13 +62,35 @@
         // generate unique id for the group of strings
         // replace newline character with <br>
         if(property_exists($data, 'item') && property_exists($data, 'text')) {
-            $itemID  = intval($data->item);
-            $comment = $data->text;
-            echo $itemID . " -- " . "yeaah" . " -- " . $comment;
+            $gameID = intval($data->item);
+
+            if(ItemExists($gameID, 'game', $db)) {
+                $comment = $data->text;
+                echo 'post -- ' . $gameID . " -- " . "yeaah" . " -- " . $comment;
+            }
         }
+        return;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////
+
+
+    // REPLY TO COMMENT
+    //////////////////////////////////////////////////////////////////////////////////////
+    if(Str::equal($action, 'reply')) {
+        // same requirements as the comment
+        if(property_exists($data, 'item') && property_exists($data, 'text')) {
+            $commentID = intval($data->item);
+            
+            if(ItemExists($commentID, 'comment', $db)) {
+                $comment = $data->text;
+                echo 'reply -- ' . $itemID . " -- " . "yeaah" . " -- " . $comment;
+            }
+        }
+        return;
     }
     //////////////////////////////////////////////////////////////////////////////////////
     
+
     function GetCommentsGroupResult($commentsDBResult) {
         global $language_config;
         global $lang;
@@ -106,6 +136,21 @@
             }
         }
         return $result;
+    }
+
+    function ItemExists($itemID, $itemType, $db) {
+        $query  = '';
+        $result = [];
+        switch($itemType) {
+            case "game":
+                $query = "select * from games where id = ?";
+                break;
+            case "comment":
+                $query = "select * from comments where comment_id = ?";
+                break;
+        }
+        $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery($query, [$itemID], true, DB::ALL_ROWS, false);
+        return _Array::size($result) > 0;
     }
 
     function isProperData($data) {
