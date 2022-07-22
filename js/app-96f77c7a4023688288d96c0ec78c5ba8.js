@@ -262,7 +262,7 @@ var SimpleModalEvents = {
             $(document).on('preview-update-views', this._updateViews.bind(this));
         },
         _updateViews: function(e, data) {
-            //console.log('yeah loaded now update views :) ' + ' -- ' + data.item);
+            var _self = this;
             $.doAjax({
                 url: globalSettings.ajax['update'],
                 data: 'action=view&data=' + JSON.stringify({'item':parseInt(data.item),'item_type':'game'})
@@ -273,14 +273,15 @@ var SimpleModalEvents = {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
                         if(response.hasOwnProperty('success')) {
-                            _self._updateContent(response, target);
+                            _self._updateContent(response);
                         }
                     }
                 }
             });
         },
-        _updateContent: function(resp, target) {
-            
+        _updateContent: function(resp) {
+            var response = resp.success;
+            $('#item-actions > #views > span > span:first').text(parseInt(response.result[0]['views']));
         }
     });
 })(jQuery);

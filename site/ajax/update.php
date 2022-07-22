@@ -126,7 +126,6 @@
 
         if(!UserCP::hasViewedGame($userID, $gameID)) {
             UserCP::updateViews($userID, $gameID);
-
             $successData['item_type'] = 'game';
             $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select views from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
             $successData['action'] = 'view';
