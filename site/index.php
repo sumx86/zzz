@@ -10,10 +10,10 @@
     
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
-    if($isLogin) {
+    /*if($isLogin) {
         Server::destroy_session('user');
         Response::include_header("Location", "/");
-    }
+    }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">

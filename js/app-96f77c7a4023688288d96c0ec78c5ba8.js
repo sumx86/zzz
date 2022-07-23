@@ -198,11 +198,9 @@ var SimpleModalEvents = {
 (function($) {
     $.initCall('comment-like-handling', {
         initialize: function() {
-            $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
-            $(document).on('comment-action-update', this._updateContent.bind(this));
-            $(document).on('comment-action-error', this._handleError.bind(this));
+            $(document).on('preview-comments-loaded', this._registerLikeEvent.bind(this));
         },
-        _registerCommentActions: function() {
+        _registerLikeEvent: function() {
             var self = this;
             $('.comment-actions').find('.like-comment').click(function(e) {
                 self._doUpdate(e);
@@ -224,7 +222,7 @@ var SimpleModalEvents = {
                         if(response.hasOwnProperty('success')) {
                             _self._updateContent(response, target);
                         } else {
-                            $(document).trigger('comment-action-error', [{response, target}]);
+                            _self._handleError();
                         }
                     }
                 }
@@ -232,10 +230,9 @@ var SimpleModalEvents = {
         },
         _updateContent: function(resp, target) {
             var response = resp.success;
-            var parent   = target.parent();
-            $(parent).html(target.clone().prop('outerHTML') + ' ' + response.result[0]['comment_likes']);
+            target.parent().find('span:first').text(response.result[0]['comment_likes']);
         },
-        _handleError: function(e) {
+        _handleError: function() {
             $("html, body").animate({scrollTop: 0}, "slow").promise().done(function() {
                 $('#comment-rate-warning').css('display', 'flex').delay(2000).hide('fast');
             });
@@ -245,12 +242,21 @@ var SimpleModalEvents = {
 (function($) {
     $.initCall('comment-reply-handling', {
         initialize: function() {
-            var self = this;
             $(document).on('preview-comments-loaded', this._registerCommentActions.bind(this));
         },
         _registerCommentActions: function(e) {
+            var self = this;
             $('.comment-actions').find('.reply > span:first').click(function(e) {
-                console.log(e.currentTarget);
+                if(!window._login) {
+                    self._handleError();
+                } else {
+                    console.log('reply-login');
+                }
+            });
+        },
+        _handleError: function() {
+            $("html, body").animate({scrollTop: 0}, "slow").promise().done(function() {
+                $('#comment-rate-warning').css('display', 'flex').delay(2000).hide('fast');
             });
         }
     });
@@ -258,7 +264,6 @@ var SimpleModalEvents = {
 (function($) {
     $.initCall('preview-views-handling', {
         initialize: function() {
-            var self = this;
             $(document).on('preview-update-views', this._updateViews.bind(this));
         },
         _updateViews: function(e, data) {
@@ -302,12 +307,11 @@ var SimpleModalEvents = {
                     $('#comment-section').css('display', 'none');
                 });
                 $(self._previewItem).click(function() {
-                    // request data about the preview item
-                    //   - information like -> likes, views, release date, iso, etc...
-                    //   - comments
                     var id = $(this).attr('class').split(" ")[1];
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
+
+                    $('#item-information > #inner > #uploader > #display-name > span:first').text($(this).attr('data-uploader'));
 
                     $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + id);
                     $('#item-actions > #likes > span > span:first').text($(this).find('.collection-item-slider > .likes').attr('data-count'));
@@ -365,7 +369,7 @@ var SimpleModalEvents = {
                             </div>\
                             <div class='comment-actions info'>\
                                 <div class='like'>\
-                                    <span><i class='fa fa-thumbs-up like-comment "+commentsData[i]['comment']['comment_id']+"' data-action='like' data-url='update'></i> "+commentsData[i]['comment']['likes']+"</span>\
+                                    <span><i class='fa fa-thumbs-up like-comment "+commentsData[i]['comment']['comment_id']+"' data-action='like' data-url='update'></i> <span> "+commentsData[i]['comment']['likes']+"</span></span>\
                                 </div>\
                                 <div class='reply'>\
                                     <span>"+commentsData[i]['comment']['reply-meta']+"</span>\

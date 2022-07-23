@@ -58,7 +58,7 @@
     <script type="text/javascript" src="\ps-classics\js\ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#login-success-container').click(function(){
+            $('#login-success-container,.member-listing-item').click(function(e) {
                 $.redirect('/account/uid/' + $(this).attr('data-uid'));
             });
         });
@@ -85,7 +85,7 @@
                                 <img src='\ps-classics\img\oth\pngegg.png'>
                             </div>
                             <div id='username'>
-                                <span>Roberto98</span>
+                                <span>".htmlentities(Server::retrieve_session('user', 'username'), ENT_QUOTES, 'UTF-8')."</span>
                             </div>
                         </div>
                         <div id='dropdown-menu-switch'>
@@ -118,7 +118,7 @@
                     $usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset " . $offset, [], true, DB::ALL_ROWS);
                     if(_Array::size($usersList) > 0) {
                         foreach($usersList as $user) {
-                            echo "<div class='member-listing-item'>
+                            echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
                                 <div class='member-picture'>
                                     <img src='\ps-classics\img\oth\pngegg.png'>
                                 </div>

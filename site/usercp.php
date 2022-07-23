@@ -98,6 +98,10 @@
             global $language_config;
             global $lang;
 
+            if(!self::assertUsername($req[$userField])) {
+                self::$errors[$userField] = $language_config[$lang]['register-errors']['username-format'];
+                return false;
+            }
             if( self::userExists($req[$userField]) ) {
                 self::$errors[$userField] = $language_config[$lang]['register-errors']['existing-user'];
                 return false;
@@ -134,6 +138,13 @@
         public static function emailExists($email) {
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where email = ?", [$email], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
+        }
+
+        /*
+         * Check if $username is valid
+         */
+        public static function assertUsername($username) {
+            return Str::in_range($username, [3, 30]);
         }
 
         /*

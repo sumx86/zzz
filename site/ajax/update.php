@@ -85,7 +85,7 @@
                     UserCP::unrateComment($userID, $commentID);
                 }
                 $successData['item_type'] = 'comment';
-                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select comment_likes from comments where comment_id = ?", [$commentID], true, DB::ALL_ROWS, true);
+                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select comment_likes from comments where comment_id = ? limit 1", [$commentID], true, DB::ALL_ROWS, true);
                 $successData['action'] = 'like';
                 $successData['item']   = intval($data->item);
                 Response::throw_json_string(["success" => $successData]);
@@ -121,16 +121,18 @@
     // UPDATE GAME VIEW
     ////////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'view')) {
-        $userID = intval(Server::retrieve_session('user', 'id'));
-        $gameID = intval($data->item);
+        if($data->item_type == 'game') {
+            $userID = intval(Server::retrieve_session('user', 'id'));
+            $gameID = intval($data->item);
 
-        if(!UserCP::hasViewedGame($userID, $gameID)) {
-            UserCP::updateViews($userID, $gameID);
-            $successData['item_type'] = 'game';
-            $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select views from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
-            $successData['action'] = 'view';
-            $successData['item']   = $gameID;
-            Response::throw_json_string(["success" => $successData]);
+            if(!UserCP::hasViewedGame($userID, $gameID)) {
+                UserCP::updateViews($userID, $gameID);
+                $successData['item_type'] = 'game';
+                $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select views from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
+                $successData['action'] = 'view';
+                $successData['item']   = $gameID;
+                Response::throw_json_string(["success" => $successData]);
+            }
         }
         return;
     }

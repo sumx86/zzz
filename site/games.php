@@ -59,7 +59,7 @@
     <script type="text/javascript" src="\ps-classics\js\ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            
+            window._login = <?php echo $isLogin ? 'true' : 'false' ; ?>;
         });
     </script>
 </head>
@@ -133,7 +133,7 @@
                         $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
                         if(_Array::size($arrayResult) > 0) {
                             foreach($arrayResult as $item) {
-                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."'>
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."'>
                                     <div class='cover'>
                                         <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                                     </div>
