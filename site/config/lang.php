@@ -53,6 +53,9 @@
             'likes' => 'Харесвания',
             'comments' => 'Коментари',
             'login-to-comment' => 'Влез в акаунта си за да напишеш коментар',
+            'quit-account-confirm' => 'Сигурен/а ли си че искаш да излезеш от акаунта си?',
+            'yes' => 'Да',
+            'no'  => 'Не',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -139,6 +142,9 @@
             'likes' => 'Likes',
             'comments' => 'Comments',
             'login-to-comment' => 'You need to login to post a comment',
+            'quit-account-confirm' => 'Are you sure you want to sign out of your account?',
+            'yes' => 'Yes',
+            'no'  => 'No',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

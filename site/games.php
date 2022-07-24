@@ -65,6 +65,23 @@
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($isLogin) {
+                echo "<div id='logout-confirmation-modal'>
+                          <div id='inner'>
+                              <span id='message'>".$language_config[$lang]['quit-account-confirm']."</span>
+                              <div id='confirmation-buttons'>
+                                  <div id='yes' class='button'>
+                                       <span>".$language_config[$lang]['yes']."</span>
+                                  </div>
+                                  <div id='no' class='button'>
+                                       <span>".$language_config[$lang]['no']."</span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>";
+            }
+        ?>
         <section id='top-section' class='sections'>
             <div id='navbar'>
                 <a href='/' id='site-name'>
@@ -92,6 +109,10 @@
                             <i class='fa fa-bars'></i>
                         </div>
                     </div>";
+                    
+                    echo "<div id='sign-out'>
+                            <i class='fa fa-power-off'></i>
+                        </div>";
                 }
             ?>
             </div>

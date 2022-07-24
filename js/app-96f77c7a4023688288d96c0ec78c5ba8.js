@@ -157,6 +157,36 @@ var SimpleModalEvents = {
 })(jQuery);
 (function($) {
     $(document).ready(function() {
+        $('#sign-out > i:first').click(function(e) {
+            $('#logout-confirmation-modal').css('display', 'flex').animate({top: 0}).promise().done(function(){
+                var count = 0;
+                var borderColor = '#a11443';
+                var funcID = setInterval(function() {
+                    if(count == 6) {
+                        clearInterval(funcID);
+                    } else {
+                        if(borderColor == '#a11443') {
+                            borderColor = '#241b44';
+                        } else {
+                            borderColor = '#a11443';
+                        }
+                        $('#logout-confirmation-modal').css('border-color', borderColor);
+                    }
+                    count++;
+                }, 100);
+
+                $('#confirmation-buttons > #yes > span:first').click(function() {
+                    $.redirect('/ajax/logout');
+                });
+                $('#confirmation-buttons > #no > span:first').click(function(){
+                    $('#logout-confirmation-modal').animate({'top': '-9.3%'}).css('display', 'flex');
+                });
+            });
+        });
+    });
+})(jQuery);
+(function($) {
+    $(document).ready(function() {
         // on mouse over #677ab5
         $('#login-button').click(function() {
             $.redirect('/sign-in');
