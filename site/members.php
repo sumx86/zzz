@@ -141,7 +141,7 @@
                         foreach($usersList as $user) {
                             echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
                                 <div class='member-picture'>
-                                    <img src='\ps-classics\img\oth\pngegg.png'>
+                                    <img src='\\ps-classics\\img\\51N9LyN4gZL._AC_UX569_.jpg'>
                                 </div>
                                 <div class='member-info'>
                                     <div class='username'>

@@ -56,6 +56,7 @@
             'quit-account-confirm' => 'Сигурен/а ли си че искаш да излезеш от акаунта си?',
             'yes' => 'Да',
             'no'  => 'Не',
+            'most-liked-games' => 'Най-харесваните игри',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -145,6 +146,7 @@
             'quit-account-confirm' => 'Are you sure you want to sign out of your account?',
             'yes' => 'Yes',
             'no'  => 'No',
+            'most-liked-games' => 'Most liked games',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

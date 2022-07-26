@@ -162,7 +162,7 @@ var SimpleModalEvents = {
                 var count = 0;
                 var borderColor = '#a11443';
                 var funcID = setInterval(function() {
-                    if(count == 6) {
+                    if(count == 8) {
                         clearInterval(funcID);
                     } else {
                         if(borderColor == '#a11443') {
@@ -308,15 +308,24 @@ var SimpleModalEvents = {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
                         if(response.hasOwnProperty('success')) {
-                            _self._updateContent(response);
+                            _self._updateContent(response, data.item);
                         }
                     }
                 }
             });
         },
-        _updateContent: function(resp) {
+        _updateContent: function(resp, itemID) {
             var response = resp.success;
-            $('#item-actions > #views > span > span:first').text(parseInt(response.result[0]['views']));
+            var newViewsCount = response.result[0]['views'];
+
+            $('#item-actions > #views > span > span:first').text(newViewsCount);
+            $('.collection-item').each(function(index, element) {
+                var id = $(element).attr('class').split(' ')[1];
+                if(itemID == id) {
+                    $(element).find('.collection-item-slider:first > .views:first').attr('data-count', newViewsCount);
+                    $(element).find('.collection-item-slider:first > .views:first > span:first > span:first').text(newViewsCount);
+                }
+            });
         }
     });
 })(jQuery);
@@ -324,7 +333,6 @@ var SimpleModalEvents = {
     // ps1 ps2 ps3
     $.initCall('game-preview-control', {
         _exitElement: '#exit-preview',
-        _previewItem: '.collection-item',
         _previewContainer: '#game-preview-container',
 
         initialize: function() {
@@ -336,7 +344,8 @@ var SimpleModalEvents = {
                     $('.comment-box').css('display', 'none');
                     $('#comment-section').css('display', 'none');
                 });
-                $(self._previewItem).click(function() {
+                
+                $('.collection-item').click(function() {
                     var id = $(this).attr('class').split(" ")[1];
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
@@ -422,22 +431,23 @@ var SimpleModalEvents = {
 })(jQuery);
 (function($) {
     $.initCall('collection-item-action-buttons', {
+        _parent: null,
         initialize: function() {
             var self = this;
             $(document).on('collection-item-stats-update', this._updateContent.bind(this));
             $(document).on('collection-item-stats-error', this._handleError.bind(this));
             $(document).ready(function() {
-                $('.action-button:not(".no-action") > span').find('i:first').click(function(e) {
-                    self._doUpdate(e);
+                $('.action-button:not(".no-action") > span').find('i:first').click(function(element) {
+                    self._doUpdate(element);
                 });
             });
         },
         _doUpdate: function(e) {
             var target = $(e.currentTarget);
-            var parent = target.parent().parent();
+            this._parent = target.parent().parent();
             $.doAjax({
                 url: globalSettings.ajax['update'],
-                data: 'action='+parent.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(parent.attr('class').split(" ")[1]),'item_type':'game'})
+                data: 'action='+this._parent.attr('data-action') + '&data=' + JSON.stringify({'item':parseInt(this._parent.attr('class').split(" ")[1]),'item_type':'game'})
             }, false)
             .done(function(jqXHR, status, req) {
                 if(status == 'success') {
@@ -454,13 +464,29 @@ var SimpleModalEvents = {
         },
         _updateContent: function(e, data) {
             var response = data.response.success;
-            console.log(response);
+            var collectionItemID = this._parent.attr('class').split(" ")[1];
             switch(response.action) {
                 case "like":
-                    $('#item-actions > #likes > span > span:first').text(response.result[0]['likes']);
+                    var newLikesCount = response.result[0]['likes'];
+                    $('#item-actions > #likes > span > span:first').text(newLikesCount);
+                    $('.collection-item').each(function(index, element) {
+                        var id = $(element).attr('class').split(' ')[1];
+                        if(collectionItemID == id) {
+                            $(element).find('.collection-item-slider:first > .likes:first').attr('data-count', newLikesCount);
+                            $(element).find('.collection-item-slider:first > .likes:first > span:first > span:first').text(newLikesCount);
+                        }
+                    });
                     break;
                 case "favourite":
-                    $('#item-actions > #favourited > span > span:first').text(response.result[0]['favourited']);
+                    var newFavouritedCount = response.result[0]['favourited'];
+                    $('#item-actions > #favourited > span > span:first').text(newFavouritedCount);
+                    $('.collection-item').each(function(index, element) {
+                        var id = $(element).attr('class').split(' ')[1];
+                        if(collectionItemID == id) {
+                            $(element).find('.collection-item-slider:first > .favourited:first').attr('data-count', newFavouritedCount);
+                            $(element).find('.collection-item-slider:first > .favourited:first > span:first > span:first').text(newFavouritedCount);
+                        }
+                    });
                     break;
                 default:
                     break;

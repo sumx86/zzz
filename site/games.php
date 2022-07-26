@@ -166,16 +166,16 @@
                                             <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>
                                         </div>
                                         <div class='likes' data-count='".intval($item['likes'])."'>
-                                            <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['likes'])."</span>
+                                            <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['likes'])."</span></span>
                                         </div>
                                         <div class='favourited' data-count='".intval($item['favourited'])."'>
-                                            <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['favourited'])."</span>
+                                            <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['favourited'])."</span></span>
                                         </div>
                                         <div class='comments' data-count='".intval($item['comments'])."'>
                                             <span><i class='fa fa-comments' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['comments'])."</span>
                                         </div>
                                         <div class='views' data-count='".intval($item['views'])."'>
-                                            <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['views'])."</span>
+                                            <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['views'])."</span></span>
                                         </div>
                                     </div>
                                 </div>";

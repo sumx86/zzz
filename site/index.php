@@ -174,7 +174,34 @@
                 <div class='error' id='register-password-confirmation-field-error'></div>
             </div>";
             } else {
-                echo "<div id='statistics-showcase-container'></div>";
+                echo "<div id='statistics-showcase-container'>
+                          <div id='top'>
+                              <span>".$language_config[$lang]['most-liked-games']."</span>
+                          </div>
+                          <div id='games-section'>
+                              <div class='game'>
+                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\ps2\\51DG31T4PDL._SY445_.jpg'></div>
+                                  <div class='slider'></div>
+                              </div>
+                              <div class='game'>
+                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\ps2\\AC_sneufesefse.jpg'></div>
+                                  <div class='slider'></div>
+                              </div>
+                              <div class='game'>
+                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\ps2\\Midnight_Club_2_PAL(de)-Front.jpg'></div>
+                                  <div class='slider'></div>
+                              </div>
+                          </div>
+                          <div class='likes-count-showcase aa1'>
+                              <span><i class='fa fa-thumbs-up'></i> <span>103</span></span>
+                          </div>
+                          <div class='likes-count-showcase aa2'>
+                              <span><i class='fa fa-thumbs-up'></i> <span>103</span></span>
+                          </div>
+                          <div class='likes-count-showcase aa3'>
+                              <span><i class='fa fa-thumbs-up'></i> <span>103</span></span>
+                          </div>
+                    </div>";
             }
         ?>
         <div id='search-game-index-container'>
