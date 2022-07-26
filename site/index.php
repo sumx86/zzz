@@ -208,7 +208,7 @@
             <div id='top'>
                 <span><?php echo $language_config[$lang]['find-favgame']; ?></span>
             </div>
-            <form id='search-form' action='' method=''>
+            <form id='search-form' action='/collection' method='get'>
                 <input id='search-game' type='text' name='search-game' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
             </form>
             <div id='mid'>
