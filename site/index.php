@@ -247,6 +247,9 @@
             var text = element.text();
             if( (/[\u0400-\u04FF]+/).test(text) ){element.css('font-weight', 'bold');}
         });
+        $('#search-game-icon').click(function() {
+            $('#search-form').submit();
+        });
     });
 </script>
 <footer>

@@ -220,7 +220,8 @@ var SimpleModalEvents = {
     $.initCall('toggle-collection-containers', {
         initialize: function() {
             $(document).on('click', '.platform', function() {
-                $.redirect('/collection?page=1&platform=' + $(this).attr('id'));
+                let result = window.location.href.match(/search-game=(.*)/i)[0];
+                $.redirect('/collection?page=1&platform=' + $(this).attr('id') + (result ? '&' + result : '' ));
             });
         }
     });
@@ -341,8 +342,9 @@ var SimpleModalEvents = {
             $(document).ready(function() {
                 $(self._exitElement).click(function() {
                     $(self._previewContainer).css('display', 'none');
-                    $('.comment-box').css('display', 'none');
+                    $('.comment-box, #scrolltop-caret').remove();
                     $('#comment-section').css('display', 'none');
+                    $('#no-comments').css('display', 'none');
                 });
                 
                 $('.collection-item').click(function() {
@@ -391,6 +393,7 @@ var SimpleModalEvents = {
             var commentsData = response.success;
             if(commentsData.length <= 0) {
                 $('#no-comments').css('display', 'block');
+                $('#scrolltop-caret').css('display', 'none');
                 return;
             }
             for(var i = 0; i < commentsData.length; i++) {
@@ -424,6 +427,9 @@ var SimpleModalEvents = {
                 </div>");
                 $(html).css('display', 'block');
                 $('#comment-section > #inner').append(html);
+            }
+            if(commentsData.length >= 2) {
+                $('#comment-section > #inner').append('<i id="scrolltop-caret" class="fa fa-caret-up"></i>');
             }
             $(document).trigger('preview-comments-loaded', []);
         }
