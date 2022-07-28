@@ -69,7 +69,7 @@ body {
 #main-container {
     width: 100%;
     height: 100%;
-    background-image: url("/ps-classics/img/cropped-5120-2880-1155233.png");
+    background-image: url("/ps-classics/img/night-sky-3840 x 2160.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -1573,7 +1573,7 @@ body {
     height: 70%;
     left: 16%;
     top: 5%;
-    border: 2px solid #cd002f;
+    border: 2px solid #a9afe5; /* #cd002f */
     border-radius: 5px;
     background-color: rgb(46, 15, 46);
 }
@@ -2424,6 +2424,15 @@ footer {
     font-family: 'prototype';
     color: #b6c6e0;
     margin-top: 1.9%;
+}
+
+#scrolltop-caret {
+    position: relative;
+    color:white;
+    left: 50%;
+    top: -8px;
+    font-size: 2.5em;
+    cursor: pointer;
 }
 
 #spinner {
