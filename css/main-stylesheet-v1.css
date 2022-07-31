@@ -2435,6 +2435,318 @@ footer {
     cursor: pointer;
 }
 
+#upload-game-container {
+    position: absolute;
+    width: 3%;
+    height: 5%;
+    top: 15.5%;
+    left: 68%;
+    background-color: transparent;
+}
+
+#upload-game-container > #upload-game-form {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; 
+}
+
+#upload-game-container > #upload-game-form > #inner {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#upload-game-container > #upload-game-form > #inner > i {
+    position: absolute;
+    color: #ff3563;
+    font-size: 1.8em;
+    top: 15%;
+    cursor: pointer;
+}
+
+#user-section {
+    position: absolute;
+    width: 85%;
+    height: 85%;
+    top: 11%;
+    left: 7.5%;
+    border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#game-upload-container {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 91%;
+    background-color: rgb(0, 0, 0);
+}
+
+#game-upload-container > #top > #exit-preview {
+    position: absolute;
+    color: white;
+    left: 95%;
+    font-size: 1.7em;
+    cursor: pointer;
+}
+
+#game-upload-container > #inner {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    top: 10%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #04070a;
+}
+
+#game-upload-container > #inner > #game-cover {
+    position: absolute;
+    width: 24%;
+    height: 70%;
+    left: 20%;
+    top: 10%;
+    border: 2px solid #a9afe5; /* #cd002f */
+    border-radius: 5px;
+    background-color: rgb(46, 15, 46);
+}
+
+#game-upload-container > #inner > #game-cover > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+#game-upload-container > #inner > #header {
+    position: absolute;
+    width: 40%;
+    height: 5%;
+    left: 47%;
+    top: 11%;
+    background-color: transparent;
+}
+
+#game-upload-container > #inner > #header > #text {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 15%;
+    height: 100%;
+    left: 5%;
+    background-color: transparent;
+}
+
+#game-upload-container > #inner > #header > #text > span {
+    position: absolute;
+    color: white;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    font-size: 1.2em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#game-upload-container > #inner > #header > #header-line {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    top: 81%;
+    background-color: rgb(69, 88, 99);
+}
+
+#game-upload-container > #inner > #header > #header-line > #underline {
+    position: relative;
+    width: 15%;
+    height: 100%;
+    left: 5%;
+    background-color: rgb(46, 214, 96);
+}
+
+#game-upload-container > #inner > #game-metadata {
+    position: absolute;
+    width: 35%;
+    height: 60%;
+    left: 47%;
+    top: 15%;
+    background-color: transparent;
+}
+
+.game-upload-field-info-tooltip {
+    position: absolute;
+    justify-content: center;
+    width: 22%;
+    height: 13%;
+    left: 77%;
+    background-color: #2ed660;
+    border-radius: 5px;
+}
+
+.game-upload-field-info-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 60%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: transparent #2ed660 transparent transparent;
+}
+
+.game-upload-field-info-tooltip > .top {
+    position: absolute;
+    width: 100%;
+    height: 25%;
+    background-color: transparent;
+}
+
+.game-upload-field-info-tooltip > .mid {
+    position: absolute;
+    width: 95%;
+    height: 65%;
+    left: 2.5%;
+    top: 30%;
+    background-color: transparent;
+}
+
+.game-upload-field-info-tooltip > .top > .inner {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    left: 2.5%;
+    background-color: transparent;
+    border-bottom: 1px solid black;
+}
+
+.game-upload-field-info-tooltip > .top > .inner > span {
+    position: absolute;
+    color: black;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    font-size: 1.2em;
+    left: 5%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.game-upload-field-info-tooltip > .mid > span {
+    position: relative;
+    display: inline-block;
+    color: black;
+    font-family: 'Roboto-Regular', 'prototype', 'Jura-Bold', sans-serif;
+    font-size: 1em;
+    left: 5%;
+    margin-top: 1%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.game-upload-field-info-tooltip > .mid > span:nth-child(1){
+    top: 7%;
+}
+
+.game-upload-field-info-tooltip > .mid > span:nth-child(2){
+    top: 14%;
+}
+
+
+#game-genre-tooltip {
+    display: none;
+    top: 21%;
+}
+
+#game-devs-tooltip {
+    display: none;
+    top: 30%;
+}
+
+#game-publ-tooltip {
+    display: none;
+    top: 39%;
+}
+
+#game-date-tooltip {
+    display: none;
+    top: 48%;
+}
+
+#game-iso-tooltip {
+    display: none;
+    top: 57%;
+}
+
+
+
+.game-upload-field {
+    position: relative;
+    width: 73%;
+    padding-left: 13px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    margin-top: 5%;
+    color: white;
+    background-color: black;
+    outline: none;
+    border: 1px solid #495461;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+#submit-game-upload {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 24%;
+    height: 7%;
+    background-color: #96afff;
+    border-radius: 3px;
+    left: 26%;
+    top: 92%;
+    cursor: pointer;
+}
+
+#submit-game-upload > span {
+    position: absolute;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: black;
+    margin-top: 4%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#submit-game-upload:active {
+    background-color: #6779b3;
+    -webkit-transition: background-color 0.1s linear;
+    -moz-transition: background-color 0.1s linear;
+    -ms-transition: background-color 0.1s linear;
+    -o-transition: background-color 0.1s linear;
+    transition: background-color 0.1s linear;
+}
+
+.game-upload-tooltip-trigger {
+    position: relative;
+    color: #ff2c49;
+    left: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
 #spinner {
     /* position: absolute; display: none; top: 79%; left: 4%; font-size: 1.4em; color: white; */
 }
