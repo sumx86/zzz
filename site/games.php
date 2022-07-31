@@ -148,53 +148,75 @@
                 <div class='platform' id='ps2'><span>PS2</span></div>
                 <div class='platform' id='ps3'><span>PS3</span></div>
             </div>
+
+            <?php
+                if($isLogin) {
+                    echo "<div id='upload-game-container'>
+                        <form id='upload-game-form'>
+                            <div id='inner'>
+                                <i class='fa fa-upload' onclick=\"$('#game-cover-file').click()\"></i>
+                            </div>
+                            <input type='file' id='game-cover-file' name='game-cover-file' style='visibility: hidden;'>
+                        </form>
+                    </div>";
+                }
+            ?>
+
             <div class='collection-container'>
                 <div id='collection'>
-                    <?php
-                        if(Str::is_empty($search)) {
-                            // Query games data from database based on CURRENT PAGE NUMBER and PLATFORM
-                            $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
-                            if(_Array::size($arrayResult) > 0) {
-                                foreach($arrayResult as $item) {
-                                    echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."'>
-                                        <div class='cover'>
-                                            <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
+                <?php
+                    if(Str::is_empty($search)) {
+                        // Query games data from database based on CURRENT PAGE NUMBER and PLATFORM
+                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
+                        if(_Array::size($arrayResult) > 0) {
+                            foreach($arrayResult as $item) {
+                                
+                                $gameMetadata = json_encode([
+                                    'genres' => $item['genres'],
+                                    'developers' => $item['developers'],
+                                    'publishers' => $item['publishers'],
+                                    'release-dates' => $item['release_dates']
+                                ]);
+                                
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-metadata='".$gameMetadata."'>
+                                    <div class='cover'>
+                                        <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
+                                    </div>
+                                    <div class='collection-item-slider'>
+                                        <div class='game-name'>
+                                            <span>".htmlentities(Str::truncate($item['name'], 19), ENT_QUOTES, 'UTF-8')."</span>
                                         </div>
-                                        <div class='collection-item-slider'>
-                                            <div class='game-name'>
-                                                <span>".htmlentities(Str::truncate($item['name'], 19), ENT_QUOTES, 'UTF-8')."</span>
-                                            </div>
-                                            <div class='uploader-name'>
-                                                <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>
-                                            </div>
-                                            <div class='likes' data-count='".intval($item['likes'])."'>
-                                                <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['likes'])."</span></span>
-                                            </div>
-                                            <div class='favourited' data-count='".intval($item['favourited'])."'>
-                                                <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['favourited'])."</span></span>
-                                            </div>
-                                            <div class='comments' data-count='".intval($item['comments'])."'>
-                                                <span><i class='fa fa-comments' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['comments'])."</span>
-                                            </div>
-                                            <div class='views' data-count='".intval($item['views'])."'>
-                                                <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['views'])."</span></span>
-                                            </div>
+                                        <div class='uploader-name'>
+                                            <span>".Str::truncate("By: ".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."", 19)."</span>
                                         </div>
-                                    </div>";
-                                }
+                                        <div class='likes' data-count='".intval($item['likes'])."'>
+                                            <span><i class='fa fa-thumbs-up' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['likes'])."</span></span>
+                                        </div>
+                                        <div class='favourited' data-count='".intval($item['favourited'])."'>
+                                            <span><i class='fa fa-heart' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['favourited'])."</span></span>
+                                        </div>
+                                        <div class='comments' data-count='".intval($item['comments'])."'>
+                                            <span><i class='fa fa-comments' style='color: #df0f55; font-size: 1.2em;'></i> ".intval($item['comments'])."</span>
+                                        </div>
+                                        <div class='views' data-count='".intval($item['views'])."'>
+                                            <span><i class='fa fa-eye' style='color: #df0f55; font-size: 1.2em;'></i> <span>".intval($item['views'])."</span></span>
+                                        </div>
+                                    </div>
+                                </div>";
                             }
-                        } else {
-                            /*$searchEngine = new SearchEngine($search, 'game', $db);
-                            $searchEngine->setOption('delim', ' ');
-                            $engineResult = $searchEngine->resultSet();
-                            
-                            if(_Array::size($engineResult) > 0) {
-                                foreach($engineResult as $game) {
-
-                                }
-                            }*/
                         }
-                    ?>
+                    } else {
+                        /*$searchEngine = new SearchEngine($search, 'game', $db);
+                        $searchEngine->setOption('delim', ' ');
+                        $engineResult = $searchEngine->resultSet();
+                        
+                        if(_Array::size($engineResult) > 0) {
+                            foreach($engineResult as $game) {
+
+                            }
+                        }*/
+                    }
+                ?>
                 </div>
                 <div class='pagination-container' data-action='collection' data-platform='<?php echo $platform; ?>'>
                     <div id='inner'>
@@ -250,12 +272,30 @@
                                 </div>
                             </div>
                             <div id='game-info'>
-                                <div id='release-date' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Release dates: October 30, 2006</span></div>
-                                <div id='genre' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Genres: Action, Adventure</span></div>
-                                <div id='platforms' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Platforms: Playstation 2, Xbox 360</span></div>
-                                <div id='developers' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Developers: HappyCitizens</span></div>
-                                <div id='publishers' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Publishers: HappyCitizens</span></div>
-                                <div id='iso' class='game-info-text'><span style='color: #fc5603;'>&bull; </span><span>Iso: <a href='https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/' target="_blank">link</a></span></div>
+                                <div id='release-date' class='game-info-text'>
+                                    <span style='color: #fc5603;'>&bull; </span>
+                                    <span>Release dates: <span>October 30, 2006</span></span>
+                                </div>
+                                <div id='genre' class='game-info-text'>
+                                    <span style='color: #fc5603;'>&bull; </span>
+                                    <span>Genres: <span>October 30, 2006</span></span>
+                                </div>
+                                <div id='platforms' class='game-info-text'>
+                                    <span style='color: #fc5603;'>&bull; </span>
+                                    <span>Platforms: <span>October 30, 2006</span></span>
+                                </div>
+                                <div id='developers' class='game-info-text'>
+                                    <span style='color: #fc5603;'>&bull; </span>
+                                    <span>Developers: <span>October 30, 2006</span></span>
+                                </div>
+                                <div id='publishers' class='game-info-text'>
+                                    <span style='color: #fc5603;'>&bull; </span>
+                                    <span>Publishers: <span>October 30, 2006</span></span>
+                                </div>
+                                <div id='iso' class='game-info-text'>
+                                    <span style='color: #fc5603;'>&bull; </span>
+                                    <span>Iso: <a href='https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/' target="_blank">link</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -281,6 +321,102 @@
                     </div>
                     <div id='comment-rate-warning'>
                         <span><?php echo $language_config[$lang]['account-first']; ?></span>
+                    </div>
+                </div>
+            </div>
+            <div id='game-upload-container'>
+                <div id='top'>
+                    <div id='exit-preview'>
+                        <i class='fa fa-times'></i>
+                    </div>
+                </div>
+                <div id='inner'>
+                    <div id='game-cover'>
+                        <img src='\ps-classics\img\collection\ps2\AC_sneufesefse.jpg'>
+                    </div>
+                    <div id='header'>
+                        <div id='text'>
+                            <span><?php echo $language_config[$lang]['info']; ?></span>
+                        </div>
+                        <div id='header-line'>
+                            <div id='underline'></div>
+                        </div>
+                    </div>
+                    <div id='game-metadata'>
+                        <form id='metadata' action='' method=''>
+                            <input class='game-upload-field' type='text' name='game-name'  id='game-name'  placeholder='<?php echo $language_config[$lang]['game-name'];  ?> ...' autocomplete='off'>
+                            <input class='game-upload-field' type='text' name='game-genre' id='game-genre' placeholder='<?php echo $language_config[$lang]['game-genre']; ?> ...' autocomplete='off'>
+                                <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-genre'></i>
+
+                            <input class='game-upload-field' type='text' name='game-devs'  id='game-devs'  placeholder='<?php echo $language_config[$lang]['game-devs']; ?> ...' autocomplete='off'>
+                                <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-devs'></i>
+
+                            <input class='game-upload-field' type='text' name='game-publ'  id='game-publ'  placeholder='<?php echo $language_config[$lang]['game-publ']; ?> ...' autocomplete='off'>
+                                <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-publ'></i>
+
+                            <input class='game-upload-field' type='text' name='game-date'  id='game-date'  placeholder='<?php echo $language_config[$lang]['game-date']; ?> ...' autocomplete='off'>
+                                <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-date'></i>
+
+                            <input class='game-upload-field' type='text' name='game-iso'   id='game-iso'   placeholder='<?php echo $language_config[$lang]['game-iso']; ?> - https://example.com' autocomplete='off'>
+                            <div id='submit-game-upload'>
+                                <span class='multilang'><?php echo $language_config[$lang]['confirm-upload']; ?></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div id='game-genre-tooltip' class='game-upload-field-info-tooltip'>
+                        <div class='top'>
+                            <div class='inner'>
+                                <span><?php echo $language_config[$lang]['examples']; ?></span>
+                            </div>
+                        </div>
+                        <div class='mid'>
+                            <span>&bull; Action</span></br>
+                            <span>&bull; Action, Horror, Adventure</span>
+                        </div>
+                    </div>
+                    <div id='game-devs-tooltip' class='game-upload-field-info-tooltip'>
+                        <div class='top'>
+                            <div class='inner'>
+                                <span><?php echo $language_config[$lang]['examples']; ?></span>
+                            </div>
+                        </div>
+                        <div class='mid'>
+                            <span>&bull; Electronic Arts</span></br>
+                            <span>&bull; Electronic Arts, Overkill</span>
+                        </div>
+                    </div>
+                    <div id='game-publ-tooltip' class='game-upload-field-info-tooltip'>
+                        <div class='top'>
+                            <div class='inner'>
+                                <span><?php echo $language_config[$lang]['examples']; ?></span>
+                            </div>
+                        </div>
+                        <div class='mid'>
+                            <span>&bull; Rockstar Games</span></br>
+                            <span>&bull; Rockstar Games, Starbreeze</span>
+                        </div>
+                    </div>
+                    <div id='game-date-tooltip' class='game-upload-field-info-tooltip'>
+                        <div class='top'>
+                            <div class='inner'>
+                                <span><?php echo $language_config[$lang]['examples']; ?></span>
+                            </div>
+                        </div>
+                        <div class='mid'>
+                            <span>&bull; October 31 1998</span></br>
+                            <span>&bull; October 31 1998, July 10 2004</span>
+                        </div>
+                    </div>
+                    <div id='game-iso-tooltip' class='game-upload-field-info-tooltip'>
+                        <div class='top'>
+                            <div class='inner'>
+                                <span><?php echo $language_config[$lang]['examples']; ?></span>
+                            </div>
+                        </div>
+                        <div class='mid'>
+                            <span>&bull; October 31 1998</span></br>
+                            <span>&bull; October 31 1998, July 10 2004</span>
+                        </div>
                     </div>
                 </div>
             </div>

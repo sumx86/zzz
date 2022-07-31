@@ -58,6 +58,9 @@
                 </div>
                 <span id='name-text'>ps-classics</span>
             </a>
+            <div id='login-button'>
+                <span class='multilang'><?php echo $language_config[$lang]['sign-in']; ?></span>
+            </div>
         </div>
         <?php
             if(!$isLogin) {
@@ -65,11 +68,6 @@
                 <div id='top'>
                     <span id='text'>".$language_config[$lang]['sign-in']."</span>
                 </div>
-                <!--<div id='mid'>
-                    <div id='inner'>
-                        <span id='text'>Имаш съществуващ акаунт? Влез сега</span>
-                    </div>
-                </div>-->
                 <div id='form-container'>
                     <form id='login-form' action='' method='' data-action='login'>
                         <input  class='input-field' type='text' name='login-username-field' id='login-username-field' placeholder='".$language_config[$lang]['user-or-email']."'>

@@ -352,13 +352,20 @@ var SimpleModalEvents = {
                     $(self._previewContainer + " > #preview > #game-cover > img:first").attr('src', $(this).find('.cover:first > img').attr('src'));
                     $(self._previewContainer + " > #preview > #top > #inner > span").text($(this).attr('data-name'));
 
-                    $('#item-information > #inner > #uploader > #display-name > span:first').text($(this).attr('data-uploader'));
-
                     $("#item-actions > #likes,#item-actions > #favourited").attr('class', 'action-button ' + id);
                     $('#item-actions > #likes > span > span:first').text($(this).find('.collection-item-slider > .likes').attr('data-count'));
                     $('#item-actions > #favourited > span > span:first').text($(this).find('.collection-item-slider > .favourited').attr('data-count'));
                     $('#item-actions > #comments > span > span:first').text($(this).find('.collection-item-slider > .comments').attr('data-count'));
                     $('#item-actions > #views > span > span:first').text($(this).find('.collection-item-slider > .views').attr('data-count'));
+
+                    // SETTING THE METADATA
+                    var metadata = $.parseJSON($(this).attr('data-metadata'));
+                    $('#item-information > #inner > #uploader  > #display-name > span:first').text($(this).attr('data-uploader'));
+                    $('#item-information > #inner > #game-info > #release-date > span').eq(1).find('span:first').text(metadata['release_dates']);
+                    $('#item-information > #inner > #game-info > #genre        > span').eq(1).find('span:first').text(metadata['genres']);
+                    $('#item-information > #inner > #game-info > #platforms    > span').eq(1).find('span:first').text(metadata['platforms']);
+                    $('#item-information > #inner > #game-info > #developers   > span').eq(1).find('span:first').text(metadata['developers']);
+                    $('#item-information > #inner > #game-info > #publishers   > span').eq(1).find('span:first').text(metadata['publishers']);
 
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
@@ -528,6 +535,40 @@ var SimpleModalEvents = {
                     }
                 }, self);
             });
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('game-upload-module', {
+        initialize: function() {
+            var _self = this;
+            $(document).ready(function() {
+                $('#game-upload-container > #top > #exit-preview').click(function() {
+                    $(this).parent().parent().css('display', 'none');
+                    $('.game-upload-field').val('');
+                });
+                $('.game-upload-tooltip-trigger').click(function() {
+                    _self._toggleFieldInfoTooltip($(this).attr('data-target'));
+                });
+            });
+            console.log('GAME-UPLOAD-MODULE');
+        },
+        _toggleFieldInfoTooltip: function(fieldID) {
+            var _id = fieldID + '-tooltip';
+            var _self = this;
+            $('.game-upload-field-info-tooltip').each(function(index, element) {
+                var _element = $(element);
+                if(_element.attr('id') != _id) {
+                    $(element).css('display', 'none');
+                } else {
+                    _self._toggleTooltip(_id);
+                }
+            });
+        },
+        _toggleTooltip: function(id) {
+            var tooltipID = '#' + id;
+            var display = $(tooltipID).css('display') == 'block' ? 'none' : 'block' ;
+            $(tooltipID).css('display', display);
         }
     });
 })(jQuery);

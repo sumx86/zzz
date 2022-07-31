@@ -107,6 +107,10 @@
             ?>
         </div>
 
+        <section id='user-section'>
+            
+        </section>
+
         <div id='lang-container'>
             <div id='inner'>
                 <div id='en' class='lang-img-container' data-lang='en'>
