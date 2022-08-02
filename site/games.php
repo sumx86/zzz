@@ -170,14 +170,15 @@
                         $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
                         if(_Array::size($arrayResult) > 0) {
                             foreach($arrayResult as $item) {
-                                
+
                                 $gameMetadata = json_encode([
-                                    'genres' => $item['genres'],
-                                    'developers' => $item['developers'],
-                                    'publishers' => $item['publishers'],
-                                    'release-dates' => $item['release_dates']
+                                    'genres'        => $item['genres'],
+                                    'developers'    => $item['developers'],
+                                    'publishers'    => $item['publishers'],
+                                    'release-dates' => $item['release_dates'],
+                                    'platforms'     => $item['platforms']
                                 ]);
-                                
+
                                 echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-metadata='".$gameMetadata."'>
                                     <div class='cover'>
                                         <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
@@ -265,7 +266,7 @@
                         <div id='inner'>
                             <div id='uploader'>
                                 <div id='image' class='uploader-data' data-uid='1' data-acc>
-                                    <img src='\ps-classics\img\artworks-000616474873-i3mr2m-t500x500.jpg'>
+                                    <img src='\ps-classics\img\51N9LyN4gZL._AC_UX569_.jpg'>
                                 </div>
                                 <div id='display-name' class='uploader-data' data-uid='1' data-acc>
                                     <span>RobertoRicardo2000</span>
@@ -274,23 +275,23 @@
                             <div id='game-info'>
                                 <div id='release-date' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>
-                                    <span>Release dates: <span>October 30, 2006</span></span>
+                                    <span><?php echo $language_config[$lang]['game-date']; ?>: <span></span></span>
                                 </div>
                                 <div id='genre' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>
-                                    <span>Genres: <span>October 30, 2006</span></span>
+                                    <span><?php echo $language_config[$lang]['game-genre']; ?>: <span></span></span>
                                 </div>
                                 <div id='platforms' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>
-                                    <span>Platforms: <span>October 30, 2006</span></span>
+                                    <span><?php echo $language_config[$lang]['game-pltf']; ?>: <span></span></span>
                                 </div>
                                 <div id='developers' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>
-                                    <span>Developers: <span>October 30, 2006</span></span>
+                                    <span><?php echo $language_config[$lang]['game-devs']; ?>: <span></span></span>
                                 </div>
                                 <div id='publishers' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>
-                                    <span>Publishers: <span>October 30, 2006</span></span>
+                                    <span><?php echo $language_config[$lang]['game-publ']; ?>: <span></span></span>
                                 </div>
                                 <div id='iso' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>

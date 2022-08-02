@@ -64,6 +64,7 @@
             'game-publ'  => 'Издатели',
             'game-date'  => 'Дати на издаване',
             'game-iso'   => 'Линк към iso файла',
+            'game-pltf'  => 'Платформи',
             'examples'   => 'Примери',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
@@ -162,6 +163,7 @@
             'game-publ'  => 'Publishers',
             'game-date'  => 'Release dates',
             'game-iso'   => 'Link to iso',
+            'game-pltf'  => 'Platforms',
             'examples'   => 'Examples',
             'login-errors' => [
                 'empty' => 'This field is required!',

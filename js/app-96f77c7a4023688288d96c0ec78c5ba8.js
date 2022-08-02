@@ -358,14 +358,15 @@ var SimpleModalEvents = {
                     $('#item-actions > #comments > span > span:first').text($(this).find('.collection-item-slider > .comments').attr('data-count'));
                     $('#item-actions > #views > span > span:first').text($(this).find('.collection-item-slider > .views').attr('data-count'));
 
-                    // SETTING THE METADATA
+                    // METADATA START
                     var metadata = $.parseJSON($(this).attr('data-metadata'));
                     $('#item-information > #inner > #uploader  > #display-name > span:first').text($(this).attr('data-uploader'));
-                    $('#item-information > #inner > #game-info > #release-date > span').eq(1).find('span:first').text(metadata['release_dates']);
+                    $('#item-information > #inner > #game-info > #release-date > span').eq(1).find('span:first').text(metadata['release-dates']);
                     $('#item-information > #inner > #game-info > #genre        > span').eq(1).find('span:first').text(metadata['genres']);
                     $('#item-information > #inner > #game-info > #platforms    > span').eq(1).find('span:first').text(metadata['platforms']);
                     $('#item-information > #inner > #game-info > #developers   > span').eq(1).find('span:first').text(metadata['developers']);
                     $('#item-information > #inner > #game-info > #publishers   > span').eq(1).find('span:first').text(metadata['publishers']);
+                    // METADATA END
 
                     $(self._previewContainer).css('display', 'block');
                     $('#lang-container').css('z-index', '5');
@@ -550,8 +551,8 @@ var SimpleModalEvents = {
                 $('.game-upload-tooltip-trigger').click(function() {
                     _self._toggleFieldInfoTooltip($(this).attr('data-target'));
                 });
+                _self._handleFileUpload();
             });
-            console.log('GAME-UPLOAD-MODULE');
         },
         _toggleFieldInfoTooltip: function(fieldID) {
             var _id = fieldID + '-tooltip';
@@ -569,6 +570,13 @@ var SimpleModalEvents = {
             var tooltipID = '#' + id;
             var display = $(tooltipID).css('display') == 'block' ? 'none' : 'block' ;
             $(tooltipID).css('display', display);
+        },
+        _handleFileUpload: function() {
+            $(':file').on('change', function() {
+                if(typeof FileReader != 'undefined') {
+                    console.log('nice');
+                }
+            })
         }
     });
 })(jQuery);
