@@ -120,7 +120,7 @@ body {
     position: absolute;
     width: 60%;
     height: 100%;
-    left: 20%;
+    left: 30%;
     background-color: transparent;
     cursor: pointer;
 }
@@ -2480,7 +2480,7 @@ footer {
 
 #game-upload-container {
     position: absolute;
-    display: block;
+    display: none;
     width: 100%;
     height: 91%;
     background-color: rgb(0, 0, 0);
@@ -2505,7 +2505,7 @@ footer {
     background-color: #04070a;
 }
 
-#game-upload-container > #inner > #game-cover {
+#game-upload-container > #inner > #game-upload-cover {
     position: absolute;
     width: 24%;
     height: 70%;
@@ -2516,7 +2516,7 @@ footer {
     background-color: rgb(46, 15, 46);
 }
 
-#game-upload-container > #inner > #game-cover > img {
+#game-upload-container > #inner > #game-upload-cover > img {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -2664,22 +2664,27 @@ footer {
 
 #game-genre-tooltip {
     display: none;
-    top: 21%;
+    top: 19.5%;
+}
+
+#game-pltf-tooltip {
+    display: none;
+    top: 27.5%;
 }
 
 #game-devs-tooltip {
     display: none;
-    top: 30%;
+    top: 36%;
 }
 
 #game-publ-tooltip {
     display: none;
-    top: 39%;
+    top: 44%;
 }
 
 #game-date-tooltip {
     display: none;
-    top: 48%;
+    top: 52%;
 }
 
 #game-iso-tooltip {
@@ -2695,11 +2700,11 @@ footer {
     padding-left: 13px;
     padding-top: 9px;
     padding-bottom: 9px;
-    margin-top: 5%;
+    margin-top: 4%;
     color: white;
     background-color: black;
     outline: none;
-    border: 1px solid #495461;
+    border: 1px solid #323942;
     border-radius: 5px;
     font-size: 0.9em;
 }
@@ -2713,7 +2718,7 @@ footer {
     background-color: #96afff;
     border-radius: 3px;
     left: 26%;
-    top: 92%;
+    top: 98%;
     cursor: pointer;
 }
 
