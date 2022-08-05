@@ -542,14 +542,19 @@ var SimpleModalEvents = {
 (function($) {
     $.initCall('game-upload-module', {
         _lastError: '',
+        _files: null,
+        
         initialize: function() {
             var _self = this;
             $(document).ready(function() {
+                $(document).on('game-preview-done', _self._registerSubmitEvent.bind(_self));
+
                 $('#game-upload-container > #top > #exit-preview').click(function() {
                     $(this).parent().parent().css('display', 'none');
                     $('.game-upload-field').val('');
                     $("#upload-game-form")[0].reset();
                 });
+
                 $('.game-upload-tooltip-trigger').click(function() {
                     _self._toggleFieldInfoTooltip($(this).attr('data-target'));
                 });
@@ -576,6 +581,7 @@ var SimpleModalEvents = {
         _handleFileUpload: function() {
             var _self = this;
             $(':file').on('change', function() {
+                _self._files = this.files;
                 _self._checkIsLegitFile(this.files);
                 if(_self._lastError != '') {
                     _self._showError(_self._lastError, this.files[0].name);
@@ -585,14 +591,39 @@ var SimpleModalEvents = {
             })
         },
         _checkIsLegitFile: function(filedata) {
-            var nameData     = filedata[0].name.split('.');
-            var filetypeData = filedata[0].type.split('/');
-            if($.inArray(nameData[nameData.length - 1], ['jpeg', 'jpg', 'png']) == -1) {
+            var nameData = filedata[0].name.split('.');
+            if($.inArray(nameData[nameData.length - 1], ['jpeg', 'jpg']) == -1) {
                 this._lastError = 'extension-error';
-            } else if($.inArray(filetypeData[1], ['jpeg', 'jpg', 'png']) == -1) {
+            } else if(!filedata[0].type.match(/image/)) {
                 this._lastError = 'file-type-error';
             } else {
                 this._lastError = '';
+            }
+        },
+        _registerSubmitEvent: function() {
+            $('#submit-game-upload').on('click', this._proceedUpload.bind(this));
+        },
+        _proceedUpload: function() {
+            if(typeof FormData != 'undefined') {
+                var form_data = new FormData();                  
+                form_data.append('file', this._files[0]);
+                $.doAjax({
+                    url: '/ajax/upload',
+                    data: form_data, dataType: 'text', cache: false, contentType: false, processData: false
+                })
+                .done(function(jqXHR, status, req) {
+                    console.log(jqXHR);
+                    if(status == 'success') {
+                        if(jqXHR.indexOf('{') == 0) {
+                            var response = $.parseJSON(jqXHR);
+                            if(response.hasOwnProperty('success')) {
+                                
+                            } else {
+                                _self._handleServerErrors(response.error);
+                            }
+                        }
+                    }
+                });
             }
         },
         _tryTriggerPreview: function(filedata) {
@@ -605,6 +636,7 @@ var SimpleModalEvents = {
                     $('#game-upload-cover').css("background-image", "url("+loadedFile.result+")");
                     $('#game-upload-cover').css("background-size", "cover");
                     $('#game-upload-cover').css("background-position", "center center");
+                    $(document).trigger('game-preview-done', {});
                 };
                 reader.readAsDataURL(filedata);
             }
@@ -620,6 +652,9 @@ var SimpleModalEvents = {
                 default:
                     break;
             }
+        },
+        _handleServerErrors: function(errors) {
+            
         }
     });
 })(jQuery);

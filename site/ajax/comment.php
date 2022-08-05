@@ -66,7 +66,8 @@
 
             if(ItemExists($gameID, 'game', $db)) {
                 $comment = $data->text;
-                echo 'post -- ' . $gameID . " -- " . "yeaah" . " -- " . $comment;
+                //echo 'post -- ' . $gameID . " -- " . "yeaah" . " -- " . $comment;
+                var_dump(Str::splitfixed($comment, 5));
             }
         }
         return;

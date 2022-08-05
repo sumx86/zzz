@@ -130,6 +130,15 @@
         }
 
         /*
+         * Replace all occurrences of each element in the array with its associated value
+         */
+        public static function replace_all($string, $array) {
+            // " -> [quot1]
+            // ' -> [quot2]
+            // ` -> [quot3]
+        }
+
+        /*
          * Truncate a string to the number of characters specified
          */
         public static function truncate($string, $numchars = 0) {
