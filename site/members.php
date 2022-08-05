@@ -106,9 +106,6 @@
                                 <span>".htmlentities(Server::retrieve_session('user', 'username'), ENT_QUOTES, 'UTF-8')."</span>
                             </div>
                         </div>
-                        <div id='dropdown-menu-switch'>
-                            <i class='fa fa-bars'></i>
-                        </div>
                     </div>";
 
                     echo "<div id='sign-out'>

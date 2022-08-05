@@ -541,12 +541,14 @@ var SimpleModalEvents = {
 })(jQuery);
 (function($) {
     $.initCall('game-upload-module', {
+        _lastError: '',
         initialize: function() {
             var _self = this;
             $(document).ready(function() {
                 $('#game-upload-container > #top > #exit-preview').click(function() {
                     $(this).parent().parent().css('display', 'none');
                     $('.game-upload-field').val('');
+                    $("#upload-game-form")[0].reset();
                 });
                 $('.game-upload-tooltip-trigger').click(function() {
                     _self._toggleFieldInfoTooltip($(this).attr('data-target'));
@@ -568,15 +570,56 @@ var SimpleModalEvents = {
         },
         _toggleTooltip: function(id) {
             var tooltipID = '#' + id;
-            var display = $(tooltipID).css('display') == 'block' ? 'none' : 'block' ;
+            var display = $(tooltipID).css('display') == 'block' ? 'none' : 'block';
             $(tooltipID).css('display', display);
         },
         _handleFileUpload: function() {
+            var _self = this;
             $(':file').on('change', function() {
-                if(typeof FileReader != 'undefined') {
-                    console.log('nice');
+                _self._checkIsLegitFile(this.files);
+                if(_self._lastError != '') {
+                    _self._showError(_self._lastError, this.files[0].name);
+                } else {
+                    _self._tryTriggerPreview(this.files[0]);
                 }
             })
+        },
+        _checkIsLegitFile: function(filedata) {
+            var nameData     = filedata[0].name.split('.');
+            var filetypeData = filedata[0].type.split('/');
+            if($.inArray(nameData[nameData.length - 1], ['jpeg', 'jpg', 'png']) == -1) {
+                this._lastError = 'extension-error';
+            } else if($.inArray(filetypeData[1], ['jpeg', 'jpg', 'png']) == -1) {
+                this._lastError = 'file-type-error';
+            } else {
+                this._lastError = '';
+            }
+        },
+        _tryTriggerPreview: function(filedata) {
+            if(typeof FileReader != 'undefined') {
+                var reader = new FileReader();
+                // Load file
+                reader.onload = function(event) {
+                    var loadedFile = event.target;
+                    $('#game-upload-container').css('display', 'block');
+                    $('#game-upload-cover').css("background-image", "url("+loadedFile.result+")");
+                    $('#game-upload-cover').css("background-size", "cover");
+                    $('#game-upload-cover').css("background-position", "center center");
+                };
+                reader.readAsDataURL(filedata);
+            }
+        },
+        _showError: function(errortype, filename) {
+            switch(errortype) {
+                case "extension-error":
+                    console.log('extension error -> ' + filename);
+                    break;
+                case "file-type-error":
+                    console.log('file-type error -> ' + filename);
+                    break;
+                default:
+                    break;
+            }
         }
     });
 })(jQuery);

@@ -122,11 +122,7 @@
                                     <span>".htmlentities(Str::truncate(Server::retrieve_session('user', 'username'), 9), ENT_QUOTES, 'UTF-8')."</span>
                                 </div>
                             </div>
-                            <div id='dropdown-menu-switch'>
-                                <i class='fa fa-bars'></i>
-                            </div>
                         </div>";
-                        
                     echo "<div id='sign-out'>
                             <i class='fa fa-power-off'></i>
                         </div>";

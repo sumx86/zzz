@@ -106,9 +106,6 @@
                                 <span>".htmlentities(Str::truncate(Server::retrieve_session('user', 'username'), 9), ENT_QUOTES, 'UTF-8')."</span>
                             </div>
                         </div>
-                        <div id='dropdown-menu-switch'>
-                            <i class='fa fa-bars'></i>
-                        </div>
                     </div>";
                     
                     echo "<div id='sign-out'>
@@ -332,8 +329,8 @@
                     </div>
                 </div>
                 <div id='inner'>
-                    <div id='game-cover'>
-                        <img src='\ps-classics\img\collection\ps2\AC_sneufesefse.jpg'>
+                    <div id='game-upload-cover'>
+                        
                     </div>
                     <div id='header'>
                         <div id='text'>
@@ -348,6 +345,9 @@
                             <input class='game-upload-field' type='text' name='game-name'  id='game-name'  placeholder='<?php echo $language_config[$lang]['game-name'];  ?> ...' autocomplete='off'>
                             <input class='game-upload-field' type='text' name='game-genre' id='game-genre' placeholder='<?php echo $language_config[$lang]['game-genre']; ?> ...' autocomplete='off'>
                                 <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-genre'></i>
+
+                            <input class='game-upload-field' type='text' name='game-pltf'  id='game-pltf'  placeholder='<?php echo $language_config[$lang]['game-pltf']; ?> ...' autocomplete='off'>
+                                <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-pltf'></i>
 
                             <input class='game-upload-field' type='text' name='game-devs'  id='game-devs'  placeholder='<?php echo $language_config[$lang]['game-devs']; ?> ...' autocomplete='off'>
                                 <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-devs'></i>
@@ -373,6 +373,17 @@
                         <div class='mid'>
                             <span>&bull; Action</span></br>
                             <span>&bull; Action, Horror, Adventure</span>
+                        </div>
+                    </div>
+                    <div id='game-pltf-tooltip' class='game-upload-field-info-tooltip'>
+                        <div class='top'>
+                            <div class='inner'>
+                                <span><?php echo $language_config[$lang]['examples']; ?></span>
+                            </div>
+                        </div>
+                        <div class='mid'>
+                            <span>&bull; PlayStation 2</span></br>
+                            <span>&bull; PlayStation 2, macOS, PlayStation 3</span>
                         </div>
                     </div>
                     <div id='game-devs-tooltip' class='game-upload-field-info-tooltip'>
