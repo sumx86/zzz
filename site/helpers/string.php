@@ -133,9 +133,26 @@
          * Replace all occurrences of each element in the array with its associated value
          */
         public static function replace_all($string, $array) {
-            // " -> [quot1]
-            // ' -> [quot2]
-            // ` -> [quot3]
+            $newString = '';
+            if(count($array) > 0) {
+                $newString = str_replace(array_keys($array), array_values($array), $string);
+            }
+            return $newString;
+        }
+
+        /*
+         * Replace single and double quotes
+         */
+        public static function replace_all_quotes($string, $inverse = false) {
+            return $inverse ? self::replace_all($string, ['[quot1]' => '\'', '[quot2]' => '"'])
+                            : self::replace_all($string, ['\'' => '[quot1]', '"' => '[quot2]']);
+        }
+
+        /*
+         * Convert quotes to html entities
+         */
+        public static function htmlEnt($string) {
+            return htmlentities($string, ENT_QUOTES, 'UTF-8');
         }
 
         /*

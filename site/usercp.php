@@ -36,7 +36,8 @@
             global $language_config;
             global $lang;
             
-            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from users where username = ?", [$req[$userField]], true, DB::ALL_ROWS);
+            $username = Str::replace_all_quotes($req[$userField]);
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from users where username = ?", [$username], true, DB::ALL_ROWS);
             if( _Array::size($result) > 0 ) {
                 if(password_verify($req[$passField], $result[0]['password'])) {
                     self::setSessionData($result[0]);
@@ -57,7 +58,8 @@
             global $language_config;
             global $lang;
             
-            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where email = ?", [$req[$emailField]], true, DB::ALL_ROWS);
+            $email  = Str::replace_all_quotes($req[$emailField]);
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where email = ?", [$email], true, DB::ALL_ROWS);
             if( _Array::size($result) <= 0 ) {
                 self::$errors[$emailField] = $language_config[$lang]['reset-pass-errors']['wrong-e'];
                 return false;
@@ -98,15 +100,18 @@
             global $language_config;
             global $lang;
 
-            if(!self::assertUsername($req[$userField])) {
+            $username = Str::replace_all_quotes($req[$userField]);
+            $usermail = Str::replace_all_quotes($req[$emailField]);
+
+            if(!self::assertUsername($username)) {
                 self::$errors[$userField] = $language_config[$lang]['register-errors']['username-format'];
                 return false;
             }
-            if( self::userExists($req[$userField]) ) {
+            if( self::userExists($username) ) {
                 self::$errors[$userField] = $language_config[$lang]['register-errors']['existing-user'];
                 return false;
             }
-            if( self::emailExists($req[$emailField]) ) {
+            if( self::emailExists($usermail) ) {
                 self::$errors[$emailField] = $language_config[$lang]['register-errors']['existing-email'];
                 return false;
             }
@@ -120,7 +125,7 @@
                 self::$errors[$passcField] = '';
                 return false;
             }
-            self::$dbInstance->rawQuery("insert into users (username, email, password) values (?, ?, ?)", [$req[$userField], $req[$emailField], password_hash($req[$passField], PASSWORD_BCRYPT)], false);
+            self::$dbInstance->rawQuery("insert into users (username, email, password) values (?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT)], false);
             return true;
         }
 
@@ -168,6 +173,11 @@
             return true;
         }
 
+
+
+
+
+
         /*
          * Check if a $userId has rated (liked or favourited) a $gameID
          */
@@ -214,6 +224,11 @@
             self::$dbInstance->rawQuery($query, [$gameID, $gameID, $userId], false, false, true);
         }
 
+
+
+
+
+
         /*
          * Check if a $userId has liked a $commentID
          */
@@ -236,6 +251,21 @@
         public static function unrateComment($userId, $commentID) {
             self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes-1 where comment_id=?; delete from rated_comments where comment_id=? and liked_by_user_id=?", [$commentID, $commentID, $userId], false, false, true);
         }
+
+        /*
+         * Post a comment
+         */
+        public static function postComment($comment, $commentID, $gameID, $username, $userID, $date) {
+            // $comment is an array of strings
+            foreach($comment as $commentText) {
+                self::$dbInstance->rawQuery("insert into comments (comment, item_id, comment_by, comment_by_id, comment_date, comment_id) values (?, ?, ?, ?, ?, ?)", [$commentText, $gameID, $username, $userID, $date, $commentID], false, false, true);
+            }
+        }
+
+
+        
+
+
 
         /*
          * Increment the views count for a $gameID

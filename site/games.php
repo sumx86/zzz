@@ -1,6 +1,7 @@
 <?php
     require_once "helpers/string.php";
     require_once "helpers/array.php";
+    require_once "helpers/util.php";
     require_once "server.php";
     require_once "config/lang.php";
     require_once "config/db.php";
@@ -97,13 +98,14 @@
                     <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
                 </div>";
                 } else {
+                    $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
                     echo "<div id='login-success-container'>
                         <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
                             <div id='image'>
                                 <img src='\ps-classics\img\oth\pngegg.png'>
                             </div>
                             <div id='username'>
-                                <span>".htmlentities(Str::truncate(Server::retrieve_session('user', 'username'), 9), ENT_QUOTES, 'UTF-8')."</span>
+                                <span>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
                             </div>
                         </div>
                     </div>";

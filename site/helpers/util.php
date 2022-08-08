@@ -45,5 +45,11 @@
             }
             return true;
         }
+
+        public static function get_current_date_and_time($includeTime) {
+            date_default_timezone_set('Europe/Sofia');
+            $date = $includeTime ? 'm/d/Y H:i:s' : 'm/d/Y';
+            return date($date);
+        }
     }
 ?>

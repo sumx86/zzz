@@ -405,7 +405,7 @@ var SimpleModalEvents = {
                 return;
             }
             for(var i = 0; i < commentsData.length; i++) {
-                var html = $.parseHTML("<div class='comment-box'>\
+                var html = $.parseHTML("<div class='comment-box x"+commentsData[i]['comment']['user_id']+"'>\
                     <div class='inner'>\
                         <div class='user-pic'>\
                             <img src='\\ps-classics\\img\\93401019.jfif'>\
@@ -531,7 +531,14 @@ var SimpleModalEvents = {
                             data: 'action=post&data=' + JSON.stringify({'item':target.attr('data-item'),'text':$('#collection-item-comment-input-field').val()})
                         }, false)
                         .done(function(jqXHR, status, req) {
-                            console.log(jqXHR + ' -- ' + status + ' -- ' + req);
+                            if(status == 'success') {
+                                if(jqXHR.indexOf('{') == 0) {
+                                    var response = $.parseJSON(jqXHR);
+                                    if(response.hasOwnProperty('success')) {
+                                        //location.reload();
+                                    }
+                                }
+                            }
                         });
                     }
                 }, self);
