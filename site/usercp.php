@@ -262,6 +262,13 @@
             }
         }
 
+        /*
+         * Increment the comments count in games table
+         */
+        public static function incrementComments($gameID) {
+            self::$dbInstance->rawQuery("update games set comments=comments+1 where id=?", [$gameID], false, false, true);
+        }
+
 
         
 

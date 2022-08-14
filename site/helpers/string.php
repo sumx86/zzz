@@ -144,8 +144,8 @@
          * Replace single and double quotes
          */
         public static function replace_all_quotes($string, $inverse = false) {
-            return $inverse ? self::replace_all($string, ['[quot1]' => '\'', '[quot2]' => '"'])
-                            : self::replace_all($string, ['\'' => '[quot1]', '"' => '[quot2]']);
+            return $inverse ? self::replace_all($string, ['[quot1]' => '\'', '[quot2]' => '"', '[colon]' => ';'])
+                            : self::replace_all($string, ['\'' => '[quot1]', '"' => '[quot2]', ';' => '[colon]']);
         }
 
         /*

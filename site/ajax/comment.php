@@ -79,9 +79,8 @@
                     $userID   = intval(Server::retrieve_session('user', 'id'));
 
                     UserCP::postComment($comment, $newCommentID, $gameID, $username, $userID, Util::get_current_date_and_time(false));
-                    Response::throw_json_string(
-                        ["success" => '']
-                    );
+                    UserCP::incrementComments($gameID);
+                    Response::throw_json_string(["success" => '']);
                 }
             }
         }

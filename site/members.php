@@ -10,7 +10,7 @@
     
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
-    $search  = Server::GetParam('search-member');
+    $search  = Str::replace_all_quotes(Server::GetParam('search-member'));
     
     $db         = new DB(false);
     $pagination = new Pagination([
@@ -20,6 +20,12 @@
         'table' => 'users',
         'db' => $db
     ]);
+    
+    if($pagination->Last() > 1) {
+        $offset = $pagination->GetCurrentPage() * 27;
+    } else {
+        $offset = 0;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,12 +137,29 @@
             <div id='listing'>
                 <?php
                     if(Str::is_empty($search)) {
-                        if($pagination->Last() > 1) {
-                            $offset = $pagination->GetCurrentPage() * 27;
-                        } else {
-                            $offset = 0;
-                        }
                         $usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users limit 27 offset " . $offset, [], true, DB::ALL_ROWS);
+                        if(_Array::size($usersList) > 0) {
+                            foreach($usersList as $user) {
+
+                                $username = Str::truncate(Str::replace_all_quotes($user['username'], true), 9);
+                                
+                                echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
+                                    <div class='member-picture'>
+                                        <img src='\\ps-classics\\img\\51N9LyN4gZL._AC_UX569_.jpg'>
+                                    </div>
+                                    <div class='member-info'>
+                                        <div class='username'>
+                                            <span class='multilang'>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
+                                        </div>
+                                        <div class='following'>
+                                            <span>".$language_config[$lang]['following'].": ".intval($user['following'])."</span>
+                                        </div>
+                                    </div>
+                                </div>";
+                            }
+                        }
+                    } else {
+                        $usersList = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from users where lower( users.username ) like '%".$search."%' limit 27 offset " . $offset, [], true, DB::ALL_ROWS);
                         if(_Array::size($usersList) > 0) {
                             foreach($usersList as $user) {
 
