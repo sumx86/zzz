@@ -51,11 +51,12 @@ CREATE TABLE `comments` (
   `comment` varchar(255) NOT NULL DEFAULT '',
   `item_id` int NOT NULL DEFAULT '0',
   `comment_by` varchar(100) NOT NULL DEFAULT '',
+  `comment_by_id` int NOT NULL DEFAULT '0',
   `comment_date` varchar(35) NOT NULL DEFAULT '',
   `comment_id` int NOT NULL DEFAULT '0',
   `comment_likes` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'They didnt know what was going on in that room hehehe',7,'_SomeUser98','7/16/2022',23,3),(2,'Or maybe they did but just',7,'_SomeUser98','7/16/2022',24,3),(3,'pretended lol haha xD',7,'_SomeUser98','7/16/2022',24,3);
+INSERT INTO `comments` VALUES (1,'They didnt know what was going on in that room hehehe',7,'devArt98',3,'7/16/2022',23,4),(2,'Or maybe they did but just',7,'devArt98',3,'7/16/2022',24,4),(3,'pretended lol haha xD',7,'devArt98',3,'7/16/2022',24,4),(8,'This game is freaking awesome!',7,'anto98',2,'08/06/2022',25,3),(24,'zzz',7,'devArt98',3,'08/07/2022',30,1),(25,'Awesomeeeeee!!!!!',7,'anto98',2,'08/07/2022',31,2),(26,'Tomb Raider => The BEST GAME SERIES EVAAAAH!!!!',10,'Motha[quot1]Fucka',4,'08/07/2022',32,1),(23,'I love this game!!!',9,'devArt98',3,'08/07/2022',29,3),(27,'Fuck yeaaah!!!!',16,'Motha[quot1]Fucka',4,'08/07/2022',33,1),(28,'This game is freaking AWESOME!!![quot1]',15,'Motha[quot1]Fucka',4,'08/10/2022',34,0),(29,'Brat I grew up with this game <3',17,'Motha[quot1]Fucka',4,'08/10/2022',35,1);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +93,7 @@ CREATE TABLE `games` (
   `release_dates` varchar(255) NOT NULL DEFAULT '',
   `platforms` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +102,7 @@ CREATE TABLE `games` (
 
 LOCK TABLES `games` WRITE;
 /*!40000 ALTER TABLE `games` DISABLE KEYS */;
-INSERT INTO `games` VALUES (1,'Midnight Club 3 Dub Edition Remix','ps2','71OruZvHa4L._SL1415_.jpg','RobertoRicardo2000',2,1,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(2,'Midnight Club 2','ps2','Midnight_Club_2_PAL(de)-Front.jpg','RobertoRicardo2000',0,0,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(3,'Juiced 2 Hot Import Nights','ps2','51zETZEerpL._SY445_.jpg','RobertoRicardo2000',1,0,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(4,'Grand Theft Auto San Andreas','ps2','51SV62HXM1L._AC_.jpg','RobertoRicardo2000',0,0,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(5,'Grand Theft Auto Vice City','ps2','61F2X96DR9L._AC_.jpg','RobertoRicardo2000',1,1,0,1,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(6,'Batman Begins 2005','ps2','51QVCS4XCVL._AC_.jpg','RobertoRicardo2000',1,0,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(7,'Need For Speed Carbon','ps2','AC_sneufesefse.jpg','anto98',3,3,0,3,'https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(8,'Need For Speed Most Wanted','ps2','AC_NFSMW_swedsne.jpg','RobertoRicardo2000',2,1,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(9,'Tomb Raider Legend','ps2','51DG31T4PDL._SY445_.jpg','RobertoRicardo2000',3,3,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(10,'Tomb Raider Anniversary','ps2','51GCi6BnCXL._AC_.jpg','RobertoRicardo2000',2,3,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(11,'Without Warning','ps2','51Y6VCAVHPL._AC_.jpg','RobertoRicardo2000',0,0,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(12,'Kuon 2004','ps2','Kuon_NA_cover.jpg','anto98',1,1,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(14,'Clock Tower 3','ps2','51M2AH7S15L._SY445_.jpg','anto98',2,2,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(15,'Forbidden Siren 2','ps2','R_cover.jpg','devArt98',1,1,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(16,'Tomb Raider Underworld','ps2','81gIhTH5BkL._SL1500_.jpg','anto98',0,0,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE');
+INSERT INTO `games` VALUES (1,'Midnight Club 3 Dub Edition Remix','ps2','71OruZvHa4L._SL1415_.jpg','RobertoRicardo2000',3,2,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(2,'Midnight Club 2','ps2','Midnight_Club_2_PAL(de)-Front.jpg','RobertoRicardo2000',1,1,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(3,'Juiced 2 Hot Import Nights','ps2','51zETZEerpL._SY445_.jpg','RobertoRicardo2000',1,0,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(4,'Grand Theft Auto San Andreas','ps2','51SV62HXM1L._AC_.jpg','RobertoRicardo2000',1,1,0,4,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(5,'Grand Theft Auto Vice City','ps2','61F2X96DR9L._AC_.jpg','RobertoRicardo2000',1,1,0,2,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(6,'Batman Begins 2005','ps2','51QVCS4XCVL._AC_.jpg','RobertoRicardo2000',2,1,0,4,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(7,'Need For Speed Carbon','ps2','AC_sneufesefse.jpg','anto98',4,4,5,4,'https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(8,'Need For Speed Most Wanted','ps2','AC_NFSMW_swedsne.jpg','RobertoRicardo2000',2,1,0,4,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(9,'Tomb Raider Legend','ps2','51DG31T4PDL._SY445_.jpg','RobertoRicardo2000',4,4,1,4,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(10,'Tomb Raider Anniversary','ps2','51GCi6BnCXL._AC_.jpg','RobertoRicardo2000',3,4,1,4,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(11,'Without Warning','ps2','51Y6VCAVHPL._AC_.jpg','RobertoRicardo2000',1,1,0,4,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(12,'Kuon 2004','ps2','Kuon_NA_cover.jpg','anto98',2,2,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(14,'Clock Tower 3','ps2','51M2AH7S15L._SY445_.jpg','anto98',3,3,0,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(15,'Forbidden Siren 2','ps2','R_cover.jpg','devArt98',2,1,1,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(16,'Tomb Raider Underworld','ps2','81gIhTH5BkL._SL1500_.jpg','anto98',2,2,1,3,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE'),(17,'WWE SmackDown vs. Raw 2009','ps2','51hSE75DQ+L._SY445_.jpg','anto98',1,1,1,1,'','Action, Racing, Adventures','EA Black Box, EA Vancouver, Global VR, MORE','Electronic Arts, Warner Bros. Interactive Entertainment','October 31 1998','PlayStation 2, macOS, Microsoft Windows, PlayStation 3, MORE');
 /*!40000 ALTER TABLE `games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +118,7 @@ CREATE TABLE `rated_comments` (
   `comment_id` int NOT NULL DEFAULT '0',
   `liked_by_user_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=256 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +127,7 @@ CREATE TABLE `rated_comments` (
 
 LOCK TABLES `rated_comments` WRITE;
 /*!40000 ALTER TABLE `rated_comments` DISABLE KEYS */;
-INSERT INTO `rated_comments` VALUES (109,23,1),(89,24,1),(141,23,2),(134,24,2),(147,23,3),(148,24,3);
+INSERT INTO `rated_comments` VALUES (109,23,1),(89,24,1),(169,23,2),(168,24,2),(220,23,3),(208,24,3),(167,25,2),(177,27,2),(179,28,2),(217,25,3),(213,26,3),(204,28,3),(212,29,3),(223,31,2),(226,29,2),(245,25,4),(247,23,4),(244,30,4),(243,31,4),(250,29,4),(238,32,4),(249,33,4),(248,24,4),(255,35,4);
 /*!40000 ALTER TABLE `rated_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +144,7 @@ CREATE TABLE `rated_games` (
   `liked_by_user_id` int NOT NULL DEFAULT '0',
   `favourited_by_user_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=285 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=379 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +153,7 @@ CREATE TABLE `rated_games` (
 
 LOCK TABLES `rated_games` WRITE;
 /*!40000 ALTER TABLE `rated_games` DISABLE KEYS */;
-INSERT INTO `rated_games` VALUES (138,10,0,1),(99,5,0,1),(93,8,1,0),(108,10,1,0),(32,5,1,0),(88,8,0,1),(144,7,1,0),(143,7,0,1),(139,9,0,1),(137,9,1,0),(273,7,0,2),(203,7,2,0),(253,8,2,0),(154,6,2,0),(165,9,0,2),(156,9,2,0),(166,10,2,0),(162,1,2,0),(167,10,0,2),(259,14,2,0),(260,14,0,2),(230,12,0,2),(231,12,2,0),(278,7,3,0),(277,7,0,3),(247,14,3,0),(246,14,0,3),(241,10,0,3),(279,9,0,3),(244,9,3,0),(261,3,3,0),(281,15,0,3),(280,15,3,0),(284,1,0,3),(283,1,3,0);
+INSERT INTO `rated_games` VALUES (138,10,0,1),(99,5,0,1),(93,8,1,0),(108,10,1,0),(32,5,1,0),(88,8,0,1),(144,7,1,0),(143,7,0,1),(139,9,0,1),(137,9,1,0),(299,7,0,2),(298,7,2,0),(253,8,2,0),(301,6,2,0),(309,9,0,2),(156,9,2,0),(166,10,2,0),(162,1,2,0),(167,10,0,2),(259,14,2,0),(260,14,0,2),(230,12,0,2),(231,12,2,0),(305,7,3,0),(306,7,0,3),(247,14,3,0),(246,14,0,3),(241,10,0,3),(279,9,0,3),(244,9,3,0),(261,3,3,0),(281,15,0,3),(280,15,3,0),(284,1,0,3),(283,1,3,0),(288,15,2,0),(307,16,0,2),(308,16,2,0),(377,7,0,4),(364,9,0,4),(315,9,4,0),(378,7,4,0),(349,10,4,0),(350,10,0,4),(346,16,4,0),(345,16,0,4),(375,12,4,0),(334,1,0,4),(335,1,4,0),(338,2,0,4),(339,2,4,0),(340,4,4,0),(341,4,0,4),(347,6,4,0),(348,6,0,4),(352,11,4,0),(351,11,0,4),(372,17,4,0),(371,17,0,4),(373,14,0,4),(374,12,0,4),(376,14,4,0);
 /*!40000 ALTER TABLE `rated_games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +197,7 @@ CREATE TABLE `users` (
   `followers` int NOT NULL DEFAULT '0',
   `following` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +206,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'z','z','$2y$10$j8eYPFiMYdYtiUeJCWbNleXI7RB1jM3l7Y1KwUXzPXDR7jNXhGdaO','','',0,0),(2,'anto98','abv@abv.bg','$2y$10$gcj9ZgFxGzMly5d4YIYB5elxW9reLNMXGg3DVdsAYNRyTufKY4mLi','','',0,0),(3,'devArt98','zzz@abv.bg','$2y$10$Hs.UbQN53GFxYYW6WeDdQOFvlle94n1wrWNxNog8EphqvqHUJyq7a','','',0,0);
+INSERT INTO `users` VALUES (1,'z','z','$2y$10$j8eYPFiMYdYtiUeJCWbNleXI7RB1jM3l7Y1KwUXzPXDR7jNXhGdaO','','',0,0),(2,'anto98','abv@abv.bg','$2y$10$gcj9ZgFxGzMly5d4YIYB5elxW9reLNMXGg3DVdsAYNRyTufKY4mLi','','',0,0),(3,'devArt98','zzz@abv.bg','$2y$10$Hs.UbQN53GFxYYW6WeDdQOFvlle94n1wrWNxNog8EphqvqHUJyq7a','','',0,0),(4,'Motha[quot1]Fucka','az[quot1]@email.bg','$2y$10$kW3POFjNYpUCL1i3YIvPnO8hlRS0rN2QVPIwwVKOlHeZ7T9vyeod6','','',0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +222,7 @@ CREATE TABLE `viewed_games` (
   `game_id` int NOT NULL DEFAULT '0',
   `viewed_by_user_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +231,7 @@ CREATE TABLE `viewed_games` (
 
 LOCK TABLES `viewed_games` WRITE;
 /*!40000 ALTER TABLE `viewed_games` DISABLE KEYS */;
-INSERT INTO `viewed_games` VALUES (1,7,1),(2,8,1),(3,9,1),(4,10,1),(5,11,1),(6,4,1),(7,7,2),(8,6,1),(9,4,2),(10,1,2),(11,9,2),(12,8,2),(13,6,2),(14,3,2),(15,11,2),(16,10,2),(17,2,2),(18,14,2),(19,12,2),(20,14,3),(21,12,3),(22,7,3),(23,5,3),(24,11,3),(25,10,3),(26,9,3),(27,6,3),(28,4,3),(29,2,3),(30,1,3),(31,3,3),(32,15,3),(33,15,2),(34,16,2),(35,8,3),(36,16,3);
+INSERT INTO `viewed_games` VALUES (1,7,1),(2,8,1),(3,9,1),(4,10,1),(5,11,1),(6,4,1),(7,7,2),(8,6,1),(9,4,2),(10,1,2),(11,9,2),(12,8,2),(13,6,2),(14,3,2),(15,11,2),(16,10,2),(17,2,2),(18,14,2),(19,12,2),(20,14,3),(21,12,3),(22,7,3),(23,5,3),(24,11,3),(25,10,3),(26,9,3),(27,6,3),(28,4,3),(29,2,3),(30,1,3),(31,3,3),(32,15,3),(33,15,2),(34,16,2),(35,8,3),(36,16,3),(37,7,4),(38,9,4),(39,10,4),(40,8,4),(41,16,4),(42,12,4),(43,15,4),(44,2,4),(45,1,4),(46,4,4),(47,5,4),(48,6,4),(49,11,4),(50,3,4),(51,14,4),(52,17,4);
 /*!40000 ALTER TABLE `viewed_games` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -243,4 +244,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-05  5:32:49
+-- Dump completed on 2022-08-14 13:01:03
