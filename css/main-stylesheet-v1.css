@@ -1706,6 +1706,101 @@ body {
     background-color: transparent;
 }
 
+
+
+
+
+#game-preview-container > #preview > #write-comment > #emoji-smiley {
+    position: absolute;
+    width: 5%;
+    height: 17%;
+    left: 40%;
+    background-color: transparent;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#game-preview-container > #preview > #write-comment > #emoji-smiley > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+#game-preview-container > #preview > #write-comment > #emoji-animals-nature {
+    position: absolute;
+    width: 5%;
+    height: 17%;
+    left: 47%;
+    background-color: transparent;
+    z-index: 3;
+}
+
+#game-preview-container > #preview > #write-comment > #emoji-animals-nature > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+#game-preview-container > #preview > #write-comment > #emoji-symbols {
+    position: absolute;
+    width: 5%;
+    height: 17%;
+    left: 54%;
+    background-color: transparent;
+    z-index: 3;
+}
+
+#game-preview-container > #preview > #write-comment > #emoji-symbols > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+#game-preview-container > #preview > #write-comment > #add-link {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 19%;
+    height: 13%;
+    top: 4%;
+    left: 47%;
+    background-color: transparent;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#game-preview-container > #preview > #write-comment > #add-link > span {
+    position: absolute;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+
+
+
 #game-preview-container > #preview > #write-comment > form > #collection-item-comment-input-field {
     position: absolute;
     width: 80%;
@@ -1768,6 +1863,49 @@ body {
     -o-user-select: none;
     user-select: none;
 }
+
+
+
+
+#game-preview-container > #preview >#emoji-container {
+    position: absolute;
+    display: none;
+    width: 20%;
+    height: 25%;
+    left: 60%;
+    top: 41%;
+    background-color: black;
+    border: 1px solid #738399;
+    border-radius: 5px;
+}
+
+#game-preview-container > #preview >#emoji-container > #top {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 13%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview >#emoji-container > #top > span {
+    color: white;
+}
+
+
+#game-preview-container > #preview >#emoji-container > #mid {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    top: 13%;
+    height: 87%;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    word-break: break-all;
+    background-color: transparent;
+}
+
 
 
 /* COLLECTION PAGE START */
@@ -2467,6 +2605,37 @@ footer {
     top: 15%;
     cursor: pointer;
 }
+
+
+
+
+#filter-games-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 6%;
+    height: 3%;
+    top: 16.5%;
+    left: 71%;
+    background-color: transparent;
+}
+
+#filter-games-container > span {
+    position: absolute;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    top: 10%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+
 
 #user-section {
     position: absolute;
