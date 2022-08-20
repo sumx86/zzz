@@ -51,5 +51,14 @@
             $date = $includeTime ? 'm/d/Y H:i:s' : 'm/d/Y';
             return date($date);
         }
+
+        /*
+         * Taken from stackoverflow
+         */
+        public static function emoji_to_unicode($emoji) {
+            $emoji   = mb_convert_encoding($emoji, 'UTF-32', 'UTF-8');
+            $unicode = strtolower(preg_replace("/^[0]+/", "U+", bin2hex($emoji)));
+            return $unicode;
+        }
     }
 ?>

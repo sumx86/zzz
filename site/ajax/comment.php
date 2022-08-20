@@ -67,7 +67,7 @@
             $gameID = intval($data->item);
 
             if(ItemExists($gameID, 'game', $db)) {
-                $comment = $data->text;
+                $comment = utf8_encode($data->text);
 
                 if(!Str::is_empty($comment)) {
                     $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select max(comment_id) as last_comment_id from comments", [], true, DB::ALL_ROWS);
@@ -99,6 +99,21 @@
             if(ItemExists($commentID, 'comment', $db)) {
                 $comment = $data->text;
                 echo 'reply -- ' . $itemID . " -- " . "yeaah" . " -- " . $comment;
+            }
+        }
+        return;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////
+
+
+    // DELETE COMMENT
+    //////////////////////////////////////////////////////////////////////////////////////
+    if(Str::equal($action, 'delete')) {
+        if(property_exists($data, 'item')) {
+            $commentID = intval($data->item);
+
+            if(ItemExists($commentID, 'comment', $db)) {
+                UserCP::DeleteComment($commentID, intval(Server::retrieve_session('user', 'id')));
             }
         }
         return;
@@ -158,7 +173,7 @@
                         }
                     }
                 }
-                $commentBluePrint['comment']['text'] = Str::htmlEnt(Str::replace_all_quotes($commentBluePrint['comment']['text'], true));
+                $commentBluePrint['comment']['text'] = Str::htmlEnt(Str::replace_all_quotes(utf8_decode($commentBluePrint['comment']['text']), true));
                 array_push($result, $commentBluePrint);
                 $commentBluePrint['comment']['text'] = '';
             }

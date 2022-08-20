@@ -547,6 +547,35 @@ var SimpleModalEvents = {
     });
 })(jQuery);
 (function($) {
+    $.initCall('post-comment-options', {
+        _modal: '#emoji-container',
+        _commentField: '#collection-item-comment-input-field',
+
+        initialize: function() {
+            var _self = this;
+            $(document).ready(function() {
+                $('#add-link').click(function() {
+                    $(_self._commentField).val($(_self._commentField).val() + "[link]http://example.com[/link]");
+                });
+            });
+            SimpleModalEvents.init({'target':'#emoji-container','trigger':'#emoji-smiley','uniq_d':'data-gr', 'handle':this._toggleModal.bind(this)});
+        },
+        _toggleModal: function(e) {
+            var modal = $(this._modal);
+            if( !this._isActive() ) {
+                modal.stop().fadeIn(200);
+                modal.addClass('modal-active');
+            } else {
+                modal.stop().fadeOut(200);
+                modal.removeClass('modal-active');
+            }
+        },
+        _isActive: function() {
+            return $(this._modal).hasClass('modal-active');
+        }
+    });
+})(jQuery);
+(function($) {
     $.initCall('game-upload-module', {
         _lastError: '',
         _files: null,
