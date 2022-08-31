@@ -13,7 +13,7 @@
         /*
          * Get the current url (https or http)
          */
-        public static function GetURL(){
+        public static function get_url(){
             $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://' ;
             $url    = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             return $scheme . $url;
@@ -22,7 +22,7 @@
         /*
          * Try to get a parameter from the url, return empty string otherwise
          */
-        public static function GetParam($param) {
+        public static function get_param($param) {
             if(isset($_GET[$param])) {
                 if(!Str::is_empty($_GET[$param])) {
                     return $_GET[$param];

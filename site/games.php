@@ -12,16 +12,18 @@
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
 
-    $platform   = Str::getstr(Server::GetParam('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
-    $search     = Str::replace_all_quotes(Server::GetParam('search-game'));
+    $platform   = Str::getstr(Server::get_param('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
+    $search     = Str::replace_all_quotes(Server::get_param('search-game'));
+    
     $db         = new DB(false);
     $pagination = new Pagination([
         'max-page-links' => 5,
         'max-page-items' => 27,
-        'current-page' => intval(Server::GetParam('page')),
+        'current-page' => intval(Server::get_param('page')),
         'table' => 'games',
         'db' => $db
     ]);
+    //echo Util::transform_links("Here is a link [link]https://example1.com[/link], \nand one more [link]https://example2.com[/link] is the next");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +64,25 @@
     <script type="text/javascript">
         $(document).ready(function() {
             window._login = <?php echo $isLogin ? 'true' : 'false' ; ?>;
+            window.lang  = '<?php echo $lang; ?>'
+            window.text  = {
+                'comment-removal': {
+                    'bg' : '<?php echo transliterator_transliterate('Any-Hex/Java', 'Сигурен/а ли си че искаш да изтриеш този коментар?'); ?>',
+                    'en' : 'Are you sure you want to delete the comment?'
+                },
+                'yes' : {
+                    'bg' : '<?php echo transliterator_transliterate('Any-Hex/Java', 'Да'); ?>',
+                    'en' : 'Yes'
+                },
+                'no' : {
+                    'bg' : '<?php echo transliterator_transliterate('Any-Hex/Java', 'Не'); ?>',
+                    'en' : 'No'
+                },
+                'edit' : {
+                    'bg' : '<?php echo transliterator_transliterate('Any-Hex/Java', 'Редактиране'); ?>',
+                    'en' : 'Edit comment'
+                }
+            }
         });
     </script>
 </head>
@@ -136,6 +157,7 @@
                 </div>
                 <form id='search-form' action='' method='get'>
                     <input id='search-game' type='text' name='search-game' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
+                    <input type='hidden' name='platform' value='<?php echo $platform; ?>'>
                 </form>
                 <div id='search-game-icon'>
                     <i class='fa fa-search'></i>
@@ -148,6 +170,8 @@
                 <div class='platform' id='ps3'><span>PS3</span></div>
             </div>
 
+            <div id='game-filters-container' data-gr class='modal-active'></div>
+
             <?php
                 if($isLogin) {
                     echo "<div id='upload-game-container'>
@@ -159,7 +183,7 @@
                         </form>
                     </div>";
 
-                    echo "<div id='filter-games-container'>
+                    echo "<div id='filter-games-trigger'>
                             <span>".$language_config[$lang]['filter-genre']." <span> <i class='fa fa-caret-down'></i></span></span>
                         </div>";
                 }
@@ -210,7 +234,7 @@
                             }
                         }
                     } else {
-                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where lower( games.name ) like '%".$search."%'", [], true, DB::ALL_ROWS);
+                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform = ? and lower( games.name ) like '%".$search."%'", [$platform], true, DB::ALL_ROWS);
                         if(_Array::size($arrayResult) > 0) {
                             foreach($arrayResult as $item) {
 
@@ -336,8 +360,8 @@
                     <div id='write-comment'>
                         <?php
                             if($isLogin) {
-                                echo "<div id='emoji-smiley'>
-                                        <span>🙂</span>
+                                echo "<div id='emoji-smiley' data-gr>
+                                        <span data-gr>🙂</span>
                                     </div>
                                     <div id='add-link'>
                                         <span>".$language_config[$lang]['add-link']."</span>
@@ -363,79 +387,71 @@
                     <div id='comment-rate-warning'>
                         <span><?php echo $language_config[$lang]['account-first']; ?></span>
                     </div>
-                    <div id='emoji-container'>
-                        <div id='top'>
-                            <span><?php echo $language_config[$lang]['emojis']; ?></span>
+                    <div id='emoji-container' data-gr>
+                        <div id='top' data-gr>
+                            <span data-gr><?php echo $language_config[$lang]['emojis']; ?></span>
                         </div>
-                        <div id='mid'>
-                            <div id='inner'>
-                                <div id='smiley'>
-                                    <span>
-                                        <?php
-                                            foreach(explode(" ", "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗
-                                                    😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕
-                                                    🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨
-                                                    😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴
-                                                    🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻
-                                                    💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾") as $icon) {
-                                    
-                                                    $_icon = Str::substring(Util::emoji_to_unicode($icon), 2);
-                                                    // valid emojis have length of 5
-                                                    if(Str::length($_icon) == 5) {
-                                                        echo "&#x$_icon;";
-                                                    }
-                                            }
-                                            echo "\n";
-                                        ?>
-                                    </span>
+                        <div id='mid' data-gr>
+                            <div id='inner' data-gr>
+                                <div id='smiley' class='icons-container' data-gr>
+                                    <?php
+                                        foreach(explode(" ", "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗
+                                                😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕
+                                                🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨
+                                                😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴
+                                                🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻
+                                                💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾") as $icon) {
+                                
+                                                $_icon = Str::substring(Util::emoji_to_unicode($icon), 2);
+                                                // valid emojis have length of 5
+                                                if(Str::length($_icon) == 5) {
+                                                    echo "<span class='comment-icon' data-gr data-code='$_icon'>&#x$_icon;</span>";
+                                                }
+                                        }
+                                        echo "\n";
+                                    ?>
                                 </div>
-                                <div id='animals-nature'>
-                                    <span>
-                                        <?php
-                                            foreach(explode(" ", "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐻‍❄️ 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊
-                                                    🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🪱 🐛 🦋 🐌 🐞 🐜 🦟 🦗 🕷
-                                                    🕸 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦑 🦐 🦞 🦀 🐡 🐠 🐟 🐬 🐳 🐋 🦈 🐊 🐅 🐆 🦓 🦍 🦧 🐘
-                                                    🦛 🦏 🐪 🐫 🦒 🦘 🐃 🐂 🐄 🐎 🐖 🐏 🐑 🦙 🐐 🦌 🐕 🐩 🦮 🐕‍🦺 🐈 🐈‍⬛ 🐓 🦃 🦚
-                                                    🦜 🦢 🦩 🕊 🐇 🦝 🦨 🦡 🦦 🦥 🐁 🐀 🐿 🦔 🐾 🐉 🐲 🌵 🎄 🌲 🌳 🌴 🌱 🌿 ☘️ 🍀 🎍
-                                                    🎋 🍃 🍂 🍁 🍄 🐚 🌾 💐 🌷 🌹 🥀 🌺 🌸 🌼 🌻 🌞 🌝 🌛 🌜 🌚 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔
-                                                    🌙 🌎 🌍 🌏 🪐 💫 ⭐️ 🌟 ✨ ⚡️ ☄️ 💥 🔥 🌪 🌈 ☀️ ⛅️ ☁️ ❄️ ☃️ ⛄️
-                                                    💨 💧 💦 ☔️ ☂️ 🌊") as $icon) {
-                                    
-                                                    $_icon = Str::substring(Util::emoji_to_unicode($icon), 2);
-                                                    // valid emojis have length of 5
-                                                    if(Str::length($_icon) == 5) {
-                                                        echo "&#x$_icon;";
-                                                    }
-                                            }
-                                            echo "\n";
-                                        ?>
-                                    </span>
+                                <div id='animals-nature' class='icons-container' data-gr>
+                                    <?php
+                                        foreach(explode(" ", "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐻‍❄️ 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊
+                                                🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🪱 🐛 🦋 🐌 🐞 🐜 🦟 🦗 🕷
+                                                🕸 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦑 🦐 🦞 🦀 🐡 🐠 🐟 🐬 🐳 🐋 🦈 🐊 🐅 🐆 🦓 🦍 🦧 🐘
+                                                🦛 🦏 🐪 🐫 🦒 🦘 🐃 🐂 🐄 🐎 🐖 🐏 🐑 🦙 🐐 🦌 🐕 🐩 🦮 🐕‍🦺 🐈 🐈‍⬛ 🐓 🦃 🦚
+                                                🦜 🦢 🦩 🕊 🐇 🦝 🦨 🦡 🦦 🦥 🐁 🐀 🐿 🦔 🐾 🐉 🐲 🌵 🎄 🌲 🌳 🌴 🌱 🌿 ☘️ 🍀 🎍
+                                                🎋 🍃 🍂 🍁 🍄 🐚 🌾 💐 🌷 🌹 🥀 🌺 🌸 🌼 🌻 🌞 🌝 🌛 🌜 🌚 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔
+                                                🌙 🌎 🌍 🌏 🪐 💫 ⭐️ 🌟 ✨ ⚡️ ☄️ 💥 🔥 🌪 🌈 ☀️ ⛅️ ☁️ ❄️ ☃️ ⛄️
+                                                💨 💧 💦 ☔️ ☂️ 🌊") as $icon) {
+                                
+                                                $_icon = Str::substring(Util::emoji_to_unicode($icon), 2);
+                                                // valid emojis have length of 5
+                                                if(Str::length($_icon) == 5) {
+                                                    echo "<span class='comment-icon' data-gr data-code='$_icon'>&#x$_icon;</span>";
+                                                }
+                                        }
+                                        echo "\n";
+                                    ?>
                                 </div>
-                                <div id='symbols'>
-                                    <span>
-                                        <?php
-                                            foreach(explode(" ", "❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💕 💞 💓 💗 💖 💘 💝
-                                                    💟☮️ ✝️ ☪️ 🕉 ☸️ ✡️ 🔯 🕎 ☯️ ☦️ 🛐 ⛎ ♈️ ♉️ ♊️ ♋️ ♌️ ♍️
-                                                    ♎️ ♏️ ♐️ ♑️ ♒️ ♓️ 🆔 ⚛️ 🉑 ☢️ ☣️ 📴 📳 🈶 🈚️ 🈸 🈺 🈷️ ✴️
-                                                    🆚 💮 🉐 ㊙️ ㊗️ 🈴 🈵 🈹 🈲 🅰️ 🅱️ 🆎 🆑 🅾️ 🆘 ❌ ⭕️ 🛑 ⛔️
-                                                    📛 🚫 💯 💢 ♨️ 🚷 🚯 🚳 🚱 🔞 📵 🚭 ❗️ ❕ ❓ ❔ ‼️ ⁉️ 🔅 🔆 〽️
-                                                    ⚠️ 🚸 🔱 ⚜️ 🔰 ♻️ ✅ 🈯️ 💹 ❇️ ✳️ ❎ 🌐 💠 Ⓜ️ 🌀 💤 🏧 🚾 ♿️ 🅿️ 🛗 🈳 🈂️
-                                                    🛂 🛃 🛄 🛅 🚹 🚺 🚼 ⚧ 🚻 🚮 🎦 📶 🈁 🔣 ℹ️ 🔤 🔡 🔠 🆖 🆗 🆙 🆒 🆕 🆓 0️⃣ 1️
-                                                    2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟 🔢 #️⃣ *️⃣ ⏏️ ▶️ ⏸ ⏯ ⏹ ⏺ ⏭ ⏮ ⏩ ⏪ ⏫ ⏬
-                                                    ◀️ 🔼 🔽 ➡️ ⬅️ ⬆️ ⬇️ ↗️ ↘️ ↙️ ↖️ ↕️ ↔️ ↪️ ↩️ ⤴️ ⤵️ 🔀 🔁 🔂 🔄 🔃 🎵 🎶 ➕ ➖
-                                                    ➗ ✖️ ♾ 💲 💱 ™️ ©️ ®️ 〰️ ➰ ➿ 🔚 🔙 🔛 🔝 🔜 ✔️ ☑️ 🔘 🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️
-                                                    🟤 🔺 🔻 🔸 🔹 🔶 🔷 🔳 🔲 ▪️ ▫️ ◾️ ◽️ ◼️ ◻️ 🟥 🟧 🟨 🟩 🟦 🟪 ⬛️ ⬜️ 🟫 🔈 🔇 🔉 🔊
-                                                    🔔 🔕 📣 📢 👁‍🗨 💬 💭 🗯 ♠️ ♣️ ♥️ ♦️") as $icon) {
-                                    
-                                                    $_icon = Str::substring(Util::emoji_to_unicode($icon), 2);
-                                                    // valid emojis have length of 5
-                                                    if(Str::length($_icon) == 5) {
-                                                        echo "&#x$_icon;";
-                                                    }
-                                            }
-                                            echo "\n";
-                                        ?>
-                                    </span>
+                                <div id='symbols' class='icons-container' data-gr>
+                                    <?php
+                                        foreach(explode(" ", "❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💕 💞 💓 💗 💖 💘 💝
+                                                💟 🉑 ☢️ ☣️ 📴 📳 🈶 🈚️ 🈸 🈺 🈷️ ✴️
+                                                🆚 💮 🉐 ㊙️ ㊗️ 🈴 🈵 🈹 🈲 🅰️ 🅱️ 🆎 🆑 🅾️ 🆘 ❌ ⭕️ 🛑 ⛔️
+                                                📛 🚫 💯 💢 ♨️ 🚷 🚯 🚳 🚱 🔞 📵 🚭 ❗️ ❕ ❓ ❔ 🔅 🔆 〽️
+                                                ⚠️ 🚸 🔱 ⚜️ 🔰 ♻️ ✅ 🈯️ 💹 ❇️ ✳️ ❎ 🌐 💠 Ⓜ️ 🌀 💤 🏧 🚾 ♿️ 🅿️ 🛗 🈳 🈂️
+                                                🎦 📶 🈁 🔣 ℹ️ 🔤 🔡 🔠 🆖 🆗 🆙 🆒 🆕 🆓
+                                                🔢 #️⃣ *️⃣ ⏏️ ▶️ ⏸ ⏯ ⏹ ⏺ ⏭ ⏮ ⏩ ⏪ ⏫ ⏬
+                                                ◀️ 🔼 🔽 ➡️ ⬅️ ⬆️ ⬇️ ↖️ ↪️ ↩️ ⤴️ ⤵️ 🔀 🔁 🔂 🔄 🔃 🎵 🎶
+                                                ➗ ✖️ ♾ 💲 💱 〰️ ➰ ➿ ✔️ 🔘 🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️
+                                                🔇 🔉 🔊 🔔 🔕 📣 📢 👁‍🗨 💬 💭") as $icon) {
+                                
+                                                $_icon = Str::substring(Util::emoji_to_unicode($icon), 2);
+                                                // valid emojis have length of 5
+                                                if(Str::length($_icon) == 5) {
+                                                    echo "<span class='comment-icon' data-gr data-code='$_icon'>&#x$_icon;</span>";
+                                                }
+                                        }
+                                        echo "\n";
+                                    ?>
                                 </div>
                             </div>
                         </div>

@@ -18,14 +18,14 @@
         /*
          * Check if a string contains atleast one uppercase letter
          */
-        public static function containsUpper($string) {
+        public static function contains_upper($string) {
             return preg_match('/[A-Z]/', $string);
         }
 
         /*
          * Check if a string contains atleast one digit
          */
-        public static function containsDigit($string) {
+        public static function contains_digit($string) {
             return preg_match('/[0-9]/', $string);
         }
 
@@ -53,6 +53,17 @@
                 array_push($array, self::substring($string, $j, $limit));
             }
             return $array;
+        }
+
+        /*
+         * Reassemble a string array into a single string
+         */
+        public static function reassemble($array) {
+            $string = '';
+            foreach($array as $str) {
+                $string .= $str;
+            }
+            return $string;
         }
 
         /*

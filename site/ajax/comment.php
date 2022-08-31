@@ -17,10 +17,10 @@
 
     // PREPARE AND VALIDATE DATA
     ///////////////////////////////////////////////////////////////////////////////////////
-    $actionTypes = ['load', 'post', 'reply'];
+    $actionTypes = ['load', 'post', 'reply', 'edit', 'delete'];
     $action      = trim($_POST['action']);
     $data        = json_decode($_POST['data']);
-    if(!Str::is_in($action, $actionTypes) || !isProperData($data)) {
+    if(!Str::is_in($action, $actionTypes) || !is_proper_data($data)) {
         return;
     }
 
@@ -47,7 +47,7 @@
         $itemID = intval($data->item);
         $commentsDBResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from comments where item_id=? order by comment_id", [$itemID], true, DB::ALL_ROWS);
         if(_Array::size($commentsDBResult) > 0) {
-            $commentsGroupResult = GetCommentsGroupResult($commentsDBResult);
+            $commentsGroupResult = get_comments_group_result($commentsDBResult);
         }
         Response::throw_json_string(
             ["success" => $commentsGroupResult]
@@ -66,7 +66,7 @@
         if(property_exists($data, 'item') && property_exists($data, 'text')) {
             $gameID = intval($data->item);
 
-            if(ItemExists($gameID, 'game', $db)) {
+            if(item_exists($gameID, 'game', $db)) {
                 $comment = utf8_encode($data->text);
 
                 if(!Str::is_empty($comment)) {
@@ -78,8 +78,8 @@
                     $username = Server::retrieve_session('user', 'username');
                     $userID   = intval(Server::retrieve_session('user', 'id'));
 
-                    UserCP::postComment($comment, $newCommentID, $gameID, $username, $userID, Util::get_current_date_and_time(false));
-                    UserCP::incrementComments($gameID);
+                    UserCP::post_comment($comment, $newCommentID, $gameID, $username, $userID, Util::get_current_date_and_time(false));
+                    UserCP::increment_comments($gameID);
                     Response::throw_json_string(["success" => '']);
                 }
             }
@@ -96,7 +96,7 @@
         if(property_exists($data, 'item') && property_exists($data, 'text')) {
             $commentID = intval($data->item);
             
-            if(ItemExists($commentID, 'comment', $db)) {
+            if(item_exists($commentID, 'comment', $db)) {
                 $comment = $data->text;
                 echo 'reply -- ' . $itemID . " -- " . "yeaah" . " -- " . $comment;
             }
@@ -109,11 +109,39 @@
     // DELETE COMMENT
     //////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'delete')) {
-        if(property_exists($data, 'item')) {
+        if(property_exists($data, 'item') && property_exists($data, 'game_id')) {
+            $commentID = intval($data->item);
+            $gameID    = intval($data->game_id);
+
+            if(item_exists($commentID, 'comment', $db)) {
+                UserCP::delete_comment($commentID, intval(Server::retrieve_session('user', 'id')));
+                UserCP::decrement_comments($gameID);
+                Response::throw_json_string(["success" => '']);
+            }
+        }
+        return;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    
+    // EDIT COMMENT
+    //////////////////////////////////////////////////////////////////////////////////////
+    if(Str::equal($action, 'edit')) {
+        if(property_exists($data, 'item') && property_exists($data, 'text')) {
             $commentID = intval($data->item);
 
-            if(ItemExists($commentID, 'comment', $db)) {
-                UserCP::DeleteComment($commentID, intval(Server::retrieve_session('user', 'id')));
+            if(item_exists($commentID, 'comment', $db)) {
+                $comment = utf8_encode($data->text);
+
+                if(!Str::is_empty($comment)) {
+                    $comment = Str::splitfixed(Str::replace_all_quotes($comment), 200);
+                    UserCP::update_comment($comment, $commentID, intval(Server::retrieve_session('user', 'id')), Util::get_current_date_and_time(false));
+                    Response::throw_json_string(
+                        ["success" => [
+                            "text" => utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true))]
+                        ]
+                    );
+                }
             }
         }
         return;
@@ -121,7 +149,7 @@
     //////////////////////////////////////////////////////////////////////////////////////
     
 
-    function GetCommentsGroupResult($commentsDBResult) {
+    function get_comments_group_result($commentsDBResult) {
         global $language_config;
         global $lang;
         $result = [];
@@ -175,13 +203,16 @@
                 }
                 $commentBluePrint['comment']['text'] = Str::htmlEnt(Str::replace_all_quotes(utf8_decode($commentBluePrint['comment']['text']), true));
                 array_push($result, $commentBluePrint);
-                $commentBluePrint['comment']['text'] = '';
+                
+                $commentBluePrint['comment']['text']   = '';
+                $commentBluePrint['comment']['delete'] = false;
+                $commentBluePrint['comment']['edit']   = false;
             }
         }
         return $result;
     }
 
-    function ItemExists($itemID, $itemType, $db) {
+    function item_exists($itemID, $itemType, $db) {
         $query  = '';
         $result = [];
         switch($itemType) {
@@ -196,7 +227,7 @@
         return _Array::size($result) > 0;
     }
 
-    function isProperData($data) {
+    function is_proper_data($data) {
         if(!is_object($data)) {
             return false;
         }

@@ -40,7 +40,7 @@
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from users where username = ?", [$username], true, DB::ALL_ROWS);
             if( _Array::size($result) > 0 ) {
                 if(password_verify($req[$passField], $result[0]['password'])) {
-                    self::setSessionData($result[0]);
+                    self::set_session_data($result[0]);
                     //var_dump(self::$sessionData);
                     return true;
                 }
@@ -70,7 +70,7 @@
         /*
          * Prepare the $sessionData variable
          */
-        public static function setSessionData($data) {
+        public static function set_session_data($data) {
             foreach($data as $fieldName => $fieldValue) {
                 if( $fieldName != 'password' && $fieldName != 'email' ) {
                     self::$sessionData[$fieldName] = $fieldValue;
@@ -81,7 +81,7 @@
         /*
          * Create a user session with data $sessionData
          */
-        public static function createSession($debug = false) {
+        public static function create_session($debug = false) {
             foreach(self::$sessionData as $dataName => $dataValue) {
                 if( !Server::set_session_data('user', $dataName, $dataValue) ) {
                     return false;
@@ -103,20 +103,20 @@
             $username = Str::replace_all_quotes($req[$userField]);
             $usermail = Str::replace_all_quotes($req[$emailField]);
 
-            if(!self::assertUsername($username)) {
+            if(!self::assert_username($username)) {
                 self::$errors[$userField] = $language_config[$lang]['register-errors']['username-format'];
                 return false;
             }
-            if( self::userExists($username) ) {
+            if( self::user_exists($username) ) {
                 self::$errors[$userField] = $language_config[$lang]['register-errors']['existing-user'];
                 return false;
             }
-            if( self::emailExists($usermail) ) {
+            if( self::email_exists($usermail) ) {
                 self::$errors[$emailField] = $language_config[$lang]['register-errors']['existing-email'];
                 return false;
             }
             // no error thrown here because the password strength indicator tells what's wrong with the password
-            if( !self::assertPassword($req[$passField], $passField) ) {
+            if( !self::assert_password($req[$passField], $passField) ) {
                 return false;
             }
             if( !Str::equal($req[$passField], $req[$passcField]) ) {
@@ -132,7 +132,7 @@
         /*
          * Check if a given username already exists in the database
          */
-        public static function userExists($username) {
+        public static function user_exists($username) {
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where username = ?", [$username], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
         }
@@ -140,7 +140,7 @@
         /*
          * Check if a given email already exists in the database
          */
-        public static function emailExists($email) {
+        public static function email_exists($email) {
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where email = ?", [$email], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
         }
@@ -148,25 +148,25 @@
         /*
          * Check if $username is valid
          */
-        public static function assertUsername($username) {
+        public static function assert_username($username) {
             return Str::in_range($username, [3, 30]);
         }
 
         /*
          * Check if $password is valid
          */
-        public static function assertPassword($password, $passField) {
+        public static function assert_password($password, $passField) {
             global $language_config;
             global $lang;
             if( !Str::in_range($password, [15, 50]) ) {
                 self::$errors[$passField] = $language_config[$lang]['register-errors']['password-length'];
                 return false;
             }
-            if( !Str::containsUpper($password) ) {
+            if( !Str::contains_upper($password) ) {
                 self::$errors[$passField] = $language_config[$lang]['register-errors']['password-upper'];
                 return false;
             }
-            if( !Str::containsDigit($password) ) {
+            if( !Str::contains_digit($password) ) {
                 self::$errors[$passField] = $language_config[$lang]['register-errors']['password-digit'];
                 return false;
             }
@@ -255,7 +255,7 @@
         /*
          * Post a comment
          */
-        public static function postComment($comment, $commentID, $gameID, $username, $userID, $date) {
+        public static function post_comment($comment, $commentID, $gameID, $username, $userID, $date) {
             // $comment is an array of strings
             foreach($comment as $commentText) {
                 self::$dbInstance->rawQuery("insert into comments (comment, item_id, comment_by, comment_by_id, comment_date, comment_id) values (?, ?, ?, ?, ?, ?)", [$commentText, $gameID, $username, $userID, $date, $commentID], false, false, true);
@@ -265,8 +265,31 @@
         /*
          * Increment the comments count in games table
          */
-        public static function incrementComments($gameID) {
+        public static function increment_comments($gameID) {
             self::$dbInstance->rawQuery("update games set comments=comments+1 where id=?", [$gameID], false, false, true);
+        }
+
+        /*
+         * 
+         */
+        public static function delete_comment($commentID, $userID) {
+            self::$dbInstance->rawQuery("delete from comments where comment_id = ? and comment_by_id = ?; delete from rated_comments where comment_id = ?", [$commentID, $userID, $commentID], false, false, true);
+        }
+
+        /*
+         * Decrement the comments count in games table
+         */
+        public static function decrement_comments($gameID) {
+            self::$dbInstance->rawQuery("update games set comments = comments-1 where id = ?", [$gameID], false, false, true);
+        }
+
+        /*
+         * Update the comment
+         */
+        public static function update_comment($comment, $commentID, $userID, $date) {
+            foreach($comment as $commentText) {
+                self::$dbInstance->rawQuery("update comments set comment = ?, comment_by_id = ?, comment_date = ? where comment_id = ?", [$commentText, $userID, $date, $commentID], false, false, true);
+            }
         }
 
 

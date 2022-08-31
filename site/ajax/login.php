@@ -16,7 +16,7 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     $assertionErrors = [];
 
-    if( !assertFields($config['login-fields']) ) {
+    if( !assert_fields($config['login-fields']) ) {
         Response::throw_json_string(
             ["input-error" => $assertionErrors]
         );
@@ -28,7 +28,7 @@
                 ["input-error" => UserCP::$errors]
             );
         } else {
-            UserCP::createSession(true);
+            UserCP::create_session(true);
             Response::throw_json_string(["success" => '']);
         }
         $db->close();
@@ -37,7 +37,7 @@
     /*
      * Assertion function for empty fields
      */
-    function assertFields($fields) {
+    function assert_fields($fields) {
         global $language_config;
         global $lang;
         global $assertionErrors;

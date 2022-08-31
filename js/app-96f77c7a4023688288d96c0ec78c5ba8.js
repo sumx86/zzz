@@ -117,12 +117,27 @@ var SimpleModalEvents = {
     $.corePlugin.alert.show = function(text, obj) {
         this.init(text, obj.callback);
     }
+    $.corePlugin.alert.hide = function(text, obj) {
+        $('#alert-box').remove();
+    }
 
     $.corePlugin.alert.init = function(text, callback) {
-        var html = "<div id='alert-box'><div id='alert-box-text-box'><span id='text'>"+text+"</span></div><button id='alert-box-button' data-action='ok'>OK</button></div>";
+        var html = "<div id='alert-box'><div id='alert-box-text-box'><span id='text'>"+text+"</span></div>";
+        if(callback.hasOwnProperty('yes')) {
+            this.callbacks['yes'] = callback.yes;
+            html += "<button id='alert-box-button-yes' data-action='yes'>"+window.text['yes'][window.lang]+"</button>";
+        }
+        if(callback.hasOwnProperty('no')) {
+            this.callbacks['no'] = callback.no;
+            html += "<button id='alert-box-button-no' data-action='no'>"+window.text['no'][window.lang]+"</button>";
+        }
+        if(callback.hasOwnProperty('ok')) {
+            this.callbacks['ok'] = callback.yes;
+            html += "<button id='alert-box-button-ok' data-action='ok'>"+window.text['ok'][window.lang]+"</button>";
+        }
+        html += "</div>";
         this.self = $($.parseHTML(html)[0]);
         $('body').find('div:first').append(this.self);
-        this.callbacks['ok'] = callback.ok;
         this.setup();
     }
 
@@ -130,15 +145,28 @@ var SimpleModalEvents = {
         var scope = this;
         this.self.on('click', '[data-action]', this._click);
         $(document).keydown(function(event) {
-            if( event.key.toLowerCase() == "escape" || event.key.toLowerCase() == "enter" ) {
-                scope.self.find('[data-action]').focus().click();
+            if( event.key.toLowerCase() == "escape" ) {
+                scope.self.find('[data-action="no"]').focus().click();
             }
         });
     }
 
     $.corePlugin.alert._click = function(e) {
+        var action = $(e.target).attr('id').split("-")[3];
+        switch(action) {
+            case "yes":
+                $.corePlugin.alert.callbacks['yes']();
+                break;
+            case "no":
+                $.corePlugin.alert.callbacks['no']();
+                break;
+            case "ok":
+                $.corePlugin.alert.callbacks['ok']();
+                break;
+            default:
+                break;
+        }
         // can't use 'this' here since it is replaced with the event target
-        $.corePlugin.alert.callbacks['ok']();
     }
 })(jQuery);
 (function($) {
@@ -220,12 +248,16 @@ var SimpleModalEvents = {
     $.initCall('toggle-collection-containers', {
         initialize: function() {
             $(document).on('click', '.platform', function() {
-                let result = window.location.href.match(/search-game=(.*)/i)[0];
-                $.redirect('/collection?page=1&platform=' + $(this).attr('id') + (result ? '&' + result : '' ));
+                let result = window.location.href.match(/search-game=(.*)/i);
+                $.redirect('/collection?page=1&platform=' + $(this).attr('id') + (result != null ? '&' + result[0] : '' ));
             });
         }
     });
 })(jQuery);
+
+
+
+
 (function($) {
     $.initCall('comment-like-handling', {
         initialize: function() {
@@ -292,6 +324,112 @@ var SimpleModalEvents = {
         }
     });
 })(jQuery);
+(function($) {
+    $.initCall('comment-editing-handling', {
+        _commentID: null,
+        _itemID: null,
+        _editBlockIndex: null,
+
+        initialize: function() {
+            $(document).on('preview-comments-loaded', this._registerCommentEditActions.bind(this));
+        },
+        _registerCommentEditActions: function(e) {
+            var _self = this;
+            this._registerSubmitEvents();
+            $('.comment-edit-action-button > i').click(function() {
+                var mainParent = $(this).parent().parent();
+                var parentCls  = mainParent.attr('class').split(" ");
+                _self._commentID  = parentCls[1];
+                _self._itemID     = parentCls[2];
+                _self._editBlockIndex = mainParent.attr('data-fl-idx');
+                var commentAction = $(this).parent().attr('class').split(" ")[0];
+
+                if(commentAction == 'delete') {
+                    _self._scrollToTheTop();
+                    _self._promptCommentRemoval(window.text['comment-removal'][window.lang]);
+                } else {
+                    _self._showEditField(_self._editBlockIndex);
+                }
+            });
+        },
+        _updateData: function(action, text) {
+            var _self = this;
+            $.doAjax({
+                url: globalSettings.ajax['comment'],
+                data: 'action='+action+'&data=' + JSON.stringify({'item':_self._commentID,'item_type':'comment', 'text':text, 'game_id':_self._itemID})
+            }, false)
+            .done(function(jqXHR, status, req) {
+                console.log('[COMMENT-EDITING-HANDLING-MODULE] -> ' + jqXHR);
+                if(status == 'success') {
+                    if(jqXHR.indexOf('{') == 0) {
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success') && action == 'delete') {
+                            _self._removeCommentBoxWithId(_self._commentID);
+                        }
+                    }
+                }
+            });
+        },
+        _removeCommentBoxWithId: function(commentID) {
+            $('.box-' + commentID).remove();
+        },
+        _promptCommentRemoval: function(text) {
+            var _self = this;
+            $.corePlugin.alert.show(text, {
+                callback: {
+                    yes: function() {
+                        _self._updateData('delete');
+                        $.corePlugin.alert.hide();
+                    },
+                    no: function() {
+                        $.corePlugin.alert.hide();
+                    }
+                }
+            }, true);
+        },
+        _registerSubmitEvents: function() {
+            var _self = this;
+            $('.submit-btn').on('mousedown', function(e){
+                var target = $(e.currentTarget);
+                target.find('i:first').css('color', target.attr('data-color-o'));
+            })
+            .on('mouseup', function(e){
+                var target = $(e.currentTarget);
+                target.find('i:first').css('color', target.attr('data-color-i'));
+                if(target.hasClass('edit-submit')) {
+                    _self._updateData('edit', target.parent().find('.inner:first > textarea:first').val());
+                }
+                if(target.hasClass('edit-cancel')) {
+                    target.parent().css('display', 'none');
+                }
+            })
+            .on('mouseout', function(e){
+                var target = $(e.currentTarget);
+                target.find('i:first').css('color', target.attr('data-color-i'));
+            });
+        },
+        _showEditField: function(id) {
+            $('.comment-edit-box').each(function(i, e) {
+                var element  = $(e);
+                var dataAttr = element.attr('data-fl-idx');
+
+                if(dataAttr != undefined) {
+                    if(dataAttr == id) {
+                        element.css('display', 'block').find('textarea').val('');
+                        return;
+                    }
+                }
+            });
+        },
+        _scrollToTheTop: function() {
+            $("html, body").animate({scrollTop: 0}, "slow");
+        }
+    });
+})(jQuery);
+
+
+
+
 (function($) {
     $.initCall('preview-views-handling', {
         initialize: function() {
@@ -405,7 +543,7 @@ var SimpleModalEvents = {
                 return;
             }
             for(var i = 0; i < commentsData.length; i++) {
-                var html = $.parseHTML("<div class='comment-box x"+commentsData[i]['comment']['user_id']+"'>\
+                var html = "<div class='comment-box x"+commentsData[i]['comment']['user_id']+" box-"+commentsData[i]['comment']['comment_id']+"' data-fl-idx="+i+">\
                     <div class='inner'>\
                         <div class='user-pic'>\
                             <img src='\\ps-classics\\img\\93401019.jfif'>\
@@ -423,8 +561,19 @@ var SimpleModalEvents = {
                                 </div>\
                                 <div class='reply'>\
                                     <span>"+commentsData[i]['comment']['reply-meta']+"</span>\
-                                </div>\
-                            </div>\
+                                </div>";
+
+                            html += (commentsData[i]['comment']['delete'] == true && commentsData[i]['comment']['edit'] == true) ?
+                                "<div class='comment-edit "+commentsData[i]['comment']['comment_id']+" "+commentsData[i]['comment']['item_id']+"' data-fl-idx="+i+">\
+                                    <div class='edit comment-edit-action-button'>\
+                                        <i class='fa fa-edit'></i>\
+                                    </div>\
+                                    <div class='delete comment-edit-action-button'>\
+                                        <i class='fa fa-trash-o'></i>\
+                                    </div>\
+                                </div>" : "" ;
+
+                   html += "</div>\
                         </div>\
                         <div class='comment'>\
                             <div class='inner'>\
@@ -432,14 +581,37 @@ var SimpleModalEvents = {
                             </div>\
                         </div>\
                     </div>\
-                </div>");
+                </div>";
+                html = $.parseHTML(html);
                 $(html).css('display', 'block');
                 $('#comment-section > #inner').append(html);
+                this._addEditBlock('#comment-section > #inner', commentsData[i]['comment']['user_id'], commentsData[i]['comment']['comment_id'], i);
             }
             if(commentsData.length >= 2) {
                 $('#comment-section > #inner').append('<i id="scrolltop-caret" class="fa fa-caret-up"></i>');
             }
             $(document).trigger('preview-comments-loaded', []);
+        },
+        _addEditBlock: function(target, userID, commentID, blockID) {
+            var html = $.parseHTML("<div class='comment-edit-box x-"+userID+" box-"+commentID+"' data-fl-idx="+blockID+">\
+                                        <div class='inner'>\
+                                            <div class='header'>\
+                                                <span>"+window.text['edit'][window.lang]+"</span>\
+                                            </div>\
+                                            <textarea class='comment-edit-input-field'></textarea>\
+                                        </div>\
+                                        <div class='edit-submit submit-btn' data-color-i='#fc5603' data-color-o='#ffffff'>\
+                                            <i class='fa fa-check'></i>\
+                                        </div>\
+                                        <div class='edit-cancel submit-btn' data-color-i='#ffffff' data-color-o='#ff2c49'>\
+                                            <i class='fa fa-times'></i>\
+                                        </div>\
+                                        <div class='emoji-trigger' data-gr>\
+                                            <span data-gr>🙂</span>\
+                                        </div>\
+                                    </div>");
+            //$(html).css('display', 'block');
+            $(target).append(html);
         }
     });
 })(jQuery);
@@ -535,7 +707,7 @@ var SimpleModalEvents = {
                                 if(jqXHR.indexOf('{') == 0) {
                                     var response = $.parseJSON(jqXHR);
                                     if(response.hasOwnProperty('success')) {
-                                        //location.reload();
+                                        location.reload();
                                     }
                                 }
                             }
@@ -557,11 +729,38 @@ var SimpleModalEvents = {
                 $('#add-link').click(function() {
                     $(_self._commentField).val($(_self._commentField).val() + "[link]http://example.com[/link]");
                 });
+                $('.comment-icon').click(function() {
+                    $(_self._commentField).val($(_self._commentField).val() + $(this).html());
+                });
             });
             SimpleModalEvents.init({'target':'#emoji-container','trigger':'#emoji-smiley','uniq_d':'data-gr', 'handle':this._toggleModal.bind(this)});
         },
         _toggleModal: function(e) {
             var modal = $(this._modal);
+            console.log(this._isActive());
+            if( !this._isActive() ) {
+                modal.stop().fadeIn(200);
+                modal.addClass('modal-active');
+            } else {
+                modal.stop().fadeOut(200);
+                modal.removeClass('modal-active');
+            }
+        },
+        _isActive: function() {
+            return $(this._modal).hasClass('modal-active');
+        }
+    });
+})(jQuery);
+(function($){
+    $.initCall('games-filtering', {
+        _modal: '#game-filters-container',
+
+        initialize: function() {
+            SimpleModalEvents.init({'target':'#game-filters-container','trigger':'#filter-games-trigger','uniq_d':'data-gr', 'handle':this._toggleModal.bind(this)});
+        },
+        _toggleModal: function(e) {
+            var modal = $(this._modal);
+            console.log(this._isActive());
             if( !this._isActive() ) {
                 modal.stop().fadeIn(200);
                 modal.addClass('modal-active');

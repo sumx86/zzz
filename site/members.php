@@ -7,22 +7,22 @@
     require_once "helpers/array.php";
     require_once "db/db.php";
     require_once "pagination.php";
-    
+
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $isLogin = Server::is_active_session('user');
-    $search  = Str::replace_all_quotes(Server::GetParam('search-member'));
-    
+    $search  = Str::replace_all_quotes(Server::get_param('search-member'));
+
     $db         = new DB(false);
     $pagination = new Pagination([
         'max-page-links' => 5,
         'max-page-items' => 27,
-        'current-page' => intval(Server::GetParam('page')),
+        'current-page' => intval(Server::get_param('page')),
         'table' => 'users',
         'db' => $db
     ]);
-    
-    if($pagination->Last() > 1) {
-        $offset = $pagination->GetCurrentPage() * 27;
+
+    if($pagination->last() > 1) {
+        $offset = $pagination->get_current_page() * 27;
     } else {
         $offset = 0;
     }
@@ -186,15 +186,15 @@
             <div class='pagination-container' data-action='members'>
                 <div id='inner'>
                     <?php
-                        $maxPageLinks = $pagination->GetMaxPageLinks();
-                        $lastPage     = $pagination->Last();
+                        $maxPageLinks = $pagination->get_max_page_links();
+                        $lastPage     = $pagination->last();
                         $count        = $lastPage >= $maxPageLinks ? $maxPageLinks : $lastPage;
 
                         for($i = 0; $i < $count; $i++) {
                             if($i == 3) {
                                 echo "<div class='page-item no-redirect'><span>...</span></div>";
                             } else {
-                                echo "<div class='page-item'><span>".$pagination->Next()."</span></div>";
+                                echo "<div class='page-item'><span>".$pagination->next()."</span></div>";
                             }
                         }
                     ?>

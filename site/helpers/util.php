@@ -60,5 +60,30 @@
             $unicode = strtolower(preg_replace("/^[0]+/", "U+", bin2hex($emoji)));
             return $unicode;
         }
+
+        /*
+         * Transform the link to a clickable link
+         */
+        public static function transform_links($string) {
+            $output    = [];
+            $newstring = '';
+            $links     = [];
+
+            if(preg_match_all('/(\[link\])(\S+)(\[\/link\])/', $string, $output)) {
+                foreach($output[2] as $link) {
+                    $key = "[link]".$link."[/link]";
+                    $links[$key] = "<a href='".$link."'>link</a>";
+                    $newstring   = str_replace(array_keys($links), array_values($links), $string);
+                }
+            }
+            return $newstring;
+        }
+
+        /*
+         * 
+         */
+        public static function has_path($link) {
+            
+        }
     }
 ?>
