@@ -1546,7 +1546,7 @@ body {
     justify-content: center;
     width: 20%;
     height: 4.5%;
-    top: 94%;
+    top: 92.5%;
     left: 41%;
     border-radius: 5px;
     background-color: #cd002f;
@@ -1890,21 +1890,60 @@ body {
 
 #game-preview-container > #preview >#emoji-container > #top > span {
     color: white;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
 }
-
 
 #game-preview-container > #preview >#emoji-container > #mid {
     position: absolute;
-    display: flex;
-    justify-content: center;
     width: 100%;
     top: 13%;
     height: 87%;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview >#emoji-container > #mid > #inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     word-wrap: break-word;
     word-break: break-all;
     background-color: transparent;
 }
+
+
+
+
+
+#game-preview-container > #preview >#emoji-container > #mid > #inner > #smiley {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview >#emoji-container > #mid > #inner > #animals-nature {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+#game-preview-container > #preview >#emoji-container > #mid > #inner > #symbols {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+.icons-container > span {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 
 
 
@@ -1976,6 +2015,12 @@ body {
     user-select: none;
 }
 
+
+
+
+
+
+
 .comment-box {
     display: none;
     margin-left: 13%;
@@ -2017,12 +2062,218 @@ body {
 
 
 
+
+.comment-edit-box {
+    display: none;
+    margin-left: 20%;
+    margin-top: -2.5%;
+    width: 45%;
+    height: 150px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    background-color: transparent;
+}
+
+.comment-edit-box > .emoji-trigger {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 3.5%;
+    height: 17%;
+    top: -95%;
+    left: 96%;
+    background-color: transparent;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.comment-edit-box > .emoji-trigger > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+
+
+
+
+
+#game-preview-container > #preview > #write-comment > #emoji-smiley {
+    position: absolute;
+    width: 5%;
+    height: 17%;
+    left: 40%;
+    background-color: transparent;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#game-preview-container > #preview > #write-comment > #emoji-smiley > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+#game-preview-container > #preview > #write-comment > #emoji-animals-nature {
+    position: absolute;
+    width: 5%;
+    height: 17%;
+    left: 47%;
+    background-color: transparent;
+    z-index: 3;
+}
+
+#game-preview-container > #preview > #write-comment > #emoji-animals-nature > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+#game-preview-container > #preview > #write-comment > #emoji-symbols {
+    position: absolute;
+    width: 5%;
+    height: 17%;
+    left: 54%;
+    background-color: transparent;
+    z-index: 3;
+}
+
+#game-preview-container > #preview > #write-comment > #emoji-symbols > span {
+    position: absolute;
+    font-size: 1.3em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+
+
+
+
+.comment-edit-box > .inner {
+    margin-left: 4%;
+    width: 90%;
+    height: 80%;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    /* border-right: 1px solid rgb(45, 113, 158); */
+    background-color: #0a0e12; /*#0a0e12 */
+}
+
+.comment-edit-box > .inner > .header {
+    position: absolute;
+    width: 20%;
+    height: 6%;
+    left: 27%;
+    background-color: transparent;
+}
+
+.comment-edit-box > .inner > .header > span {
+    color: white;
+    font-family: 'Roboto-Regular', 'Jura-Bold', sans-serif;
+    font-size: 0.9em;
+}
+
+.comment-edit-box > .inner > .comment-edit-input-field {
+    position: relative;
+    width: 80%;
+    left: 6%;
+    top: 20%;
+    resize: none;
+    padding-bottom: 50px;
+    padding-left: 13px;
+    color: white;
+    background-color: black;
+    outline: none;
+    border: 1px solid #738399;
+    border-radius: 5px;
+    font-size: 1.3em;
+}
+
+.comment-edit-box > .edit-submit {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    left: 87.5%;
+    top: -63%;
+    border-radius: 7px;
+    background-color: #1b3146;
+    cursor: pointer;
+}
+
+.comment-edit-box > .edit-submit > i {
+    position: absolute;
+    top: 15%;
+    font-size: 1.3em;
+    color: #fc5603;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.comment-edit-box > .edit-cancel {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    left: 87.5%;
+    top: -53%;
+    border-radius: 7px;
+    background-color: #1b3146;
+    cursor: pointer;
+}
+
+.comment-edit-box > .edit-cancel > i {
+    position: absolute;
+    top: 15%;
+    font-size: 1.3em;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+
+
+
+
+
+
+
 .comment-box > .inner > .comment-info-top {
     position: relative;
     width: 75%;
     height: 35px;
     left: 17%;
-    top: -60%;
+    top: -61%;
     border-radius: 5px;
     background-color: transparent;
 }
@@ -2062,13 +2313,17 @@ body {
     left: 14%;
 }
 
+
+
+
+
+
 .comment-box > .inner > .comment-info-top > .info > .like {
     position: absolute;
     display: flex;
     justify-content: center;
     width: 35%;
     height: 100%;
-    left: 22%;
     background-color: transparent;
 }
 
@@ -2089,13 +2344,19 @@ body {
     cursor: pointer;
 }
 
+
+
+
+
+
+
 .comment-box > .inner > .comment-info-top > .info > .reply {
     position: absolute;
     display: flex;
     justify-content: center;
     width: 35%;
     height: 100%;
-    left: 60%;
+    left: 30%;
     background-color: transparent;
 }
 
@@ -2116,6 +2377,62 @@ body {
 .comment-box > .inner > .comment-info-top > .info > .reply > span > i {
     cursor: pointer;
 }
+
+
+
+
+
+
+
+.comment-box > .inner > .comment-info-top > .info > .comment-edit {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+    left: 60%;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .comment-edit > .edit {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .comment-edit > .delete {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .comment-edit > .comment-edit-action-button > i {
+    position: absolute;
+    top: 20%;
+    font-size: 1em;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.comment-box > .inner > .comment-info-top > .info > .comment-edit > .edit > i {
+    left: 65%;
+}
+
+
+
+
+
 
 
 .comment-box > .inner > .comment-info-top > .info > span {
@@ -2609,7 +2926,7 @@ footer {
 
 
 
-#filter-games-container {
+#filter-games-trigger {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -2620,7 +2937,7 @@ footer {
     background-color: transparent;
 }
 
-#filter-games-container > span {
+#filter-games-trigger > span {
     position: absolute;
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
@@ -2632,6 +2949,23 @@ footer {
     -o-user-select: none;
     user-select: none;
     cursor: pointer;
+}
+
+
+
+
+#game-filters-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 8.5%;
+    height: 17%;
+    top: 20%;
+    left: 72%;
+    border-radius: 5px;
+    background-color: #3f4850;
+    z-index: 3;
+    overflow-y: scroll;
 }
 
 
@@ -2920,6 +3254,67 @@ footer {
     font-size: 1.1em;
     cursor: pointer;
 }
+
+
+
+
+
+#alert-box {
+    position: absolute;
+    width: 25%;
+    height: 7%;
+    left: 40%;
+    top: 92%;
+    border-radius: 5px;
+    background-color: #cd002f;
+}
+
+#alert-box > #alert-box-text-box {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    border-radius: 5px;
+    background-color: #cd002f;
+}
+
+#alert-box > #alert-box-text-box > span {
+    position: absolute;
+    top: 23%;
+    color: white;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#alert-box-button-yes {
+    position: absolute;
+    width: 13%;
+    height: 27%;
+    top: 60%;
+    left: 32%;
+    border: none;
+    background-color: #1b3146;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#alert-box-button-no {
+    position: absolute;
+    width: 13%;
+    height: 27%;
+    top: 60%;
+    left: 50%;
+    border: none;
+    background-color: #1b3146;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    z-index: 3;
+    cursor: pointer;
+}
+
+
 
 #spinner {
     /* position: absolute; display: none; top: 79%; left: 4%; font-size: 1.4em; color: white; */
