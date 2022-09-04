@@ -2924,6 +2924,31 @@ footer {
 }
 
 
+#upload-error {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    width: 18%;
+    height: 4.5%;
+    border-radius: 5px;
+    left: 49%;
+    top: 75%;
+    background-color: #cd002f;
+}
+
+#upload-error > span {
+    position: absolute;
+    top: 23%;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 
 
 #filter-games-trigger {
