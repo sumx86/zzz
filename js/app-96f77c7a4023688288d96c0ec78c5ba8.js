@@ -21,7 +21,8 @@ var globalSettings = {
         'reset-pass': '/ajax/reset-pass',
         'search': '/ajax/search',
         'update': '/ajax/update',
-        'comment': '/ajax/comment'
+        'comment': '/ajax/comment',
+        'upload': '/ajax/upload'
     },
     routes : {
         'home': '/',
@@ -546,7 +547,7 @@ var SimpleModalEvents = {
                 var html = "<div class='comment-box x"+commentsData[i]['comment']['user_id']+" box-"+commentsData[i]['comment']['comment_id']+"' data-fl-idx="+i+">\
                     <div class='inner'>\
                         <div class='user-pic'>\
-                            <img src='\\ps-classics\\img\\93401019.jfif'>\
+                            <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>\
                         </div>\
                         <div class='comment-info-top'>\
                             <div class='username info'>\
@@ -839,12 +840,14 @@ var SimpleModalEvents = {
             $('#submit-game-upload').on('click', this._proceedUpload.bind(this));
         },
         _proceedUpload: function() {
+            var _self = this;
             if(typeof FormData != 'undefined') {
-                var form_data = new FormData();                  
-                form_data.append('file', this._files[0]);
+                var formData = new FormData();
+                formData.append('file', this._files[0]);
+                formData.append('metadata', $('#metadata-form').serialize());
                 $.doAjax({
                     url: '/ajax/upload',
-                    data: form_data, dataType: 'text', cache: false, contentType: false, processData: false
+                    data: formData, dataType: 'text', cache: false, contentType: false, processData: false
                 })
                 .done(function(jqXHR, status, req) {
                     console.log(jqXHR);
@@ -927,7 +930,7 @@ var SimpleModalEvents = {
         initialize: function() {
             $(document).on('click', '[data-role="edit-user-info"]', this._toggleContentEditor.bind(this));
             $(document).on('click', '[data-role="update-user"]', this._update.bind(this));
-            $(document).on('user-info-update', this.updateContent.bind(this));
+            $(document).on('user-info-update', this._updateContent.bind(this));
         },
         _toggleContentEditor: function(e) {
             if( !this._isActiveModal() ) {
@@ -975,7 +978,7 @@ var SimpleModalEvents = {
                 }, true);
             });
         },
-        updateContent: function(event, data) {
+        _updateContent: function(event, data) {
             console.log(data);
             //ui.loaderHide(data.target.parent());
             this._toggleSubmitLock();

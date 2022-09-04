@@ -112,9 +112,10 @@
         if(property_exists($data, 'item') && property_exists($data, 'game_id')) {
             $commentID = intval($data->item);
             $gameID    = intval($data->game_id);
+            $userID    = intval(Server::retrieve_session('user', 'id'));
 
-            if(item_exists($commentID, 'comment', $db)) {
-                UserCP::delete_comment($commentID, intval(Server::retrieve_session('user', 'id')));
+            if(item_exists($commentID, 'comment', $db) && item_belongs_to_user($commentID, 'comment', $userID, $db)) {
+                UserCP::delete_comment($commentID, $userID);
                 UserCP::decrement_comments($gameID);
                 Response::throw_json_string(["success" => '']);
             }
@@ -212,6 +213,9 @@
         return $result;
     }
 
+    /*
+     * check if the item exists
+     */
     function item_exists($itemID, $itemType, $db) {
         $query  = '';
         $result = [];
@@ -224,6 +228,24 @@
                 break;
         }
         $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery($query, [$itemID], true, DB::ALL_ROWS, false);
+        return _Array::size($result) > 0;
+    }
+
+    /*
+     * check if the item was created by user with id $userID
+     */
+    function item_belongs_to_user($itemID, $itemType, $userID, $db) {
+        $query  = '';
+        $result = [];
+        switch($itemType) {
+            case "game":
+                $query = "select * from games where id = ?";
+                break;
+            case "comment":
+                $query = "select * from comments where comment_id = ? and comment_by_id = ?";
+                break;
+        }
+        $result = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery($query, [$itemID, $userID], true, DB::ALL_ROWS, false);
         return _Array::size($result) > 0;
     }
 

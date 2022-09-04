@@ -15,7 +15,16 @@
         return;
     }
 
-    $db = new DB(false);
+    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
+    $db   = new DB(false);
+    $metadata = null;
+    parse_str($_POST['metadata'], $metadata);
+
+    if(!assertMetadata($metadata)) {
+        Response::throw_json_string(["error" => $language_config[$lang]['empty-fields']]);
+        return;
+    }
+
     $engine = new FileUploadEngine($_FILES, $db);
     $engine->setAllowedTypes([
         'image/jpeg',
@@ -30,4 +39,17 @@
         return;
     }
     Response::throw_json_string(['success' => '']);
+
+
+    /*
+     * Make sure all metadata fields are filled
+     */
+    function assertMetadata($metadata) {
+        if(Str::is_empty($metadata['game-name']) || Str::is_empty($metadata['game-genre']) || Str::is_empty($metadata['game-pltf']) || 
+           Str::is_empty($metadata['game-devs']) || Str::is_empty($metadata['game-publ'])  || Str::is_empty($metadata['game-date']) || 
+           Str::is_empty($metadata['game-iso'])) {
+            return false;
+        }
+        return true;
+    }
 ?>

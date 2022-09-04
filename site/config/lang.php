@@ -69,6 +69,7 @@
             'add-link'   => 'Добави линк',
             'emojis'     => 'Емоджита',
             'filter-genre' => 'Филтър',
+            'empty-fields' => 'Не всички полета са попълнени!',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -171,6 +172,7 @@
             'add-link'   => 'Add link',
             'emojis'     => 'Emojis',
             'filter-genre' => 'Filter',
+            'empty-fields' => 'Not all fields are filled!',
             'login-errors' => [
                 'empty' => 'This field is required!',
                 'wrong-u-p' => 'Wrong username / password!'

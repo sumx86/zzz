@@ -323,7 +323,7 @@
                         <div id='inner'>
                             <div id='uploader'>
                                 <div id='image' class='uploader-data' data-uid='1' data-acc>
-                                    <img src='\ps-classics\img\51N9LyN4gZL._AC_UX569_.jpg'>
+                                    <img src='\ps-classics\img\—Pngtree—halloween pumpkin sticker_6787055.png'>
                                 </div>
                                 <div id='display-name' class='uploader-data' data-uid='1' data-acc>
                                     <span>RobertoRicardo2000</span>
@@ -477,7 +477,7 @@
                         </div>
                     </div>
                     <div id='game-metadata'>
-                        <form id='metadata' action='' method=''>
+                        <form id='metadata-form' action='' method=''>
                             <input class='game-upload-field' type='text' name='game-name'  id='game-name'  placeholder='<?php echo $language_config[$lang]['game-name'];  ?> ...' autocomplete='off'>
                             <input class='game-upload-field' type='text' name='game-genre' id='game-genre' placeholder='<?php echo $language_config[$lang]['game-genre']; ?> ...' autocomplete='off'>
                                 <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-genre'></i>
