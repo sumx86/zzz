@@ -239,7 +239,7 @@
         $result = [];
         switch($itemType) {
             case "game":
-                $query = "select * from games where id = ?";
+                //$query = "select * from games where id = ?";
                 break;
             case "comment":
                 $query = "select * from comments where comment_id = ? and comment_by_id = ?";

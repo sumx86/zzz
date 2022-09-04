@@ -891,8 +891,9 @@ var SimpleModalEvents = {
                     break;
             }
         },
-        _handleServerErrors: function(errors) {
-            
+        _handleServerErrors: function(error) {
+            $('#upload-error').find('span:first').text(error);
+            $('#upload-error').css('display', 'flex').delay(1500).hide('fast');
         }
     });
 })(jQuery);

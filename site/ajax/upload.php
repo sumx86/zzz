@@ -20,31 +20,36 @@
     $metadata = null;
     parse_str($_POST['metadata'], $metadata);
 
-    if(!assertMetadata($metadata)) {
+    if(!assert_metadata($metadata)) {
         Response::throw_json_string(["error" => $language_config[$lang]['empty-fields']]);
         return;
     }
 
+
+    // PROCEED UPLOADING
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     $engine = new FileUploadEngine($_FILES, $db);
-    $engine->setAllowedTypes([
+    $engine->set_allowed_types([
         'image/jpeg',
         'image/jpg'
     ]);
-    if($engine->hasErrors()) {
-        //Response::throw_json_string(["error" => $engine->getLastError()]);
+    if($engine->has_errors()) {
+        Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }
     if(!$engine->upload()) {
-        //Response::throw_json_string(["error" => $engine->getLastError()]);
+        Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }
     Response::throw_json_string(['success' => '']);
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    
     /*
      * Make sure all metadata fields are filled
      */
-    function assertMetadata($metadata) {
+    function assert_metadata($metadata) {
         if(Str::is_empty($metadata['game-name']) || Str::is_empty($metadata['game-genre']) || Str::is_empty($metadata['game-pltf']) || 
            Str::is_empty($metadata['game-devs']) || Str::is_empty($metadata['game-publ'])  || Str::is_empty($metadata['game-date']) || 
            Str::is_empty($metadata['game-iso'])) {

@@ -21,21 +21,21 @@
         /*
          * Set the allowed file types
          */
-        public function setAllowedTypes($allowedTypes) {
+        public function set_allowed_types($allowedTypes) {
             $this->allowedTypes = $allowedTypes;
         }
 
         /*
          * Check if an error occurred
          */
-        public function hasErrors() {
+        public function has_errors() {
             return !Str::is_empty(self::$error);
         }
 
         /*
          * Get the last error
          */
-        public function getLastError() {
+        public function get_last_error() {
             return self::$error;
         }
     }

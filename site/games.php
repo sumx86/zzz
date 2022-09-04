@@ -567,6 +567,9 @@
                         </div>
                     </div>
                 </div>
+                <div id='upload-error'>
+                    <span></span>
+                </div>
             </div>
         </section>
         <section id='comment-section'>
