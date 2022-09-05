@@ -16,7 +16,7 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     $assertionErrors = [];
 
-    if( !assertFields($config['register-fields']) ) {
+    if( !assert_fields($config['register-fields']) ) {
         Response::throw_json_string(
             ["input-error" => $assertionErrors]
         );
@@ -33,7 +33,7 @@
         $db->close();
     }
 
-    function assertFields($fields) {
+    function assert_fields($fields) {
         global $language_config;
         global $lang;
         global $assertionErrors;

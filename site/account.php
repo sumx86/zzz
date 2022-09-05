@@ -37,7 +37,7 @@
     <meta property="og:title" content="ps-classics" />
     <meta property="og:type" content="website" />
 
-    <meta name="author" content="sumx86" />
+    <meta name="author" content="Antonio Drandarov - sumx86" />
     <!-- <meta name="description" content="" />
     <meta property="og:description" content="" />
     <link rel="canonical" href="https://" />
@@ -90,7 +90,7 @@
                     echo "<div id='login-success-container'>
                         <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
                             <div id='image'>
-                                <img src='\ps-classics\img\oth\pngegg.png'>
+                                <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
                             </div>
                             <div id='username'>
                                 <span>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
@@ -106,7 +106,9 @@
         </div>
 
         <section id='user-section'>
-            
+            <div id='page-under-development'>
+                <span><?php echo $language_config[$lang]['under-development']; ?></span>
+            </div>
         </section>
 
         <div id='lang-container'>

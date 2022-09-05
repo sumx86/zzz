@@ -52,7 +52,7 @@
     <meta property="og:title" content="ps-classics" />
     <meta property="og:type" content="website" />
 
-    <meta name="author" content="sumx86" />
+    <meta name="author" content="Antonio Drandarov - sumx86" />
     <!-- <meta name="description" content="" />
     <meta property="og:description" content="" />
     <link rel="canonical" href="https://" />
@@ -107,10 +107,10 @@
                     echo "<div id='login-success-container' data-uid='".intval(Server::retrieve_session('user', 'id'))."'>
                         <div id='account-info'>
                             <div id='image'>
-                                <img src='\ps-classics\img\oth\pngegg.png'>
+                                <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
                             </div>
                             <div id='username'>
-                                <span>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
+                                <span>".Str::htmlEnt($username)."</span>
                             </div>
                         </div>
                     </div>";
@@ -145,11 +145,11 @@
                                 
                                 echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
                                     <div class='member-picture'>
-                                        <img src='\\ps-classics\\img\\51N9LyN4gZL._AC_UX569_.jpg'>
+                                        <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
                                     </div>
                                     <div class='member-info'>
                                         <div class='username'>
-                                            <span class='multilang'>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
+                                            <span class='multilang'>".Str::htmlEnt($username)."</span>
                                         </div>
                                         <div class='following'>
                                             <span>".$language_config[$lang]['following'].": ".intval($user['following'])."</span>
@@ -167,11 +167,11 @@
                                 
                                 echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
                                     <div class='member-picture'>
-                                        <img src='\\ps-classics\\img\\51N9LyN4gZL._AC_UX569_.jpg'>
+                                        <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
                                     </div>
                                     <div class='member-info'>
                                         <div class='username'>
-                                            <span class='multilang'>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
+                                            <span class='multilang'>".Str::htmlEnt($username)."</span>
                                         </div>
                                         <div class='following'>
                                             <span>".$language_config[$lang]['following'].": ".intval($user['following'])."</span>

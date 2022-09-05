@@ -35,7 +35,7 @@
     <meta property="og:title" content="ps-classics" />
     <meta property="og:type" content="website" />
 
-    <meta name="author" content="sumx86" />
+    <meta name="author" content="Antonio Drandarov - sumx86" />
     <!-- <meta name="description" content="" />
     <meta property="og:description" content="" />
     <link rel="canonical" href="https://" />

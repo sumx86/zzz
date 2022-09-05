@@ -33,7 +33,8 @@
         'image/jpeg',
         'image/jpg'
     ]);
-    if($engine->has_errors()) {
+    $engine->process();
+    if($engine->has_error()) {
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }

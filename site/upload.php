@@ -12,6 +12,13 @@
         }
 
         /*
+         * Process the file
+         */
+        public function process() {
+            
+        }
+
+        /*
          * Upload the file
          */
         public function upload() {
@@ -28,7 +35,7 @@
         /*
          * Check if an error occurred
          */
-        public function has_errors() {
+        public function has_error() {
             return !Str::is_empty(self::$error);
         }
 
