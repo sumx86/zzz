@@ -8,7 +8,8 @@
     require_once "db/db.php";
     require_once "http/response.php";
     
-    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
     /*if($isLogin) {
         Server::destroy_session('user');
@@ -105,12 +106,12 @@
                 <div id='logo'>
                     <img src='\ps-classics\img\logo\pngegg.png'>
                 </div>
-                <span id='name-text'>ps-classics</span>
+                <span id='name-text' data-theme data-fontsize='3em' data-mgtop='20%'>ps-classics</span>
             </a>
             <?php
                 if(!$isLogin) {
                     echo "<div id='login-button'>
-                            <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                            <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                         </div>";
                 } else {
                     $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
@@ -134,11 +135,11 @@
             if(!$isLogin) {
                 echo "<div id='sign-up-main-container'>
                 <div id='top'>
-                    <span id='text'>".$language_config[$lang]['sign-up']."</span>
+                    <span id='text' data-theme data-fontsize='3em'>".$language_config[$lang]['sign-up']."</span>
                 </div>
                 <div id='mid'>
                     <div id='inner'>
-                        <span id='text'>".$language_config[$lang]['username-requirement']."</span>
+                        <span id='text' data-theme data-fontsize='1.5em' data-mgtop='20%'>".$language_config[$lang]['username-requirement']."</span>
                     </div>
                 </div>
                 <div id='form-container'>
@@ -173,7 +174,7 @@
             } else {
                 echo "<div id='statistics-showcase-container'>
                           <div id='top'>
-                              <span>".$language_config[$lang]['most-liked-games']."</span>
+                              <span data-theme>".$language_config[$lang]['most-liked-games']."</span>
                           </div>
                           <div id='games-section'>
                               <div class='game'>
@@ -203,13 +204,13 @@
         ?>
         <div id='search-game-index-container'>
             <div id='top'>
-                <span><?php echo $language_config[$lang]['find-favgame']; ?></span>
+                <span data-theme data-fontsize='3em'><?php echo $language_config[$lang]['find-favgame']; ?></span>
             </div>
             <form id='search-form' action='/collection' method='get'>
                 <input id='search-game' type='text' name='search-game' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
             </form>
             <div id='mid'>
-                <span id='collection-redirect-text'><?php echo $language_config[$lang]['visit-collection']; ?></span>
+                <span id='collection-redirect-text' data-theme data-fontsize='2.3em'><?php echo $language_config[$lang]['visit-collection']; ?></span>
             </div>
             <div id='bottom'>
                 <i class='fa fa-arrow-down'></i>
@@ -232,6 +233,15 @@
                 </div>
             </div>
         </div>
+        <div id='halloween-theme'>
+            <img src='\ps-classics\img\halloween-u.png'>
+        </div>
+        <?php
+            if($theme == 'halloween') {
+                echo "<span id='halloween-web-left'>W</span>
+                      <span id='halloween-web-right'>W</span>";
+            }
+        ?>
     </div>
 </body>
 <script type='text/javascript'>

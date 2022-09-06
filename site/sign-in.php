@@ -7,7 +7,8 @@
     require_once "helpers/array.php";
     require_once "db/db.php";
     
-    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
 ?>
 <!DOCTYPE html>
@@ -56,7 +57,7 @@
                 <div id='logo'>
                     <img src='\ps-classics\img\logo\pngegg.png'>
                 </div>
-                <span id='name-text'>ps-classics</span>
+                <span id='name-text' data-theme data-fontsize='3em' data-mgtop='20%'>ps-classics</span>
             </a>
             <div id='login-button'>
                 <span class='multilang'><?php echo $language_config[$lang]['sign-in']; ?></span>
@@ -66,7 +67,7 @@
             if(!$isLogin) {
                 echo "<div id='sign-in-main-container'>
                 <div id='top'>
-                    <span id='text'>".$language_config[$lang]['sign-in']."</span>
+                    <span id='text' data-theme data-fontsize='3em' data-mgtop='-2%'>".$language_config[$lang]['sign-in']."</span>
                 </div>
                 <div id='form-container'>
                     <form id='login-form' action='' method='' data-action='login'>
@@ -92,6 +93,15 @@
                 </div>
             </div>
         </div>
+        <div id='halloween-theme'>
+            <img src='\ps-classics\img\halloween-u.png'>
+        </div>
+        <?php
+            if($theme == 'halloween') {
+                echo "<span id='halloween-web-left'>W</span>
+                      <span id='halloween-web-right'>W</span>";
+            }
+        ?>
     </div>
 </body>
 <script type='text/javascript'>

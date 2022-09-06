@@ -29,11 +29,15 @@
     // PROCEED UPLOADING
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     $engine = new FileUploadEngine($_FILES, $db);
+
+    $engine->set_max_size(100000);
+    
     $engine->set_allowed_types([
         'image/jpeg',
         'image/jpg'
     ]);
     $engine->process();
+    
     if($engine->has_error()) {
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;

@@ -9,7 +9,8 @@
     require_once "db/db.php";
     require_once "pagination.php";
 
-    $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $lang    = Server::get_request_cookie('lang',  ['en', 'bg'], 'bg');
+    $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
 
     $platform   = Str::getstr(Server::get_param('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
@@ -111,12 +112,12 @@
                     <div id='logo'>
                         <img src='\ps-classics\img\logo\pngegg.png'>
                     </div>
-                    <span id='name-text'>ps-classics</span>
+                    <span id='name-text' data-theme data-fontsize='3em' data-mgtop='20%'>ps-classics</span>
                 </a>
                 <?php
                 if(!$isLogin) {
                     echo "<div id='login-button'>
-                    <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                    <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                 </div>";
                 } else {
                     $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
@@ -150,10 +151,13 @@
                     </div>
                 </div>
             </div>
+            <div id='halloween-theme'>
+                <img src='\ps-classics\img\halloween-u.png'>
+            </div>
         
             <div id='search-game-container'>
                 <div id='top'>
-                    <span><?php echo $language_config[$lang]['find-game']; ?></span>
+                    <span data-theme data-fontsize='3em' data-mgtop='-3.5%'><?php echo $language_config[$lang]['find-game']; ?></span>
                 </div>
                 <form id='search-form' action='' method='get'>
                     <input id='search-game' type='text' name='search-game' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
@@ -296,7 +300,7 @@
                 <div id='preview'>
                     <div id='top'>
                         <div id='inner'>
-                            <span></span>
+                            <span data-theme data-fontsize='3em'></span>
                         </div>
                     </div>
                     <div id='game-cover'>
@@ -323,7 +327,7 @@
                         <div id='inner'>
                             <div id='uploader'>
                                 <div id='image' class='uploader-data' data-uid='1' data-acc>
-                                    <img src='\ps-classics\img\—Pngtree—halloween pumpkin sticker_6787055.png'>
+                                    <img src='\ps-classics\img\halloween-u.png'>
                                 </div>
                                 <div id='display-name' class='uploader-data' data-uid='1' data-acc>
                                     <span>RobertoRicardo2000</span>
@@ -379,7 +383,7 @@
                                     </form>";
                             } else {
                                 echo "<div id='top'>
-                                        <span>".$language_config[$lang]['login-to-comment']."</span>
+                                        <span data-theme data-fontsize='1.8em'>".$language_config[$lang]['login-to-comment']."</span>
                                     </div>";
                             }
                         ?>

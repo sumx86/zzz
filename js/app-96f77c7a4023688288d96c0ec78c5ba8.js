@@ -182,6 +182,35 @@ var SimpleModalEvents = {
             );
             location = location.href;
         });
+        $('#halloween-theme').click(function() {
+            var theme = '';
+            if(cookieUtil.get('theme') != 'halloween') {
+                theme = 'halloween';
+            } else {
+                theme = 'none';
+            }
+            cookieUtil.create({
+                name: 'theme', value: theme, path: '/', days: 365
+            });
+            location = location.href;
+        });
+        
+        var theme = cookieUtil.get('theme');
+        if(theme == 'halloween') {
+            $('[data-theme]').each(function(i, e) {
+                var element = $(e);
+                var text = element.text();
+                element.attr('style', 'font-family: Frightmare, whirlcyr2');
+
+                if(!(/[\u0400-\u04FF]+/).test(text)) {
+                    element.css('font-size', element.attr('data-fontsize'));
+                    element.css('top', element.attr('data-mgtop'));
+                }
+            });
+            $('#site-name > #name-text').css('top', '9%');
+        } else {
+
+        }
     });
 })(jQuery);
 (function($) {

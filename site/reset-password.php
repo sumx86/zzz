@@ -92,6 +92,9 @@
                 </div>
             </div>
         </div>
+        <div id='halloween-theme'>
+            <img src='\ps-classics\img\halloween-u.png'>
+        </div>
     </div>
 </body>
 <script type='text/javascript'>
