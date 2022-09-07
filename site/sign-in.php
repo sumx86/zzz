@@ -48,10 +48,20 @@
     <script type="text/javascript" src="\ps-classics\js\cookie-util.js"></script>
     <script type="text/javascript" src="\ps-classics\js\ui.js"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('#moon-img').css({'top': '10px'});
+        });
     </script>
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($theme == 'halloween') {
+                echo "<div id='moon-img'>
+                        <img src='\ps-classics\img\clipart457867.png'>
+                    </div>";
+            }
+        ?>
         <div id='navbar'>
             <a href='/' id='site-name'>
                 <div id='logo'>

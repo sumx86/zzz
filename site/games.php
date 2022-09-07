@@ -84,11 +84,19 @@
                     'en' : 'Edit comment'
                 }
             }
+            $('#moon-img').css({'top': '-120px'});
         });
     </script>
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($theme == 'halloween') {
+                echo "<div id='moon-img'>
+                        <img src='\ps-classics\img\clipart457867.png'>
+                    </div>";
+            }
+        ?>
         <?php
             if($isLogin) {
                 echo "<div id='logout-confirmation-modal'>
@@ -282,11 +290,11 @@
                 </div>
                 <div class='pagination-container' data-action='collection' data-platform='<?php echo $platform; ?>'>
                     <div id='inner'>
-                        <div class='page-item'><span>1</span></div>
-                        <div class='page-item'><span>2</span></div>
-                        <div class='page-item'><span>3</span></div>
-                        <div class='page-item no-redirect'><span>...</span></div>
-                        <div class='page-item'><span>5</span></div>
+                        <div class='page-item'><span data-theme>1</span></div>
+                        <div class='page-item'><span data-theme>2</span></div>
+                        <div class='page-item'><span data-theme>3</span></div>
+                        <div class='page-item no-redirect'><span data-theme>...</span></div>
+                        <div class='page-item'><span data-theme>5</span></div>
                     </div>
                 </div>
             </div>

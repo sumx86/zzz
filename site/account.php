@@ -8,7 +8,8 @@
     require_once "db/db.php";
     require_once "pagination.php";
 
-    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
     $db = new DB(false);
 ?>
@@ -50,12 +51,19 @@
     <script type="text/javascript" src="\ps-classics\js\ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            
+            $('#moon-img').css({'top': '-120px'});
         });
     </script>
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($theme == 'halloween') {
+                echo "<div id='moon-img'>
+                        <img src='\ps-classics\img\clipart457867.png'>
+                    </div>";
+            }
+        ?>
         <?php
             if($isLogin) {
                 echo "<div id='logout-confirmation-modal'>
@@ -78,12 +86,12 @@
                 <div id='logo'>
                     <img src='\ps-classics\img\logo\pngegg.png'>
                 </div>
-                <span id='name-text'>ps-classics</span>
+                <span id='name-text' data-theme data-fontsize='3em' data-mgtop='20%'>ps-classics</span>
             </a>
             <?php
                 if(!$isLogin) {
                     echo "<div id='login-button'>
-                    <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                    <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                 </div>";
                 } else {
                     $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);

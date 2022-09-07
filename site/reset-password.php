@@ -9,7 +9,8 @@
     if( Server::is_active_session('user') ) {
         Response::include_header("Location", "/");
     }
-    $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
+    $lang  = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
+    $theme = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,16 +49,26 @@
     <script type="text/javascript" src="\ps-classics\js\cookie-util.js"></script>
     <script type="text/javascript" src="\ps-classics\js\ui.js"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('#moon-img').css({'top': '10px'});
+        });
     </script>
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($theme == 'halloween') {
+                echo "<div id='moon-img'>
+                        <img src='\ps-classics\img\clipart457867.png'>
+                    </div>";
+            }
+        ?>
         <div id='navbar'>
             <a href='/' id='site-name'>
                 <div id='logo'>
                     <img src='\ps-classics\img\logo\pngegg.png'>
                 </div>
-                <span id='name-text'>ps-classics</span>
+                <span id='name-text' data-theme data-fontsize='3em' data-mgtop='20%'>ps-classics</span>
             </a>
             <div id='login-button'>
                 <span class='multilang'><?php echo $language_config[$lang]['sign-in'] ?></span>
@@ -66,11 +77,11 @@
 
         <div id='reset-password-main-container'>
             <div id='top'>
-                <span id='text'><?php echo $language_config[$lang]['recover-password']; ?></span>
+                <span id='text' data-theme data-fontsize='3em' data-mgtop='0%'><?php echo $language_config[$lang]['recover-password']; ?></span>
             </div>
             <div id='mid'>
                     <div id='inner'>
-                        <span id='text'><?php echo $language_config[$lang]['email-hint']; ?></span>
+                        <span id='text' data-theme data-fontsize='1.5em' data-mgtop='20%'><?php echo $language_config[$lang]['email-hint']; ?></span>
                     </div>
                 </div>
             <div id='form-container'>
@@ -95,6 +106,12 @@
         <div id='halloween-theme'>
             <img src='\ps-classics\img\halloween-u.png'>
         </div>
+        <?php
+            if($theme == 'halloween') {
+                echo "<span id='halloween-web-left'>W</span>
+                      <span id='halloween-web-right'>W</span>";
+            }
+        ?>
     </div>
 </body>
 <script type='text/javascript'>

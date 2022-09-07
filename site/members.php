@@ -9,6 +9,7 @@
     require_once "pagination.php";
 
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
+    $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
     $search  = Str::replace_all_quotes(Server::get_param('search-member'));
 
@@ -68,11 +69,19 @@
             $('#login-success-container,.member-listing-item').click(function(e) {
                 $.redirect('/account/uid/' + $(this).attr('data-uid'));
             });
+            $('#moon-img').css({'top': '-120px'});
         });
     </script>
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($theme == 'halloween') {
+                echo "<div id='moon-img'>
+                        <img src='\ps-classics\img\clipart457867.png'>
+                    </div>";
+            }
+        ?>
         <?php
             if($isLogin) {
                 echo "<div id='logout-confirmation-modal'>
@@ -95,12 +104,12 @@
                 <div id='logo'>
                     <img src='\ps-classics\img\logo\pngegg.png'>
                 </div>
-                <span id='name-text'>ps-classics</span>
+                <span id='name-text' data-theme data-fontsize='3em' data-mgtop='20%'>ps-classics</span>
             </a>
             <?php
                 if(!$isLogin) {
                     echo "<div id='login-button'>
-                            <span class='multilang'>".$language_config[$lang]['sign-in']."</span>
+                            <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                         </div>";
                 } else {
                     $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
@@ -123,7 +132,7 @@
         </div>
         <div id='search-users-container'>
             <div id='top'>
-                <span><?php echo $language_config[$lang]['search-members']; ?></span>
+                <span data-theme data-fontsize='3em' data-mgtop='-3.5%'><?php echo $language_config[$lang]['search-members']; ?></span>
             </div>
             <form id='search-form' action='' method='get'>
                 <input id='search-member' type='text' name='search-member' placeholder='<?php echo $language_config[$lang]['search']; ?>' autocomplete='off'>
@@ -194,7 +203,7 @@
                             if($i == 3) {
                                 echo "<div class='page-item no-redirect'><span>...</span></div>";
                             } else {
-                                echo "<div class='page-item'><span>".$pagination->next()."</span></div>";
+                                echo "<div class='page-item'><span data-theme>".$pagination->next()."</span></div>";
                             }
                         }
                     ?>

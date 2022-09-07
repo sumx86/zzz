@@ -79,11 +79,19 @@
                     }
                 }
             }, null);
+            $('#moon-img').css({'top': '10px'});
         });
     </script>
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($theme == 'halloween') {
+                echo "<div id='moon-img'>
+                        <img src='\ps-classics\img\clipart457867.png'>
+                    </div>";
+            }
+        ?>
         <?php
             if($isLogin) {
                 echo "<div id='logout-confirmation-modal'>
