@@ -84,6 +84,13 @@
                     'en' : 'Edit comment'
                 }
             }
+            $('.file-upload-icon').click(function() {
+                if(!window._login) {
+                    $('#upload-login-warn').css('display', 'flex').delay(1500).hide('fast');
+                } else {
+                    $('#game-cover-file').click();
+                }
+            });
             $('#moon-img').css({'top': '-120px'});
         });
     </script>
@@ -184,22 +191,22 @@
 
             <div id='game-filters-container' data-gr class='modal-active'></div>
 
-            <?php
-                if($isLogin) {
-                    echo "<div id='upload-game-container'>
-                        <form id='upload-game-form'>
-                            <div id='inner'>
-                                <i class='fa fa-upload' onclick=\"$('#game-cover-file').click()\"></i>
-                            </div>
-                            <input type='file' id='game-cover-file' name='game-cover-file' style='visibility: hidden;'>
-                        </form>
-                    </div>";
+            <div id='upload-game-container'>
+                <form id='upload-game-form'>
+                    <div id='inner'>
+                        <i class='fa fa-upload file-upload-icon'></i>
+                    </div>
+                    <input type='file' id='game-cover-file' name='game-cover-file' style='visibility: hidden;'>
+                </form>
+            </div>
 
-                    echo "<div id='filter-games-trigger'>
-                            <span>".$language_config[$lang]['filter-genre']." <span> <i class='fa fa-caret-down'></i></span></span>
-                        </div>";
-                }
-            ?>
+            <div id='filter-games-trigger'>
+                <span><?php echo $language_config[$lang]['filter-genre']; ?> <span> <i class='fa fa-caret-down'></i></span></span>
+            </div>
+
+            <div id='upload-login-warn'>
+                <span><?php echo $language_config[$lang]['account-first']; ?></span>
+            </div>
 
             <div class='collection-container'>
                 <div id='collection'>
@@ -338,7 +345,7 @@
                                     <img src='\ps-classics\img\halloween-u.png'>
                                 </div>
                                 <div id='display-name' class='uploader-data' data-uid='1' data-acc>
-                                    <span>RobertoRicardo2000</span>
+                                    <span></span>
                                 </div>
                             </div>
                             <div id='game-info'>
@@ -507,6 +514,22 @@
                                 <i class="fa fa-info-circle game-upload-tooltip-trigger" data-target='game-date'></i>
 
                             <input class='game-upload-field' type='text' name='game-iso'   id='game-iso'   placeholder='<?php echo $language_config[$lang]['game-iso']; ?> - https://example.com' autocomplete='off'>
+                            
+
+                            <div id='checkbox-ps1-container'>
+                                <span>ps1</span>
+                                <input type="radio" id="ps1-radio" name="platform" value="ps1">
+                            </div>
+                            <div id='checkbox-ps2-container'>
+                                <span>ps2</span>
+                                <input type="radio" id="ps2-radio" name="platform" value="ps2">
+                            </div>
+                            <div id='checkbox-ps3-container'>
+                                <span>ps3</span>
+                                <input type="radio" id="ps3-radio" name="platform" value="ps3">
+                            </div>
+
+
                             <div id='submit-game-upload'>
                                 <span class='multilang'><?php echo $language_config[$lang]['confirm-upload']; ?></span>
                             </div>

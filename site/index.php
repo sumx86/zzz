@@ -193,7 +193,7 @@
             } else {
                 echo "<div id='statistics-showcase-container'>
                           <div id='top'>
-                              <span data-theme>".$language_config[$lang]['most-liked-games']."</span>
+                              <span data-theme data-fontsize='3em'>".$language_config[$lang]['most-liked-games']."</span>
                           </div>
                           <div id='games-section'>
                               <div class='game'>
@@ -251,7 +251,11 @@
             </div>
             <div id='bottom'>
                 <div id='members-redirect' class='inactive-circle'>
-                    <img src='\ps-classics\img\pngegg.png'>
+                    <?php
+                        if($theme == 'halloween') {
+                            echo "<img src='\ps-classics\img\pngegg.png'>";
+                        }
+                    ?>
                 </div>
             </div>
         </div>

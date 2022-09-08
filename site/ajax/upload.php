@@ -1,6 +1,7 @@
 <?php
     require_once "../config/lang.php";
     require_once "../config/db.php";
+    require_once "../crypt.php";
     require_once "../helpers/string.php";
     require_once "../helpers/array.php";
     require_once "../server.php";
@@ -16,6 +17,12 @@
     }
 
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
+    // check if user is logged in
+    if(!Server::is_active_session('user')) {
+        Response::throw_json_string(["error" => $language_config[$lang]['account-first']]);
+        return;
+    }
+
     $db   = new DB(false);
     $metadata = null;
     parse_str($_POST['metadata'], $metadata);
@@ -28,16 +35,18 @@
 
     // PROCEED UPLOADING
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $engine = new FileUploadEngine($_FILES, $db);
+    $engine = new FileUploadEngine($_FILES['file'], $db);
 
-    $engine->set_max_size(100000);
+    $engine->set_max_size(120000);
+
+    $engine->set_destination("/ps-classics/img/pending/");
     
     $engine->set_allowed_types([
         'image/jpeg',
         'image/jpg'
     ]);
     $engine->process();
-    
+
     if($engine->has_error()) {
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;

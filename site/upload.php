@@ -14,23 +14,30 @@
         private $defaultSize = 100000;
 
         //
-        private $files = null;
+        private $file = null;
+
+        // The extension of the file
+        private static $fileExtension = '';
 
         // Upload destination
         private static $destination = '';
 
-        public function __construct($files, $dbInstance) {
-            $this->files = $files;
-            echo $this->files['file']['tmp_name'];
+        public function __construct($file, $dbInstance) {
+            $this->file = $file;
+            echo $this->file['name'];
         }
 
         /*
          * Process the file
          */
         public function process() {
+            // check if filename is ok
             // check if file is an image
             // check its size
             // check its dimensions (must have more height than width)
+            if(!$this->assert_file_data()) {
+                return;
+            }
         }
 
         /*
@@ -40,11 +47,15 @@
             global $language_config;
             global $lang;
 
-            if(!move_uploaded_file($this->files['file']['tmp_name'], self::$destination)) {
-                $this->error = $language_config[$lang]['upload-error'];
-                return false;
+            if(move_uploaded_file($this->file['tmp_name'], self::$destination . Crypt::generate_nonce(true, 20) . "." . self::$fileExtension)) {
+                $this->db->setFetchMode(FetchModes::$modes['assoc'])
+                    ->rawQuery("insert into pending_uploads
+                                    (name, platform, cover, uploader, link, genres, developers, publishers, release_dates, platforms) values
+                                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [], false, false, false);
+                return true;
             }
-            return true;
+            $this->error = $language_config[$lang]['upload-error'];
+            return false;
         }
 
         /*
@@ -62,7 +73,14 @@
          * Set the upload destination
          */
         public function set_destination($destination) {
-            self::$destination = $destination;
+            self::$destination = Server::get_root() . $destination;
+        }
+
+        /*
+         * Get the upload destination
+         */
+        public function get_destination() {
+            return self::$destination;
         }
 
         /*
