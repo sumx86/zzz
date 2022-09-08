@@ -65,6 +65,17 @@
                 }
             }, null);
 
+            $._on('#members-redirect', null, {
+                'mouseenter' : function() {
+                    $(this).removeClass('inactive-circle');
+                    $(this).addClass('active-circle');
+                },
+                'mouseleave' : function() {
+                    $(this).removeClass('active-circle');
+                    $(this).addClass('inactive-circle');
+                }
+            }, null);
+
             $._on('.register-input', null, {
                 'focus' : function(e) {
                     var field = $(e.target);
@@ -79,7 +90,7 @@
                     }
                 }
             }, null);
-            $('#moon-img').css({'top': '10px'});
+            $('#moon-img').animate({'top': '15px'}, 1000);
         });
     </script>
 </head>
@@ -231,6 +242,20 @@
             <img src='\ps-classics\img\oth\pngegg.png'>
         </div>
 
+        <div id='members-redirect-container'>
+            <div id='top'>
+                <span data-theme data-fontsize='3em'><?php echo $language_config[$lang]['listing']; ?></span>
+            </div>
+            <div id='mid'>
+                <i class='fa fa-arrow-down'></i>
+            </div>
+            <div id='bottom'>
+                <div id='members-redirect' class='inactive-circle'>
+                    <img src='\ps-classics\img\pngegg.png'>
+                </div>
+            </div>
+        </div>
+
         <div id='lang-container'>
             <div id='inner'>
                 <div id='en' class='lang-img-container' data-lang='en'>
@@ -256,6 +281,9 @@
     $(document).ready(function(){
         $('#collection-redirect-container').on('click', function(e) {
             $.redirect('/collection?page=1&platform=ps2');
+        });
+        $('#members-redirect').on('click', function(e) {
+            $.redirect('/members?page=1');
         });
         $('.multilang').each(function(i, e) {
             var element = $(e);

@@ -151,10 +151,14 @@
                             foreach($usersList as $user) {
 
                                 $username = Str::truncate(Str::replace_all_quotes($user['username'], true), 9);
-                                
+                                if($theme == 'halloween') {
+                                    $image = '\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png';
+                                } else {
+                                    $image = Str::htmlEnt($user['image']);
+                                }
                                 echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
                                     <div class='member-picture'>
-                                        <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
+                                        <img src='".$image."'>
                                     </div>
                                     <div class='member-info'>
                                         <div class='username'>
@@ -173,10 +177,14 @@
                             foreach($usersList as $user) {
 
                                 $username = Str::truncate(Str::replace_all_quotes($user['username'], true), 9);
-                                
+                                if($theme == 'halloween') {
+                                    $image = '\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png';
+                                } else {
+                                    $image = Str::htmlEnt($user['image']);
+                                }
                                 echo "<div class='member-listing-item' data-uid='".intval($user['id'])."'>
                                     <div class='member-picture'>
-                                        <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
+                                        <img src='".$image."'>
                                     </div>
                                     <div class='member-info'>
                                         <div class='username'>
