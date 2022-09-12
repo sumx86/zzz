@@ -389,16 +389,32 @@ var SimpleModalEvents = {
                 data: 'action='+action+'&data=' + JSON.stringify({'item':_self._commentID,'item_type':'comment', 'text':text, 'game_id':_self._itemID})
             }, false)
             .done(function(jqXHR, status, req) {
-                console.log('[COMMENT-EDITING-HANDLING-MODULE] -> ' + jqXHR);
+                //console.log('[COMMENT-EDITING-HANDLING-MODULE] -> ' + jqXHR);
                 if(status == 'success') {
                     if(jqXHR.indexOf('{') == 0) {
                         var response = $.parseJSON(jqXHR);
-                        if(response.hasOwnProperty('success') && action == 'delete') {
-                            _self._removeCommentBoxWithId(_self._commentID);
+                        if(response.hasOwnProperty('success')) {
+                            switch(action) {
+                                case 'delete':
+                                    _self._removeCommentBoxWithId(_self._commentID);
+                                    break;
+                                case 'edit':
+                                    _self.updateUI(response.success);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }
             });
+        },
+        updateUI: function(response) {
+            var commentID = response.item;
+            var text = response.text;
+
+            $('[data-cbox='+commentID+']').find('.inner > .comment > .inner > span:first').text(text);
+            $('[data-ebox='+commentID+']').css('display', 'none');
         },
         _removeCommentBoxWithId: function(commentID) {
             $('.box-' + commentID).remove();
@@ -573,7 +589,7 @@ var SimpleModalEvents = {
                 return;
             }
             for(var i = 0; i < commentsData.length; i++) {
-                var html = "<div class='comment-box x"+commentsData[i]['comment']['user_id']+" box-"+commentsData[i]['comment']['comment_id']+"' data-fl-idx="+i+">\
+                var html = "<div class='comment-box x"+commentsData[i]['comment']['user_id']+" box-"+commentsData[i]['comment']['comment_id']+"' data-fl-idx="+i+" data-cbox="+commentsData[i]['comment']['comment_id']+">\
                     <div class='inner'>\
                         <div class='user-pic'>\
                             <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>\
@@ -623,7 +639,7 @@ var SimpleModalEvents = {
             $(document).trigger('preview-comments-loaded', []);
         },
         _addEditBlock: function(target, userID, commentID, blockID) {
-            var html = $.parseHTML("<div class='comment-edit-box x-"+userID+" box-"+commentID+"' data-fl-idx="+blockID+">\
+            var html = $.parseHTML("<div class='comment-edit-box x-"+userID+" box-"+commentID+"' data-fl-idx="+blockID+" data-ebox="+commentID+">\
                                         <div class='inner'>\
                                             <div class='header'>\
                                                 <span>"+window.text['edit'][window.lang]+"</span>\
