@@ -23,12 +23,13 @@
         return;
     }
 
-    $db   = new DB(false);
+    $db = new DB(false);
+    $assertionError = '';
     $metadata = null;
     parse_str($_POST['metadata'], $metadata);
 
     if(!assert_metadata($metadata)) {
-        Response::throw_json_string(["error" => $language_config[$lang]['empty-fields']]);
+        Response::throw_json_string(["error" => Str::is_empty($assertionError) ? $language_config[$lang]['empty-fields'] : $assertionError]);
         return;
     }
 
@@ -64,9 +65,21 @@
      * Make sure all metadata fields are filled
      */
     function assert_metadata($metadata) {
+        global $assertionError;
+        global $language_config;
+        global $lang;
+        
         if(Str::is_empty($metadata['game-name']) || Str::is_empty($metadata['game-genre']) || Str::is_empty($metadata['game-pltf']) || 
            Str::is_empty($metadata['game-devs']) || Str::is_empty($metadata['game-publ'])  || Str::is_empty($metadata['game-date']) || 
            Str::is_empty($metadata['game-iso'])) {
+            return false;
+        }
+        if(!array_key_exists('platform', $metadata)) {
+            $assertionError = $language_config[$lang]['platform-not-specified'];
+            return false;
+        }
+        if(!Str::is_in($metadata['platform'], ['ps1', 'ps2', 'ps3'])) {
+            $assertionError = $language_config[$lang]['platform-not-specified'];
             return false;
         }
         return true;

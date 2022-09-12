@@ -7,6 +7,7 @@
     require_once "../http/response.php";
     require_once "../usercp.php";
     require_once "../db/db.php";
+    require_once "../mail/mail.php";
 
     if( Server::request_method() != "post" ) {
         Response::throw_json_string(["error" => "Request method is not acceptable!"]);

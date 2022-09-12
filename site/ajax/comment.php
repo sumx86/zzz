@@ -130,8 +130,9 @@
     if(Str::equal($action, 'edit')) {
         if(property_exists($data, 'item') && property_exists($data, 'text')) {
             $commentID = intval($data->item);
+            $userID    = intval(Server::retrieve_session('user', 'id'));
 
-            if(item_exists($commentID, 'comment', $db)) {
+            if(item_exists($commentID, 'comment', $db) && item_belongs_to_user($commentID, 'comment', $userID, $db)) {
                 $comment = utf8_encode($data->text);
 
                 if(!Str::is_empty($comment)) {
@@ -139,7 +140,8 @@
                     UserCP::update_comment($comment, $commentID, intval(Server::retrieve_session('user', 'id')), Util::get_current_date_and_time(false));
                     Response::throw_json_string(
                         ["success" => [
-                            "text" => utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true))]
+                            "text" => utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true)),
+                            'item' => $commentID]
                         ]
                     );
                 }
