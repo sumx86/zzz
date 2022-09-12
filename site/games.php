@@ -516,17 +516,31 @@
                             <input class='game-upload-field' type='text' name='game-iso'   id='game-iso'   placeholder='<?php echo $language_config[$lang]['game-iso']; ?> - https://example.com' autocomplete='off'>
                             
 
-                            <div id='checkbox-ps1-container'>
-                                <span>ps1</span>
-                                <input type="radio" id="ps1-radio" name="platform" value="ps1">
+                            <div id='checkbox-ps1-container' class='checkbox-container'>
+                                <div class='box'>
+                                    <span>ps1</span>
+                                </div>
+                                <div class='box'>
+                                    <input type="radio" id="ps1-radio" name="platform" value="ps1">
+                                </div>
                             </div>
-                            <div id='checkbox-ps2-container'>
-                                <span>ps2</span>
-                                <input type="radio" id="ps2-radio" name="platform" value="ps2">
+
+                            <div id='checkbox-ps2-container' class='checkbox-container'>
+                                <div class='box'>
+                                    <span>ps2</span>
+                                </div>
+                                <div class='box'>
+                                    <input type="radio" id="ps2-radio" name="platform" value="ps2">
+                                </div>
                             </div>
-                            <div id='checkbox-ps3-container'>
-                                <span>ps3</span>
-                                <input type="radio" id="ps3-radio" name="platform" value="ps3">
+
+                            <div id='checkbox-ps3-container' class='checkbox-container'>
+                                <div class='box'>
+                                    <span>ps3</span>
+                                </div>
+                                <div class='box'>
+                                    <input type="radio" id="ps3-radio" name="platform" value="ps3">
+                                </div>
                             </div>
 
 

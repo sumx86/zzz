@@ -48,6 +48,7 @@
             global $lang;
 
             if(move_uploaded_file($this->file['tmp_name'], self::$destination . Crypt::generate_nonce(true, 20) . "." . self::$fileExtension)) {
+                //$uploader = Server::retrieve_session('user', 'name');
                 $this->db->setFetchMode(FetchModes::$modes['assoc'])
                     ->rawQuery("insert into pending_uploads
                                     (name, platform, cover, uploader, link, genres, developers, publishers, release_dates, platforms) values
