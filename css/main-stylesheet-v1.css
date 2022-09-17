@@ -2288,6 +2288,58 @@ body {
 
 
 
+#checkbox-ps1-container {
+    position: absolute;
+    width: 20%;
+    height: 6%;
+    top: 97%;
+    left: 12%;
+    background-color: transparent;
+}
+
+#checkbox-ps2-container {
+    position: absolute;
+    width: 20%;
+    height: 6%;
+    top: 97%;
+    left: 29%;
+    background-color: transparent;
+}
+
+#checkbox-ps3-container {
+    position: absolute;
+    width: 20%;
+    height: 6%;
+    top: 97%;
+    left: 46%;
+    background-color: transparent;
+}
+
+.checkbox-container > .box {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.checkbox-container > .box:nth-child(2) {
+    left: 50%;
+}
+
+.checkbox-container > .box > span {
+    position: absolute;
+    color: white;
+    font-family: 'Roboto-Regular', 'Jura-Bold', sans-serif;
+    font-size: 0.9em;
+    top: 5px;
+    left: 39px;
+}
+
+
+
+
 
 .comment-edit-box > .inner {
     margin-left: 4%;
@@ -3132,7 +3184,7 @@ footer {
     height: 4.5%;
     border-radius: 5px;
     left: 49%;
-    top: 75%;
+    top: 79%;
     background-color: #cd002f;
 }
 
@@ -3446,7 +3498,7 @@ footer {
     background-color: #96afff;
     border-radius: 3px;
     left: 26%;
-    top: 98%;
+    top: 106%;
     cursor: pointer;
 }
 
