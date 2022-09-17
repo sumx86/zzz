@@ -73,6 +73,8 @@
             'filter-genre' => 'Филтър',
             'empty-fields' => 'Не всички полета са попълнени!',
             'platform-not-specified' => 'Не е избрана платформа!',
+            'file-name-error' => 'Името на файла е невалидно!',
+            'file-type-error' => 'Типа на файла е невалиден!',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -163,6 +165,8 @@
             'quit-account-confirm' => 'Are you sure you want to sign out of your account?',
             'under-development' => 'This page is still under development!',
             'upload-error' => 'Error uploading the file!',
+            'file-name-error' => 'The name of the file is not valid!',
+            'file-type-error' => 'The type of the file is not valid!',
             'yes' => 'Yes',
             'no'  => 'No',
             'most-liked-games' => 'Most liked games',

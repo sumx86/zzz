@@ -7,6 +7,9 @@
         // Array containing the allowed file types
         private $allowedTypes = [];
 
+        // Array containing the allowed file extensions
+        private $allowedExtensions = [];
+
         // Maximum file size allowed
         private $maxSize = 0;
 
@@ -24,20 +27,26 @@
 
         public function __construct($file, $dbInstance) {
             $this->file = $file;
-            echo $this->file['name'];
         }
 
         /*
          * Process the file
          */
         public function process() {
-            // check if filename is ok
-            // check if file is an image
-            // check its size
-            // check its dimensions (must have more height than width)
-            if(!$this->assert_file_data()) {
+            global $language_config;
+            global $lang;
+            
+            $filenameData = @explode(".", $this->file['name']);
+            if(count($filenameData) != 2 || !Str::is_in(end($filenameData), $this->allowedExtensions)) {
+                $this->error = $language_config[$lang]['file-name-error'];
                 return;
             }
+            if(!$this->is_allowed_type()) {
+                $this->error = $language_config[$lang]['file-type-error'];
+                return;
+            }
+            // check its size
+            // check its dimensions (must have more height than width)
         }
 
         /*
@@ -57,6 +66,32 @@
             }
             $this->error = $language_config[$lang]['upload-error'];
             return false;
+        }
+
+        /*
+         * Check if file is allowed type
+         */
+        public function is_allowed_type() {
+            foreach($this->allowedTypes as $type) {
+                if(Str::equal($this->file['type'], $type) && $this->is_type($this->file, $type)) {
+                    return true;
+                }
+            } return false;
+        }
+
+        /*
+         * Check if the file type is same as in $type
+         */
+        public function is_type($file, $type) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime  = finfo_file($finfo, $file['tmp_name']);
+
+            $is_type = false;
+            if(Str::equal($mime, $type)) {
+                $is_type = true;
+            }
+            finfo_close($finfo);
+            return $is_type;
         }
 
         /*
@@ -88,6 +123,9 @@
          * Set the allowed file types
          */
         public function set_allowed_types($allowedTypes) {
+            foreach($allowedTypes as $type) {
+                array_push($this->allowedExtensions, @explode("/", $type)[1]);
+            }
             $this->allowedTypes = $allowedTypes;
         }
 

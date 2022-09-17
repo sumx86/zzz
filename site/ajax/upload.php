@@ -52,11 +52,12 @@
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }
+    /*
     if(!$engine->upload()) {
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }
-    Response::throw_json_string(['success' => '']);
+    Response::throw_json_string(['success' => '']); */
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
