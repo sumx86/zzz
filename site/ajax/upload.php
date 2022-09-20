@@ -4,6 +4,7 @@
     require_once "../crypt.php";
     require_once "../helpers/string.php";
     require_once "../helpers/array.php";
+    require_once "../helpers/util.php";
     require_once "../server.php";
     require_once "../http/response.php";
     require_once "../usercp.php";
@@ -24,6 +25,7 @@
     }
 
     $db = new DB(false);
+    UserCP::setDB($db);
     $assertionError = '';
     $metadata = null;
     parse_str($_POST['metadata'], $metadata);
@@ -33,6 +35,11 @@
         return;
     }
 
+    // Check if 24 hours have passed since the last upload by this user
+    if(!UserCP::expiredUploadTime(Server::retrieve_session('user', 'username'))) {
+        Response::throw_json_string(["error" => $language_config[$lang]['upload-time']]);
+        return;
+    }
 
     // PROCEED UPLOADING
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,12 +59,17 @@
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }
-    /*
+    
     if(!$engine->upload()) {
         Response::throw_json_string(["error" => $engine->get_last_error()]);
         return;
     }
-    Response::throw_json_string(['success' => '']); */
+    // only one upload every 24 hours
+    UserCP::addPendingUpload(basename($engine->getUploadedFileName()), $metadata);
+    $today_dt  = new DateTime("09/20/2022 15:36:27");
+    $expire_dt = new DateTime("09/22/2022 15:36:27");
+
+    Response::throw_json_string(['success' => '']);
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

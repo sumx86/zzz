@@ -25,6 +25,8 @@
         // Upload destination
         private static $destination = '';
 
+        private static $filename = '';
+
         public function __construct($file, $dbInstance) {
             $this->file = $file;
         }
@@ -37,7 +39,9 @@
             global $lang;
             
             $filenameData = @explode(".", $this->file['name']);
-            if(count($filenameData) != 2 || !Str::is_in(end($filenameData), $this->allowedExtensions)) {
+            self::$fileExtension = end($filenameData);
+
+            if(count($filenameData) != 2 || !Str::is_in(self::$fileExtension, $this->allowedExtensions)) {
                 $this->error = $language_config[$lang]['file-name-error'];
                 return;
             }
@@ -45,7 +49,10 @@
                 $this->error = $language_config[$lang]['file-type-error'];
                 return;
             }
-            // check its size
+            if(filesize($this->file['tmp_name']) > $this->maxSize) {
+                $this->error = sprintf($language_config[$lang]['file-size-error'], $this->maxSize);
+                return;
+            }
             // check its dimensions (must have more height than width)
         }
 
@@ -56,12 +63,7 @@
             global $language_config;
             global $lang;
 
-            if(move_uploaded_file($this->file['tmp_name'], self::$destination . Crypt::generate_nonce(true, 20) . "." . self::$fileExtension)) {
-                //$uploader = Server::retrieve_session('user', 'name');
-                $this->db->setFetchMode(FetchModes::$modes['assoc'])
-                    ->rawQuery("insert into pending_uploads
-                                    (name, platform, cover, uploader, link, genres, developers, publishers, release_dates, platforms) values
-                                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [], false, false, false);
+            if(move_uploaded_file($this->file['tmp_name'], $this->generateNewFileName(20))) {
                 return true;
             }
             $this->error = $language_config[$lang]['upload-error'];
@@ -92,6 +94,14 @@
             }
             finfo_close($finfo);
             return $is_type;
+        }
+
+        /*
+         * Generate the new file name
+         */
+        public static function generateNewFileName($length) {
+            self::$filename = self::$destination . Crypt::generate_nonce(true, $length) . "." . self::$fileExtension;
+            return self::$filename;
         }
 
         /*
@@ -141,6 +151,13 @@
          */
         public function get_last_error() {
             return $this->error;
+        }
+        
+        /*
+         * Get the name of the uploaded file
+         */
+        public function getUploadedFileName() {
+            return self::$filename;
         }
     }
 ?>

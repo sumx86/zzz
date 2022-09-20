@@ -312,5 +312,47 @@
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$userID, $gameID], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
         }
+
+
+
+        /*
+         * Add the information about the pending upload
+         */
+        public static function addPendingUpload($filename, $metadata) {
+            $name          = utf8_encode(Str::replace_all_quotes($metadata['game-name']));
+            $genres        = utf8_encode(Str::replace_all_quotes($metadata['game-genre']));
+            $platforms     = utf8_encode(Str::replace_all_quotes($metadata['game-pltf']));
+            $developers    = utf8_encode(Str::replace_all_quotes($metadata['game-devs']));
+            $publishers    = utf8_encode(Str::replace_all_quotes($metadata['game-publ']));
+            $release_dates = utf8_encode(Str::replace_all_quotes($metadata['game-date']));
+            $link          = utf8_encode(Str::replace_all_quotes($metadata['game-iso']));
+            $platform      = Str::replace_all_quotes($metadata['platform']);
+
+            $cover    = $filename;
+            $uploader = Server::retrieve_session('user', 'username');
+            $date     = Util::get_current_date_and_time(true);
+
+            self::$dbInstance->rawQuery("insert into pending_uploads
+                                        (name, platform, cover, uploader, link, genres, developers, publishers, release_dates, platforms, date) values
+                                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                        [$name, $platform, $cover, $uploader, $link, $genres, $developers, $publishers, $release_dates, $platforms, $date],
+                                        false, false, false);
+        }
+
+        /*
+         * 
+         */
+        public static function getLastUploadDate($username) {
+            $date = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select max(date) from pending_uploads where uploader = ?", [$username], true, DB::ALL_ROWS);
+            return $date;
+        }
+
+        /*
+         * Check if 24 hours have passed since last upload by $username
+         */
+        public static function expiredUploadTime($username) {
+            $uploadDate = self::getLastUploadDate($username);
+            return (!is_null($uploadDate) && $uploadDate > 0) ? strtotime(Util::get_current_date_and_time(true)) - $uploadDate >= 86400 : false;
+        }
     }
 ?>

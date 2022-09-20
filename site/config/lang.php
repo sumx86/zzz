@@ -57,6 +57,7 @@
             'quit-account-confirm' => 'Сигурен/а ли си че искаш да излезеш от акаунта си?',
             'under-development' => 'Страницата е в процес на разработване!',
             'upload-error' => 'Проблем при качването на файла!',
+            'upload-time'  => 'Трябва да минат 24 часа преди нов опит за качване на игра!',
             'yes' => 'Да',
             'no'  => 'Не',
             'most-liked-games' => 'Най-харесваните игри',
@@ -75,6 +76,7 @@
             'platform-not-specified' => 'Не е избрана платформа!',
             'file-name-error' => 'Името на файла е невалидно!',
             'file-type-error' => 'Типа на файла е невалиден!',
+            'file-size-error' => 'Размера на файла не трябва да надвишава %d байта!!',
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -165,8 +167,10 @@
             'quit-account-confirm' => 'Are you sure you want to sign out of your account?',
             'under-development' => 'This page is still under development!',
             'upload-error' => 'Error uploading the file!',
+            'upload-time'  => '24 hours must pass before next upload!',
             'file-name-error' => 'The name of the file is not valid!',
             'file-type-error' => 'The type of the file is not valid!',
+            'file-size-error' => 'The size of the file must not exceed %d bytes!',
             'yes' => 'Yes',
             'no'  => 'No',
             'most-liked-games' => 'Most liked games',
