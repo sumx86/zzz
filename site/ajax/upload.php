@@ -66,9 +66,6 @@
     }
     // only one upload every 24 hours
     UserCP::addPendingUpload(basename($engine->getUploadedFileName()), $metadata);
-    $today_dt  = new DateTime("09/20/2022 15:36:27");
-    $expire_dt = new DateTime("09/22/2022 15:36:27");
-
     Response::throw_json_string(['success' => '']);
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
