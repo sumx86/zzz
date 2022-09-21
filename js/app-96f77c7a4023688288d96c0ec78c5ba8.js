@@ -938,7 +938,7 @@ var SimpleModalEvents = {
         },
         _handleServerErrors: function(error) {
             $('#upload-error').find('span:first').text(error);
-            $('#upload-error').css('display', 'flex').delay(2500).hide('fast');
+            $('#upload-error').css('display', 'flex').delay(3500).hide('slow');
         }
     });
 })(jQuery);
