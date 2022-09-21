@@ -343,7 +343,7 @@
          * 
          */
         public static function getLastUploadDate($username) {
-            $date = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select max(date) from pending_uploads where uploader = ?", [$username], true, DB::ALL_ROWS);
+            $date = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select max(date) as date from pending_uploads where uploader = ?", [$username], true, DB::ALL_ROWS);
             return $date;
         }
 
@@ -351,8 +351,8 @@
          * Check if 24 hours have passed since last upload by $username
          */
         public static function expiredUploadTime($username) {
-            $uploadDate = self::getLastUploadDate($username);
-            return (!is_null($uploadDate) && $uploadDate > 0) ? strtotime(Util::get_current_date_and_time(true)) - $uploadDate >= 86400 : false;
+            $uploadDate = self::getLastUploadDate($username)[0]['date'];
+            return (!is_null($uploadDate) && $uploadDate > 0) ? strtotime(Util::get_current_date_and_time(true)) - strtotime($uploadDate) >= 86400 : true;
         }
     }
 ?>
