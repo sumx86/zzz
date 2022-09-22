@@ -26,18 +26,17 @@
 
     $db = new DB(false);
     UserCP::setDB($db);
-    $assertionError = '';
-    $metadata = null;
-    parse_str($_POST['metadata'], $metadata);
-
-    if(!assert_metadata($metadata)) {
-        Response::throw_json_string(["error" => Str::is_empty($assertionError) ? $language_config[$lang]['empty-fields'] : $assertionError]);
-        return;
-    }
-
     // Check if 24 hours have passed since the last upload by this user
     if(!UserCP::expiredUploadTime(Server::retrieve_session('user', 'username'))) {
         Response::throw_json_string(["error" => $language_config[$lang]['upload-time']]);
+        return;
+    }
+
+    $assertionError = '';
+    $metadata = null;
+    parse_str($_POST['metadata'], $metadata);
+    if(!assert_metadata($metadata)) {
+        Response::throw_json_string(["error" => Str::is_empty($assertionError) ? $language_config[$lang]['empty-fields'] : $assertionError]);
         return;
     }
 
@@ -66,7 +65,7 @@
     }
     // only one upload every 24 hours
     UserCP::addPendingUpload(basename($engine->getUploadedFileName()), $metadata);
-    Response::throw_json_string(['success' => '']);
+    Response::throw_json_string(['success' => $language_config[$lang]['upload-success']]);
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
