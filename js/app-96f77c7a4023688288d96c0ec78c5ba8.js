@@ -886,6 +886,7 @@ var SimpleModalEvents = {
         },
         _proceedUpload: function() {
             var _self = this;
+            $('#upload-error').css('display', 'none').stop();
             if(typeof FormData != 'undefined') {
                 var formData = new FormData();
                 formData.append('file', this._files[0]);
@@ -900,9 +901,9 @@ var SimpleModalEvents = {
                         if(jqXHR.indexOf('{') == 0) {
                             var response = $.parseJSON(jqXHR);
                             if(response.hasOwnProperty('success')) {
-                                
+                                _self._handleServerMessage(response.success);
                             } else {
-                                _self._handleServerErrors(response.error);
+                                _self._handleServerMessage(response.error);
                             }
                         }
                     }
@@ -936,9 +937,9 @@ var SimpleModalEvents = {
                     break;
             }
         },
-        _handleServerErrors: function(error) {
+        _handleServerMessage: function(error) {
             $('#upload-error').find('span:first').text(error);
-            $('#upload-error').css('display', 'flex').delay(3500).hide('slow');
+            $('#upload-error').css('display', 'flex').delay(4000).hide('slow');
         }
     });
 })(jQuery);
