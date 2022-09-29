@@ -2066,6 +2066,80 @@ body {
 
 
 
+
+
+.emoji-container {
+    position: relative;
+    width: 330px;
+    height: 195px;
+    left: 103%;
+    margin-top: -41%;
+    background-color: black;
+    border: 1px solid #738399;
+    border-radius: 5px;
+    z-index: 3;
+}
+
+.emoji-container > #top {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 13%;
+    background-color: transparent;
+}
+
+.emoji-container > #top > span {
+    color: white;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+.emoji-container > #mid {
+    position: absolute;
+    width: 100%;
+    top: 13%;
+    height: 87%;
+    background-color: transparent;
+}
+
+.emoji-container > #mid > #inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    word-break: break-all;
+    background-color: transparent;
+}
+
+
+
+
+
+.emoji-container > #mid > #inner > #smiley {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+.emoji-container > #mid > #inner > #animals-nature {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+.emoji-container > #mid > #inner > #symbols {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+
+
+
+
+
+
 /* COLLECTION PAGE START */
 #top-section {
     width: 100%;
@@ -3176,21 +3250,27 @@ footer {
 }
 
 
+
+
 #upload-error {
     position: absolute;
     display: none;
     justify-content: center;
-    width: 27%;
-    height: 4.5%;
+    width: 30%;
+    height: 9%;
     border-radius: 5px;
-    left: 49%;
+    left: 42%;
     top: 79%;
-    background-color: #cd002f;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: transparent; /* #cd002f */
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 #upload-error > span {
-    position: absolute;
-    top: 23%;
+    position: relative;
+    top: 10%;
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     color: white;
@@ -3200,6 +3280,7 @@ footer {
     -o-user-select: none;
     user-select: none;
 }
+
 
 
 
@@ -3250,13 +3331,152 @@ footer {
 
 #user-section {
     position: absolute;
-    width: 85%;
-    height: 85%;
-    top: 11%;
-    left: 7.5%;
-    border-radius: 7px;
-    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 91%;
+    background-color: rgb(0, 0, 0);
 }
+
+#user-section > #inner {
+    position: absolute;
+    width: 70%;
+    height: 92%;
+    left: 15%;
+    top: 4%;
+    border-radius: 10px;
+    background-color: transparent; /* #04070a */
+}
+
+#user-section > #inner > #cover {
+    position: absolute;
+    width: 100%;
+    height: 26%;
+    background-image: url('\\ps-classics\\img\\animpaint1-4093 x 2302.jpg');
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+#user-section > #inner > #cover > #centered-container {
+    position: absolute;
+    width: 40%;
+    height: 50%;
+    left: 3%;
+    top: 40%;
+    background-color: transparent;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-image {
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border-radius: 100px;
+    left: calc(8% - 3px);
+    border: 3px solid rgb(19, 138, 235);
+    background-color: black;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-image > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-info {
+    position: absolute;
+    width: 230px;
+    height: 90px;
+    left: 41%;
+    top: 15%;
+    background-color: transparent;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-info > #username {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: transparent;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-info > #username > span {
+    position: absolute;
+    color: white;
+    font-size: 1.9em;
+    top: 30%;
+    left: 10%;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-info > #rank {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    top: 50%;
+    background-color: transparent;
+}
+
+#user-section > #inner > #cover > #centered-container > #user-info > #rank > span {
+    position: absolute;
+    color: white;
+    font-size: 1.1em;
+    top: 19%;
+    left: 10%;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#bottom-navbar {
+    position: absolute;
+    width: 75%;
+    height: 6%;
+    left: 21%;
+    top: 26.5%;
+    border-bottom: 1px solid rgb(85, 85, 85);
+    background-color: transparent;
+}
+
+#bottom-navbar > #follow-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 9%;
+    height: 61%;
+    left: 87%;
+    top: 18%;
+    border-radius: 3px;
+    background-color: #96afff;
+    cursor: pointer;
+}
+
+#bottom-navbar > #follow-button > span {
+    position: absolute;
+    top: 15%;
+    color: black;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+
+
+#user-image-preview-container {
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    left: 5%;
+    background-color: #04070a;
+    z-index: 4;
+}
+
+
+
+
+
 
 #game-upload-container {
     position: absolute;
@@ -3594,7 +3814,7 @@ footer {
 
 #page-under-development {
     position: absolute;
-    display: flex;
+    display: none; /* flex */
     justify-content: center;
     width: 55%;
     height: 7%;
@@ -3616,8 +3836,22 @@ footer {
 }
 
 
-#spinner {
-    /* position: absolute; display: none; top: 79%; left: 4%; font-size: 1.4em; color: white; */
+#upload-spinner {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    width: 10%;
+    height: 12%;
+    top: 102%;
+    left: 11%;
+    background-color: transparent;
+}
+
+#upload-spinner > i {
+    position: absolute;
+    top: 25%;
+    font-size: 1.7em;
+    color: white;
 }
 
 ::-webkit-scrollbar { width: 10px;}
