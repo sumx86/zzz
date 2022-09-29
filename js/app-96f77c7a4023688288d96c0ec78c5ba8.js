@@ -356,6 +356,7 @@ var SimpleModalEvents = {
 })(jQuery);
 (function($) {
     $.initCall('comment-editing-handling', {
+        _modal: '.emoji-container',
         _commentID: null,
         _itemID: null,
         _editBlockIndex: null,
@@ -380,6 +381,16 @@ var SimpleModalEvents = {
                 } else {
                     _self._showEditField(_self._editBlockIndex);
                 }
+            });
+
+            $('.emoji-trigger').click(function(e) {
+                $('#emoji-container').clone()
+                    .removeAttr('id')
+                    .attr('class', 'emoji-container')
+                    .css('display', 'block')
+                    .appendTo($(this).parent()
+                );
+                SimpleModalEvents.init({'target':'.emoji-container','trigger':'.emoji-trigger','uniq_d':'data-gr', 'handle':_self._toggleModal.bind(_self)});
             });
         },
         _updateData: function(action, text) {
@@ -469,6 +480,20 @@ var SimpleModalEvents = {
         },
         _scrollToTheTop: function() {
             $("html, body").animate({scrollTop: 0}, "slow");
+        },
+        _toggleModal: function(e) {
+            var modal = $(this._modal);
+            console.log(this._isActive());
+            if( !this._isActive() ) {
+                modal.stop().fadeIn(200);
+                modal.addClass('modal-active');
+            } else {
+                modal.stop().fadeOut(200);
+                modal.removeClass('modal-active');
+            }
+        },
+        _isActive: function() {
+            return $(this._modal).hasClass('modal-active');
         }
     });
 })(jQuery);
@@ -526,7 +551,7 @@ var SimpleModalEvents = {
             $(document).ready(function() {
                 $(self._exitElement).click(function() {
                     $(self._previewContainer).css('display', 'none');
-                    $('.comment-box, #scrolltop-caret').remove();
+                    $('.comment-box, .comment-edit-box, #scrolltop-caret').remove();
                     $('#comment-section').css('display', 'none');
                     $('#no-comments').css('display', 'none');
                 });
@@ -657,6 +682,7 @@ var SimpleModalEvents = {
                                         </div>\
                                     </div>");
             //$(html).css('display', 'block');
+            $(html).append($('#emoji-container').clone().removeAttr('id').attr('class', 'emoji-container'));
             $(target).append(html);
         }
     });
@@ -667,7 +693,7 @@ var SimpleModalEvents = {
         initialize: function() {
             var self = this;
             $(document).on('collection-item-stats-update', this._updateContent.bind(this));
-            $(document).on('collection-item-stats-error', this._handleError.bind(this));
+            $(document).on('collection-item-stats-error',  this._handleError.bind(this));
             $(document).ready(function() {
                 $('.action-button:not(".no-action") > span').find('i:first').click(function(element) {
                     self._doUpdate(element);
@@ -886,7 +912,10 @@ var SimpleModalEvents = {
         },
         _proceedUpload: function() {
             var _self = this;
+
+            $('#upload-spinner').css('display', 'flex');
             $('#upload-error').css('display', 'none').stop();
+
             if(typeof FormData != 'undefined') {
                 var formData = new FormData();
                 formData.append('file', this._files[0]);
@@ -901,12 +930,13 @@ var SimpleModalEvents = {
                         if(jqXHR.indexOf('{') == 0) {
                             var response = $.parseJSON(jqXHR);
                             if(response.hasOwnProperty('success')) {
-                                _self._handleServerMessage(response.success);
+                                _self._handleServerMessage(response.success, 'success');
                             } else {
-                                _self._handleServerMessage(response.error);
+                                _self._handleServerMessage(response.error, 'error');
                             }
                         }
                     }
+                    $('#upload-spinner').css('display', 'none');
                 });
             }
         },
@@ -937,9 +967,30 @@ var SimpleModalEvents = {
                     break;
             }
         },
-        _handleServerMessage: function(error) {
-            $('#upload-error').find('span:first').text(error);
-            $('#upload-error').css('display', 'flex').delay(4000).hide('slow');
+        _clearFields: function() {
+            $('.game-upload-field').val('');
+        },
+        _handleServerMessage: function(message, type) {
+            $('#upload-error').find('span:first').html(message);
+            $('#upload-error').css('display', 'flex').delay(5000).hide('slow');
+
+            if(type == 'success') {
+                this._clearFields();
+            }
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('user-follow-module', {
+        initialize: function() {
+            $(document).ready(function() {
+                $('#follow-button').click(function() {
+                    $.doAjax({url: '/ajax/followuser', data: ''}, true, null)
+                    .done(function(jqXHR, status, req) {
+                        console.log(jqXHR);
+                    });
+                });
+            });
         }
     });
 })(jQuery);
