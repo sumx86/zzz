@@ -78,6 +78,10 @@
             'file-name-error' => 'Името на файла е невалидно!',
             'file-type-error' => 'Типа на файла е невалиден!',
             'file-size-error' => 'Размера на файла не трябва да надвишава %d байта!!',
+
+            'rank-moderator' => 'Модератор',
+            'rank-member'    => 'Член',
+
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
                 'wrong-u-p' => 'Грешен потребител / парола!'
@@ -169,10 +173,14 @@
             'under-development' => 'This page is still under development!',
             'upload-error'    => 'Error uploading the file!',
             'upload-time'     => '24 hours must pass before next upload!',
-            'upload-success'  => 'Upload successful, but it may take a few hours until its fully processed.',
+            'upload-success'  => 'Upload successful, but it may take some time until its fully processed.',
             'file-name-error' => 'The name of the file is not valid!',
             'file-type-error' => 'The type of the file is not valid!',
             'file-size-error' => 'The size of the file must not exceed %d bytes!',
+
+            'rank-moderator' => 'Moderator',
+            'rank-member'    => 'Member',
+
             'yes' => 'Yes',
             'no'  => 'No',
             'most-liked-games' => 'Most liked games',

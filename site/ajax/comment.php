@@ -60,9 +60,6 @@
     // POST COMMENT
     //////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'post')) {
-        // split comment if it exceeds 200 characters
-        // generate unique id for the group of strings
-        // replace newline character with <br>
         if(property_exists($data, 'item') && property_exists($data, 'text')) {
             $gameID = intval($data->item);
 
@@ -194,7 +191,7 @@
                         $commentBluePrint['comment']['item_id']    = intval($commentItemID);
                         $commentBluePrint['comment']['comment_id'] = intval($commentID);
                         $commentBluePrint['comment']['user_id']    = intval($userID);
-                        $commentBluePrint['comment']['date'] = Str::htmlEnt($commentDate, ENT_QUOTES, 'UTF-8');
+                        $commentBluePrint['comment']['date']       = Str::htmlEnt($commentDate, ENT_QUOTES, 'UTF-8');
 
                         if(Server::is_active_session('user')) {
                             if(Server::retrieve_session('user', 'id') == $userID) {
@@ -204,7 +201,7 @@
                         }
                     }
                 }
-                $commentBluePrint['comment']['text'] = Str::htmlEnt(Str::replace_all_quotes(utf8_decode($commentBluePrint['comment']['text']), true));
+                $commentBluePrint['comment']['text'] = Util::transform_links(Str::htmlEnt(Str::replace_all_quotes(utf8_decode($commentBluePrint['comment']['text']), true)));
                 array_push($result, $commentBluePrint);
                 
                 $commentBluePrint['comment']['text']   = '';

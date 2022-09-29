@@ -548,6 +548,9 @@
                                 <span class='multilang'><?php echo $language_config[$lang]['confirm-upload']; ?></span>
                             </div>
                         </form>
+                        <div id='upload-spinner'>
+                            <i class='fa fa-spinner fa-spin'></i>
+                        </div>
                     </div>
                     <div id='game-genre-tooltip' class='game-upload-field-info-tooltip'>
                         <div class='top'>

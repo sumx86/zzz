@@ -98,6 +98,7 @@
             $passField  = $data['pass'];
             $passcField = $data['pass-confirm'];
             global $language_config;
+            global $config;
             global $lang;
 
             $username = Str::replace_all_quotes($req[$userField]);
@@ -125,7 +126,7 @@
                 self::$errors[$passcField] = '';
                 return false;
             }
-            self::$dbInstance->rawQuery("insert into users (username, email, password) values (?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT)], false);
+            self::$dbInstance->rawQuery("insert into users (username, email, password, image) values (?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image']], false);
             return true;
         }
 

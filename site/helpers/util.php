@@ -72,11 +72,12 @@
             if(preg_match_all('/(\[link\])(\S+)(\[\/link\])/', $string, $output)) {
                 foreach($output[2] as $link) {
                     $key = "[link]".$link."[/link]";
-                    $links[$key] = "<a href='".$link."'>link</a>";
+                    $links[$key] = "<a href='".$link."' target='_blank' style='color: white;'>link</a>";
                     $newstring   = str_replace(array_keys($links), array_values($links), $string);
                 }
+                return $newstring;
             }
-            return $newstring;
+            return $string;
         }
 
         /*
@@ -84,6 +85,21 @@
          */
         public static function has_path($link) {
             
+        }
+
+        public static function get_rank($rank) {
+            global $language_config;
+            global $lang;
+
+            $rank = intval($rank);
+            switch($rank) {
+                case 0:
+                    return 'VIP';
+                case 1:
+                    return $language_config[$lang]['rank-moderator'];
+                case 2:
+                    return $language_config[$lang]['rank-member'];
+            }
         }
     }
 ?>

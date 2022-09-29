@@ -1,6 +1,7 @@
 <?php
     require_once "helpers/string.php";
     require_once "helpers/array.php";
+    require_once "helpers/util.php";
     require_once "server.php";
     require_once "config/lang.php";
     require_once "config/db.php";
@@ -11,7 +12,8 @@
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
-    $db = new DB(false);
+    $userID  = intval(Server::get_param('uid'));
+    $db      = new DB(false);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +54,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#moon-img').css({'top': '-120px'});
+            $('#user-image').click(function() {
+                //$(this).find('img:first').attr('src');
+                //console.log($(this).find('img:first').attr('src'));
+            });
         });
     </script>
 </head>
@@ -117,6 +123,51 @@
             <div id='page-under-development'>
                 <span><?php echo $language_config[$lang]['under-development']; ?></span>
             </div>
+
+            <?php
+                $userData  = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank from users where id = ?", [$userID], true, DB::ALL_ROWS);
+
+                $username  = Str::htmlEnt(Str::replace_all_quotes($userData[0]['username'], true));
+                $userRank  = Util::get_rank($userData[0]['user_rank']);
+                $userImage = Str::htmlEnt($userData[0]['image']);
+                
+                $followers = intval($userData[0]['followers']);
+                $following = intval($userData[0]['following']);
+            ?>
+
+            <div id='inner'>
+                <div id='cover'>
+                    <div id='centered-container'>
+                        <div id='user-image'>
+                            <img src='<?php echo $userImage; ?>'>
+                        </div>
+                        <div id='user-info'>
+                            <div id='username'>
+                                <span><?php echo $username; ?></span>
+                            </div>
+                            <div id='rank'>
+                                <span><?php echo $userRank; ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id='bottom-navbar'>
+                    <?php
+                        if($isLogin) {
+                            if($userID != Server::retrieve_session('user', 'id')) {
+                                echo "<div id='follow-button'>
+                                          <span><i class='fa fa-user'></i> Follow</span>
+                                      </div>";
+                            }
+                        } else {
+                            echo "<div id='follow-button'>
+                                      <span><i class='fa fa-user'></i> Follow</span>
+                                  </div>";
+                        }
+                    ?>
+                </div>
+            </div>
+            <div id='user-image-preview-container'></div>
         </section>
 
         <div id='lang-container'>
@@ -135,7 +186,7 @@
     </div>
 </body>
 <script type='text/javascript'>
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('.multilang').each(function(i, e) {
             var element = $(e);
             var text = element.text();

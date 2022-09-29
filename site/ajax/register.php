@@ -1,5 +1,6 @@
 <?php
     require_once "../config/lang.php";
+    require_once "../config/config.php";
     require_once "../config/db.php";
     require_once "../helpers/string.php";
     require_once "../helpers/array.php";
