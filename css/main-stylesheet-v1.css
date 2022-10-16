@@ -1752,16 +1752,15 @@ body {
 
 #game-preview-container > #preview > #item-information > #inner > #uploader > #display-name {
     position: absolute;
-    width: 80%;
-    height: 90%;
-    top: 5%;
-    left: 15%;
-    background-color: transparent;
+    width: auto;
+    height: 30%;
+    top: 35%;
+    left: 17%;
+    background-color: white;
 }
 
 #game-preview-container > #preview > #item-information > #inner > #uploader > #display-name > span {
     position: absolute;
-    top: 30%;
     left: 2%;
     font-size: 1.4em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
@@ -1780,6 +1779,7 @@ body {
     height: 70%;
     left: 2%;
     top: 29%;
+    border-bottom: 2px solid #476f9c;
     background-color: transparent; /* rgb(167, 77, 167) */
 }
 
@@ -3333,7 +3333,7 @@ footer {
     position: absolute;
     width: 100%;
     height: 91%;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 #user-section > #inner {
@@ -3370,7 +3370,7 @@ footer {
     height: 170px;
     border-radius: 100px;
     left: calc(8% - 3px);
-    border: 3px solid rgb(19, 138, 235);
+    border: 3px solid rgb(235, 105, 19);
     background-color: black;
     z-index: 3;
     cursor: pointer;
@@ -3431,7 +3431,7 @@ footer {
     height: 6%;
     left: 21%;
     top: 26.5%;
-    border-bottom: 1px solid rgb(85, 85, 85);
+    border-bottom: 2px solid rgb(85, 85, 85);
     background-color: transparent;
 }
 
@@ -3464,13 +3464,99 @@ footer {
 
 
 
+
+#bottom-navbar > #inbox-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 9%;
+    height: 61%;
+    left: 87%;
+    top: 18%;
+    border-radius: 3px;
+    background-color: #1b3146; /* #96afff */
+    cursor: pointer;
+}
+
+#bottom-navbar > #inbox-button > span {
+    position: absolute;
+    top: 15%;
+    color: rgb(252, 86, 3);
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#bottom-navbar > #inbox-button > span > i {
+    /* font-weight: bold; */
+}
+
+
+
+
+
+
 #user-image-preview-container {
     position: absolute;
+    display: none;
     width: 90%;
     height: 100%;
     left: 5%;
-    background-color: #04070a;
+    background-color: rgba(15, 15, 15, 0.8);
     z-index: 4;
+}
+
+#user-image-preview-container > #inner {
+    position: absolute;
+    width: 30%;
+    height: 60%;
+    top: 14%;
+    left: 35%;
+    background-color: rgb(24, 26, 27);
+}
+
+#user-image-preview-container > #inner > #top {
+    position: relative;
+    width: 100%;
+    height: 7%;
+    border-bottom: 1px solid rgb(42, 61, 77);
+    background-color: transparent;
+}
+
+#user-image-preview-container > #inner > #top > #exit-profile-pic {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 6%;
+    height: 90%;
+    left: 92%;
+    background-color: transparent;
+}
+
+#user-image-preview-container > #inner > #top > #exit-profile-pic > i {
+    position: absolute;
+    top: 15%;
+    font-size: 1.3em;
+    color: white;
+    cursor: pointer;
+}
+
+#user-image-preview-container > #inner > #image-preview {
+    position: relative;
+    width: 100%;
+    height: 93%;
+    background-color: transparent;
+}
+
+#user-image-preview-container > #inner > #image-preview > img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
 }
 
 
