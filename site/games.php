@@ -8,6 +8,7 @@
     require_once "cookie.php";
     require_once "db/db.php";
     require_once "pagination.php";
+    require_once "usercp.php";
 
     $lang    = Server::get_request_cookie('lang',  ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
@@ -15,15 +16,19 @@
 
     $platform   = Str::getstr(Server::get_param('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
     $search     = Str::replace_all_quotes(Server::get_param('search-game'));
-    
+    $pageID     = intval(Server::get_param('page'));
+
     $db         = new DB(false);
     $pagination = new Pagination([
         'max-page-links' => 5,
         'max-page-items' => 27,
-        'current-page' => intval(Server::get_param('page')),
+        'current-page' => $pageID,
         'table' => 'games',
+        'platform' => $platform,
         'db' => $db
     ]);
+    //UserCP::setDB($db);
+    //UserCP::move_game('Alice: Madness');
     //echo Util::transform_links("Here is a link [link]https://example1.com[/link], \nand one more [link]https://example2.com[/link] is the next");
 ?>
 <!DOCTYPE html>
@@ -212,8 +217,9 @@
                 <div id='collection'>
                 <?php
                     if(Str::is_empty($search)) {
+                        $offset = ($pageID - 1) * 27;
                         // Query games data from database based on CURRENT PAGE NUMBER and PLATFORM
-                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform=?", [$platform], true, DB::ALL_ROWS);
+                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform = ? limit 27 offset $offset", [$platform], true, DB::ALL_ROWS);
                         if(_Array::size($arrayResult) > 0) {
                             foreach($arrayResult as $item) {
 
@@ -222,12 +228,13 @@
                                     'developers'    => $item['developers'],
                                     'publishers'    => $item['publishers'],
                                     'release-dates' => $item['release_dates'],
-                                    'platforms'     => $item['platforms']
+                                    'platforms'     => $item['platforms'],
+                                    'iso'           => $item['link']
                                 ]);
 
-                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-metadata='".$gameMetadata."'>
-                                    <div class='cover'>
-                                        <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".Str::htmlEnt(Str::replace_all_quotes($item['name'], true))."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-uploaderid=".$item['uploader_id']." data-metadata='".$gameMetadata."'>
+                                    <div class='cover ".$platform."-cover'>
+                                        <img src='\\ps-classics\\img\\collection\\".$platform."\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                                     </div>
                                     <div class='collection-item-slider'>
                                         <div class='game-name'>
@@ -253,7 +260,8 @@
                             }
                         }
                     } else {
-                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform = ? and lower( games.name ) like '%".$search."%'", [$platform], true, DB::ALL_ROWS);
+                        $offset = ($pageID - 1) * 27;
+                        $arrayResult = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from games where platform = ? and lower( games.name ) like '%".$search."%' limit 27", [$platform], true, DB::ALL_ROWS);
                         if(_Array::size($arrayResult) > 0) {
                             foreach($arrayResult as $item) {
 
@@ -265,9 +273,9 @@
                                     'platforms'     => $item['platforms']
                                 ]);
 
-                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".htmlentities($item['name'], ENT_QUOTES, 'UTF-8')."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-metadata='".$gameMetadata."'>
-                                    <div class='cover'>
-                                        <img src='\\ps-classics\\img\\collection\\ps2\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".Str::htmlEnt(Str::replace_all_quotes($item['name'], true))."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-uploaderid=".$item['uploader_id']." data-metadata='".$gameMetadata."'>
+                                    <div class='cover ".$platform."'>
+                                        <img src='\\ps-classics\\img\\collection\\".$platform."\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                                     </div>
                                     <div class='collection-item-slider'>
                                         <div class='game-name'>
@@ -297,11 +305,14 @@
                 </div>
                 <div class='pagination-container' data-action='collection' data-platform='<?php echo $platform; ?>'>
                     <div id='inner'>
-                        <div class='page-item'><span data-theme>1</span></div>
+                        <?php
+                            $pagination->generate_links();
+                        ?>
+                        <!-- <div class='page-item'><span data-theme>1</span></div>
                         <div class='page-item'><span data-theme>2</span></div>
                         <div class='page-item'><span data-theme>3</span></div>
                         <div class='page-item no-redirect'><span data-theme>...</span></div>
-                        <div class='page-item'><span data-theme>5</span></div>
+                        <div class='page-item'><span data-theme>5</span></div> -->
                     </div>
                 </div>
             </div>
@@ -371,7 +382,7 @@
                                 </div>
                                 <div id='iso' class='game-info-text'>
                                     <span style='color: #fc5603;'>&bull; </span>
-                                    <span>Iso: <a href='https://cdromance.com/ps2-iso/need-for-speed-carbon-usa/' target="_blank">link</a></span>
+                                    <span id='iso-span'>Iso: </span>
                                 </div>
                             </div>
                         </div>

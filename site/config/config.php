@@ -1,8 +1,8 @@
 <?php
     $config = array(
         'error-doc' => [
-            '403' => '/chan/site/errors/403.php',
-            '404' => '/chan/site/errors/404.php'
+            '403' => '/ps-classics/site/errors/403.php',
+            '404' => '/ps-classics/site/errors/404.php'
         ],
         'login-fields' => [
             'user' => 'login-username-field',

@@ -87,6 +87,21 @@
             $this->last_page = ceil($this->max_db_items / $this->max_page_items);
         }
 
+        /***/
+        public function generate_links() {
+            $lastPage = $this->last();
+            $count = 0;
+            if($lastPage >= $this->max_page_links) {
+                $count = 5;
+            } else {
+                $count = $lastPage;
+            }
+            for($i = 1 ; $i <= $count ; $i++) {
+                $innerText = $i != 4 ? $i : '...' ;
+                echo "<div class='page-item'><span data-theme>".$innerText."</span></div>";
+            }
+        }
+
         /*
          * Retrieve the $max_db_items count
          */

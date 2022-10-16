@@ -8,12 +8,20 @@
     require_once "cookie.php";
     require_once "db/db.php";
     require_once "pagination.php";
+    require_once "http/response.php";
+    require_once "usercp.php";
 
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
     $userID  = intval(Server::get_param('uid'));
-    $db      = new DB(false);
+
+    $db = new DB(false);
+    UserCP::setDB($db);
+    
+    if(!UserCP::user_exists($userID)) {
+        Response::throw_http_error(404);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,8 +63,25 @@
         $(document).ready(function() {
             $('#moon-img').css({'top': '-120px'});
             $('#user-image').click(function() {
-                //$(this).find('img:first').attr('src');
-                //console.log($(this).find('img:first').attr('src'));
+                var src   = $(this).find('img:first').attr('src');
+                var image = $('#user-image-preview-container > #inner > #image-preview > img');
+                image.attr('src', src);
+                $('#user-image-preview-container > #inner').css('top', '14%');
+                $('#user-image-preview-container').css('display', 'block');
+                Util.rescaleImage(image);
+            });
+            $('#exit-profile-pic').click(function() {
+                Util.userImageHidePreview();
+            });
+            $(document).click(function(e) {
+                if($(e.target).attr('data-gr') == undefined) {
+                    Util.userImageHidePreview();
+                }
+            });
+            $(document).keydown(function(event) {
+                if( event.key.toLowerCase() == "escape" ) {
+                    $('#exit-profile-pic').click();
+                }
             });
         });
     </script>
@@ -138,8 +163,8 @@
             <div id='inner'>
                 <div id='cover'>
                     <div id='centered-container'>
-                        <div id='user-image'>
-                            <img src='<?php echo $userImage; ?>'>
+                        <div id='user-image' data-gr>
+                            <img src='<?php echo $userImage; ?>' data-gr>
                         </div>
                         <div id='user-info'>
                             <div id='username'>
@@ -155,19 +180,34 @@
                     <?php
                         if($isLogin) {
                             if($userID != Server::retrieve_session('user', 'id')) {
-                                echo "<div id='follow-button'>
+                                echo "<div id='follow-button' class='cx-x-".$userID."'>
                                           <span><i class='fa fa-user'></i> Follow</span>
                                       </div>";
+                            } else {
+                                echo "<div id='inbox-button'>
+                                        <span><i class='fa fa-envelope-o'></i> Inbox</span>
+                                    </div>";
                             }
                         } else {
-                            echo "<div id='follow-button'>
+                            echo "<div id='follow-button' class='cx-x-".$userID."'>
                                       <span><i class='fa fa-user'></i> Follow</span>
                                   </div>";
                         }
                     ?>
                 </div>
             </div>
-            <div id='user-image-preview-container'></div>
+            <div id='user-image-preview-container'>
+                <div id='inner' data-gr>
+                    <div id='top' data-gr>
+                        <div id='exit-profile-pic'>
+                            <i class='fa fa-times'></i>
+                        </div>
+                    </div>
+                    <div id='image-preview' data-gr>
+                        <img src='' data-gr>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <div id='lang-container'>

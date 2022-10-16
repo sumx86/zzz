@@ -1,7 +1,7 @@
 <?php
-    require_once "../crypt.php";
-    require_once "../server.php";
-    require_once "../config/lang.php";
+    //require_once "../crypt.php";
+    require_once "server.php";
+    require_once "config/lang.php";
     
     $lang  = Server::get_request_cookie("lang", ["en", "bg"], "en");
     $theme = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');

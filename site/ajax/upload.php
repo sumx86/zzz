@@ -44,13 +44,14 @@
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     $engine = new FileUploadEngine($_FILES['file'], $db);
 
-    $engine->set_max_size(300000);
+    $engine->set_max_size(5000000);
 
     $engine->set_destination("/ps-classics/img/pending/");
     
     $engine->set_allowed_types([
         'image/jpeg',
-        'image/jpg'
+        'image/jpg',
+        'image/png'
     ]);
     $engine->process();
 

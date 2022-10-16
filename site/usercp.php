@@ -133,8 +133,17 @@
         /*
          * Check if a given username already exists in the database
          */
-        public static function user_exists($username) {
-            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where username = ?", [$username], true, DB::ALL_ROWS);
+        public static function user_exists($user) {
+            $query = '';
+            switch(gettype($user)) {
+                case "string":
+                    $query = 'select id from users where username = ?';
+                    break;
+                case "integer":
+                    $query = 'select username from users where id = ?';
+                    break;
+            }
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$user], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
         }
 
@@ -329,14 +338,15 @@
             $link          = utf8_encode(Str::replace_all_quotes($metadata['game-iso']));
             $platform      = Str::replace_all_quotes($metadata['platform']);
 
-            $cover    = $filename;
-            $uploader = Server::retrieve_session('user', 'username');
-            $date     = Util::get_current_date_and_time(true);
+            $cover      = $filename;
+            $uploader   = Server::retrieve_session('user', 'username');
+            $uploaderID = intval(Server::retrieve_session('user', 'id'));
+            $date       = Util::get_current_date_and_time(true);
 
             self::$dbInstance->rawQuery("insert into pending_uploads
-                                        (name, platform, cover, uploader, link, genres, developers, publishers, release_dates, platforms, date) values
-                                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                                        [$name, $platform, $cover, $uploader, $link, $genres, $developers, $publishers, $release_dates, $platforms, $date],
+                                        (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, release_dates, platforms, date) values
+                                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                        [$name, $platform, $cover, $uploader, $uploaderID, $link, $genres, $developers, $publishers, $release_dates, $platforms, $date],
                                         false, false, false);
         }
 
@@ -354,6 +364,10 @@
         public static function expiredUploadTime($username) {
             $uploadDate = self::getLastUploadDate($username)[0]['date'];
             return (!is_null($uploadDate) && $uploadDate > 0) ? strtotime(Util::get_current_date_and_time(true)) - strtotime($uploadDate) >= 86400 : true;
+        }
+
+        public static function move_game($gameName) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("insert into games (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates) select name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates from pending_uploads where name like '".$gameName."%'", false, false, false);
         }
     }
 ?>
