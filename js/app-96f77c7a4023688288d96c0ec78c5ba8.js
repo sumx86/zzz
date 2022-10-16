@@ -51,6 +51,42 @@ var SimpleModalEvents = {
     }
 };
 
+var Util = {
+    userImageHidePreview: function() {
+        $('#user-image-preview-container > #inner').stop().animate({'top': '-70%'}, 300).promise().done(function () {$('#user-image-preview-container').fadeOut('fast')});
+    },
+    rescaleImage: function(image) {
+        var img = new Image();
+        img.src = image.attr('src');
+        console.log(img.width + ' -- ' + img.height);
+        var dimDiff = img.height - img.width;
+        var newCss  = {
+            width: '',left: ''
+        };
+
+        if(dimDiff >= 300) {
+            newCss = {
+                width: '60%',
+                left: '20%'
+            };
+        } else if (dimDiff >= 200) {
+            newCss = {
+                width: '75%',
+                left: '12.5%'
+            };
+        } else if (dimDiff >= 100) {
+            newCss = {
+                width: '92%',
+                left: '4%'
+            };
+        }
+
+        if(newCss.width != '') {
+            image.css(newCss);
+        }
+    }
+};
+
 (function($){
     $.extend(jQuery, {
         initCall: function(objectName, obj) {
@@ -170,6 +206,15 @@ var SimpleModalEvents = {
         // can't use 'this' here since it is replaced with the event target
     }
 })(jQuery);
+(function() {
+    $(document).ready(function() {
+        if((/platform=ps3/).test(location.href)) {
+            $('.collection-item').css('height', '26%');
+            $('#preview > #game-cover').css('height', '63%');
+            $('#item-actions').css('top', '68.5%');
+        }
+    });
+})(jQuery);
 (function($) {
     $(document).ready(function() {
         $('.lang-img-container > img').click(function() {
@@ -278,8 +323,7 @@ var SimpleModalEvents = {
     $.initCall('toggle-collection-containers', {
         initialize: function() {
             $(document).on('click', '.platform', function() {
-                let result = window.location.href.match(/search-game=(.*)/i);
-                $.redirect('/collection?page=1&platform=' + $(this).attr('id') + (result != null ? '&' + result[0] : '' ));
+                $.redirect('/collection?page=1&platform=' + $(this).attr('id'));
             });
         }
     });
@@ -575,6 +619,18 @@ var SimpleModalEvents = {
                     $('#item-information > #inner > #game-info > #platforms    > span').eq(1).find('span:first').text(metadata['platforms']);
                     $('#item-information > #inner > #game-info > #developers   > span').eq(1).find('span:first').text(metadata['developers']);
                     $('#item-information > #inner > #game-info > #publishers   > span').eq(1).find('span:first').text(metadata['publishers']);
+
+
+                    var iso = '';
+                    if(metadata['iso'] != 'None') {
+                        iso = "Iso: <a href='"+metadata['iso']+"' target='_blank'>link</a>";
+                    } else {
+                        iso = 'Iso: No link';
+                    }
+                    $('#item-information > #inner > #game-info > #iso     > #iso-span').html(iso);
+
+
+                    $('.uploader-data').attr('data-uid', $(this).attr('data-uploaderid'));
                     // METADATA END
 
                     $(self._previewContainer).css('display', 'block');
@@ -899,7 +955,7 @@ var SimpleModalEvents = {
         },
         _checkIsLegitFile: function(filedata) {
             var nameData = filedata[0].name.split('.');
-            if($.inArray(nameData[nameData.length - 1], ['jpeg', 'jpg']) == -1) {
+            if($.inArray(nameData[nameData.length - 1], ['jpeg', 'jpg', 'png']) == -1) {
                 this._lastError = 'extension-error';
             } else if(!filedata[0].type.match(/image/)) {
                 this._lastError = 'file-type-error';
