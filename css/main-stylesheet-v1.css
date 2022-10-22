@@ -75,6 +75,11 @@
     src: url("/ps-classics/fonts/blood-crl.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: 'japan-rich';
+    src: url("/ps-classics/fonts/JapanRichRegular-lgRpD.otf") format("truetype");
+}
+
 
 html, body {
     margin: 0;
@@ -233,8 +238,8 @@ body {
 
 #site-name > #name-text {
     position: absolute;
-    font-size: 2.1em;
-    font-family: 'TempestApacheBold-Z0el';
+    font-size: 1.7em;
+    font-family: 'japan-rich';
     color: #b2c7e4;
     left: 35%;
     top: 29%;
@@ -970,7 +975,7 @@ body {
 #search-users-container > #top > span {
     position: absolute;
     font-size: 2.5em;
-    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    font-family: 'japan-rich', 'prototype', 'Jura-Bold', sans-serif;
     color: #b2c7e4;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1226,7 +1231,7 @@ body {
 #search-game-container > #top > span {
     position: absolute;
     font-size: 2.5em;
-    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    font-family: 'japan-rich', 'prototype', 'Jura-Bold', sans-serif;
     color: #b2c7e4;
     -webkit-user-select: none;
     -moz-user-select: none;
