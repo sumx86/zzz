@@ -187,6 +187,10 @@
                                 echo "<div id='inbox-button'>
                                         <span><i class='fa fa-envelope-o'></i> Inbox</span>
                                     </div>";
+                                
+                                echo "<div id='account-settings'>
+                                          <i class='fa fa-cog'></i>
+                                      </div>";
                             }
                         } else {
                             echo "<div id='follow-button' class='cx-x-".$userID."'>

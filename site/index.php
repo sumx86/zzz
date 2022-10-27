@@ -10,7 +10,10 @@
     
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
+
     $isLogin = Server::is_active_session('user');
+    $db      = new DB(false);
+    
     /*if($isLogin) {
         Server::destroy_session('user');
         Response::include_header("Location", "/");
@@ -133,11 +136,14 @@
                             <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                         </div>";
                 } else {
+                    $userData  = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select image from users where id = ?", [intval(Server::retrieve_session('user', 'id'))], true, DB::ALL_ROWS);
+                    $userImage = Str::htmlEnt($userData[0]['image']);
+            
                     $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
                     echo "<div id='login-success-container'>
                             <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
                                 <div id='image'>
-                                    <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
+                                    <img src='".$userImage."'>
                                 </div>
                                 <div id='username'>
                                     <span>".Str::htmlEnt($username, ENT_QUOTES, 'UTF-8')."</span>
@@ -279,6 +285,9 @@
                       <span id='halloween-web-right'>W</span>";
             }
         ?>
+    </div>
+    <div id='emulators'>
+        
     </div>
 </body>
 <script type='text/javascript'>

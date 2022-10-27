@@ -126,7 +126,7 @@
                 self::$errors[$passcField] = '';
                 return false;
             }
-            self::$dbInstance->rawQuery("insert into users (username, email, password, image) values (?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image']], false);
+            self::$dbInstance->rawQuery("insert into users (username, email, password, image, user_rank) values (?, ?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image'], 2], false);
             return true;
         }
 
