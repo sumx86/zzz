@@ -1784,7 +1784,7 @@ body {
     height: 70%;
     left: 2%;
     top: 29%;
-    border-bottom: 2px solid #476f9c;
+    border-bottom: 2px solid #fc5603; /* 476f9c */
     background-color: transparent; /* rgb(167, 77, 167) */
 }
 
@@ -3518,6 +3518,14 @@ footer {
     top: 15%;
     color: white;
     font-size: 1.4em;
+}
+
+#settings-container-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 5;
 }
 
 
