@@ -7,17 +7,15 @@
     require_once "helpers/array.php";
     require_once "db/db.php";
     require_once "http/response.php";
+    require_once "usercp.php";
     
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
 
     $isLogin = Server::is_active_session('user');
     $db      = new DB(false);
-    
-    /*if($isLogin) {
-        Server::destroy_session('user');
-        Response::include_header("Location", "/");
-    }*/
+    UserCP::setDB($db);
+    $mostLikedGames = UserCP::get_most_liked_games();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -203,26 +201,26 @@
                           </div>
                           <div id='games-section'>
                               <div class='game'>
-                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\ps2\\51DG31T4PDL._SY445_.jpg'></div>
+                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\".$mostLikedGames[0]['platform']."\\".$mostLikedGames[0]['cover']."'></div>
                                   <div class='slider'></div>
                               </div>
                               <div class='game'>
-                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\ps2\\AC_sneufesefse.jpg'></div>
+                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\".$mostLikedGames[1]['platform']."\\".$mostLikedGames[1]['cover']."'></div>
                                   <div class='slider'></div>
                               </div>
                               <div class='game'>
-                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\ps2\\Midnight_Club_2_PAL(de)-Front.jpg'></div>
+                                  <div class='cover'><img src='\\ps-classics\\img\\collection\\".$mostLikedGames[2]['platform']."\\".$mostLikedGames[2]['cover']."'></div>
                                   <div class='slider'></div>
                               </div>
                           </div>
                           <div class='likes-count-showcase aa1'>
-                              <span><i class='fa fa-thumbs-up'></i> <span>103</span></span>
+                              <span><i class='fa fa-thumbs-up'></i> <span>".intval($mostLikedGames[0]['likes'])."</span></span>
                           </div>
                           <div class='likes-count-showcase aa2'>
-                              <span><i class='fa fa-thumbs-up'></i> <span>103</span></span>
+                              <span><i class='fa fa-thumbs-up'></i> <span>".intval($mostLikedGames[1]['likes'])."</span></span>
                           </div>
                           <div class='likes-count-showcase aa3'>
-                              <span><i class='fa fa-thumbs-up'></i> <span>103</span></span>
+                              <span><i class='fa fa-thumbs-up'></i> <span>".intval($mostLikedGames[2]['likes'])."</span></span>
                           </div>
                     </div>";
             }

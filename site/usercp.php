@@ -369,5 +369,13 @@
         public static function move_game($gameName) {
             self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("insert into games (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates) select name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates from pending_uploads where name like '".$gameName."%'", false, false, false);
         }
+
+        /*
+         * 
+         */
+        public static function get_most_liked_games() {
+            $likes = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from games order by likes desc limit 3", false, true, DB::ALL_ROWS);
+            return $likes;
+        }
     }
 ?>

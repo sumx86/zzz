@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="\ps-classics\css\font-awesome.min.css">
 
     <link rel="stylesheet" href="\ps-classics\css\main-stylesheet-v1.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <meta name="title" content="ps-classics.com/collection" />
     <meta property="og:url" content="https://www.ps-classics.com/collection" />
@@ -82,6 +83,9 @@
                 if( event.key.toLowerCase() == "escape" ) {
                     $('#exit-profile-pic').click();
                 }
+            });
+            $('#account-settings').click(function() {
+                $('#settings-container').show('fast');
             });
         });
     </script>
@@ -175,6 +179,8 @@
                             </div>
                         </div>
                     </div>
+                    <input type="color" id="color" name="color" value="#e66465" style='position: absolute; visibility: hidden; left: 11%; top: 20%;'>
+                    <label for="color" style='position: absolute; width: 30px; height: 30px; cursor: pointer; border-radius: 100px; left: 12%; top: 25%;'><i class="material-icons" style='color: white;'>palette</i></label>
                 </div>
                 <div id='bottom-navbar'>
                     <?php
@@ -212,6 +218,9 @@
                     </div>
                 </div>
             </div>
+            <div id='settings-container-section'>
+
+            </div>
         </section>
 
         <div id='lang-container'>
@@ -236,6 +245,20 @@
             var text = element.text();
             if( (/[\u0400-\u04FF]+/).test(text) ){element.css('font-weight', 'bold');}
         });
+    });
+    var picBorderColor = cookieUtil.get('pic-border-color');
+    if(picBorderColor) {
+        $('#user-image').css('border', '3px solid ' + picBorderColor);
+    }
+    $('input[type="color"]').on('change', function() {
+        $('#user-image').css('border', '3px solid ' + $(this).val());
+        cookieUtil.create({
+                name: 'pic-border-color',
+                value: $(this).val(),
+                path: '/',
+                days: 365
+            }
+        );
     });
 </script>
 <footer>
