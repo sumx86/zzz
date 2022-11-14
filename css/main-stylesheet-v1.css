@@ -186,6 +186,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    border-radius: 100%;
 }
 
 #navbar > #login-success-container > #account-info > #username {
@@ -3524,12 +3525,548 @@ footer {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     z-index: 5;
+}
+
+#settings-container-section > #exit-section {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    top: 5%;
+    left: 95%;
+    background-color: transparent;
+}
+
+#settings-container-section > #exit-section > i {
+    position: absolute;
+    color: white;
+    font-size: 1.7em;
+    cursor: pointer;
+}
+
+#settings-container-section > #inner {
+    position: absolute;
+    width: 73%;
+    height: 82%;
+    left: 13.5%;
+    top: 7%;
+    background-color: #10151d;
+    border-radius: 3px;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #top {
+    position: absolute;
+    width: 90%;
+    height: 50px;
+    left: 5%;
+    background-color: transparent;
+    border-bottom: 1px solid rgb(87, 87, 87);
+}
+
+#settings-container-section > #inner > #top > span {
+    position: absolute;
+    top: 15%;
+    color: rgb(252, 86, 3);
+    font-size: 1.9em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#settings-container-section > #inner > #main-info {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    top: 9%;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section { 
+    position: absolute;
+    width: 20%;
+    height: 65%;
+    top: 3%;
+    left: 2%;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section > #top { 
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 55px;
+    top: 4%;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section > #top > span {
+    position: absolute;
+    top: 30%;
+    color: #f85149;
+    font-size: 1.2em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section > #edit {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 30px;
+    top: 67%;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section > #edit > i {
+    position: absolute;
+    color: white;
+    font-size: 1.6em;
+    cursor: pointer;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section > #profile-picture {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    background-color: black;
+    top: 15%;
+    left: 35px;
+    border-radius: 100%;
+}
+
+#settings-container-section > #inner > #main-info > #picture-section > #profile-picture > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
 }
 
 
 
+
+
+
+#settings-container-section > #inner > #main-info > #confirm-changes {
+    position: absolute;
+    width: 15%;
+    height: 35px;
+    top: 87%;
+    left: 4%;
+    color: #82a0db;
+    font-size: 1.1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    background-color: #161d28;
+    border: 1px solid #2f394d;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#settings-container-section > #inner > #main-info > #confirm-changes:hover {
+    color: white;
+}
+
+
+
+
+
+
+
+#settings-container-section > #inner > #main-info > #user-data {
+    position: absolute;
+    width: 75%;
+    height: 95%;
+    top: 3%;
+    left: 23%;
+    background-color: transparent;
+    z-index: 5;
+    overflow-y: scroll;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #basic-info {
+    width: 90%;
+    height: auto;
+    border: 1px solid #2f394d;
+    border-radius: 5px;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #basic-info > #top {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #2f394d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #161d28;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #basic-info > #top > span {
+    position: absolute;
+    top: 11px;
+    left: 5%;
+    color: #f85149;
+    font-size: 1.2em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+.basic-info-section {
+    width: 100%;
+    height: 65px;
+    border-bottom: 1px solid #2f394d;
+    background-color: transparent;
+}
+
+.basic-info-section:last-child {
+    border: none;
+}
+
+.basic-info-section > .heading {
+    width: 70%;
+    height: 32.5px;
+    margin-left: 7%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.basic-info-section > .heading > span {
+    position: relative;
+    top: 11px;
+    color: white;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.basic-info-section > .subtext {
+    width: 83%;
+    height: 32.5px;
+    margin-left: 7%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.basic-info-section > .subtext > span {
+    position: relative;
+    top: 6px;
+    color: grey;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.basic-info-section > .icon {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-top: 8px;
+    background-color: transparent;
+}
+
+.basic-info-section > .icon > i {
+    position: relative;
+    top: 12px;
+    color: rgb(44, 128, 196);
+    font-size: 1.5em;
+}
+
+.basic-info-section:nth-child(3) {
+    
+}
+
+
+
+
+
+#settings-container-section > #inner > #main-info > #user-data > #location-login-info {
+    width: 90%;
+    height: auto;
+    margin-top: 3%;
+    left: 5%;
+    border: 1px solid #2f394d;
+    border-radius: 5px;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #location-login-info > #top {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #2f394d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #161d28;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #location-login-info > #top > span {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 5%;
+    color: #f85149;
+    font-size: 1.2em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+
+
+
+
+
+
+
+.location-info {
+    width: 100%;
+    height: 65px;
+    border-bottom: 1px solid #2f394d;
+    background-color: transparent;
+}
+
+.location-info > .heading {
+    width: 70%;
+    height: 32.5px;
+    margin-left: 7%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.location-info > .heading > span {
+    position: relative;
+    top: 11px;
+    color: white;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.location-info > .subtext {
+    width: 83%;
+    height: 32.5px;
+    margin-left: 7%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.location-info > .subtext > span {
+    position: relative;
+    top: 6px;
+    color: grey;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.location-info > .icon {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-top: 8px;
+    background-color: transparent;
+}
+
+.location-info > .icon > i {
+    position: relative;
+    top: 12px;
+    color: rgb(44, 128, 196);
+    font-size: 1.5em;
+}
+
+.location-info:last-child {
+    border-bottom: none;
+}
+
+
+
+
+
+
+
+#settings-container-section > #inner > #main-info > #user-data > #social-media {
+    width: 90%;
+    height: auto;
+    margin-top: 3%;
+    left: 5%;
+    border: 1px solid #2f394d;
+    border-radius: 5px;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #social-media > #top {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #2f394d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #161d28;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #social-media > #top > span {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 5%;
+    color: #f85149;
+    font-size: 1.2em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#social-media > form > div {
+    width: 100%;
+    height: 65px;
+    border-bottom: 1px solid #2f394d;
+    background-color: transparent;
+}
+
+#social-media > form > div:last-child {
+    border-bottom: none;
+}
+
+#social-media > form > div > span {
+    position: absolute;
+    color: white;
+    font-size: 1em;
+    margin-left: 7%;
+    margin-top: 7px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#social-media > form > div > input {
+    position: absolute;
+    width: 300px;
+    height: 27px;
+    margin-top: 30px;
+    margin-left: 7%;
+    padding-left: 10px;
+    font-size: 0.9em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: #090c10;
+    outline: none;
+    border: 1px solid #2a3649;
+    border-radius: 3px;
+}
+
+#social-media > form > div > .icon {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-top: 8px;
+    background-color: transparent;
+}
+
+#social-media > form > div > .icon > i {
+    position: relative;
+    top: 12px;
+    color: rgb(44, 128, 196);
+    font-size: 1.5em;
+}
+
+
+
+
+
+
+#settings-container-section > #inner > #main-info > #user-data > #blocked-users {
+    width: 90%;
+    height: 130px;
+    margin-top: 3%;
+    left: 5%;
+    border: 1px solid #2f394d;
+    border-radius: 5px;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #blocked-users > #top {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #2f394d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #161d28;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #blocked-users > #top > span {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 5%;
+    color: #f85149;
+    font-size: 1.2em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+
+
+
+
+
+
+#settings-container-section > #inner > #main-info > #user-data > #delete-account {
+    width: 90%;
+    height: 130px;
+    margin-top: 3%;
+    left: 5%;
+    border-radius: 5px;
+    background-color: transparent;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #delete-account > #top {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #2f394d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    z-index: 5;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #delete-account > #top > span {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 2%;
+    color: #f85149;
+    font-size: 1.2em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #delete-account > span {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 2%;
+    color: white;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #delete-account > button {
+    position: absolute;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 40px;
+    margin-left: 2%;
+    color: #f85149;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    background-color: #21262d;
+    border: 1px solid #2d343d;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#settings-container-section > #inner > #main-info > #user-data > #delete-account > button:hover {
+    color: white;
+}
 
 
 
@@ -3976,7 +4513,7 @@ footer {
 #emulators {
     width: 100%;
     height: 18%;
-    background-color: #2e4683; /* #5150a6 */
+    background-color: rgb(43, 43, 146); /* #5150a6 */
 }
 
 ::-webkit-scrollbar { width: 10px;}
