@@ -84,6 +84,11 @@ var Util = {
         if(newCss.width != '') {
             image.css(newCss);
         }
+    },
+    clearFields: function(cls) {
+        $(cls).each(function(i, e) {
+            $(e).val('');
+        });
     }
 };
 
@@ -1050,33 +1055,33 @@ var Util = {
         }
     });
 })(jQuery);
-(function($) {
+(function($){
     $.initCall('user-settings', {
-        _modal: '#settings-container',
-        _data: null,
-
         initialize: function() {
+            var _self = this;
             $(document).ready(function(){
-                $('#sign-out-button').click(function(e) {
-                    $.redirect("/ajax/logout");
+                $('.basic-info-section > .heading, .basic-info-section > .subtext').click(function() {
+                    var parent = $(this).parent();
+                    _self._slideToggle(parent);
                 });
             });
-            SimpleModalEvents.init({'target':'#settings-container','trigger':'#user-settings-button','uniq_d':'data-gr', 'handle':this._toggleModal.bind(this)});
         },
-        _toggleModal: function(e) {
-            var modal = $(this._modal);
-            if( !this._isActive() ) {
-                modal.stop().fadeIn(200);
-                modal.addClass('modal-active');
-            } else {
-                modal.stop().fadeOut(200);
-                modal.removeClass('modal-active');
+        _slideToggle: function(element) {
+            var initialPx = element.attr('data-initial-px');
+            var slidePx   = element.attr('data-slide-px');
+
+            switch(element.css('height')) {
+                case initialPx:
+                    element.animate({'height': slidePx}, 'fast');
+                    break;
+                case slidePx:
+                    element.animate({'height': initialPx}, 'fast');
+                    break;
             }
-        },
-        _isActive: function() {return $(this._modal).hasClass('modal-active');}
+        }
     });
 })(jQuery);
-(function($){
+(function($) {
     $.initCall('update-user-info', {
         _editor: '.info-edit-block',
         _active: false,
