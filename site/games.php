@@ -105,7 +105,7 @@
         <?php
             if($theme == 'halloween') {
                 echo "<div id='moon-img'>
-                        <img src='\ps-classics\img\clipart457867.png'>
+                        <img src='\ps-classics\img\NicePng_halloween-png_46141.png'>
                     </div>";
             }
         ?>
@@ -140,11 +140,14 @@
                     <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                 </div>";
                 } else {
-                    $username = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
+                    $userData  = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select image from users where id = ?", [intval(Server::retrieve_session('user', 'id'))], true, DB::ALL_ROWS);
+                    $userImage = Str::htmlEnt($userData[0]['image']);
+                    
+                    $username  = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
                     echo "<div id='login-success-container'>
                         <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
                             <div id='image'>
-                                <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>
+                                <img src='".$userImage."'>
                             </div>
                             <div id='username'>
                                 <span>".Str::htmlEnt($username)."</span>

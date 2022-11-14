@@ -113,7 +113,26 @@
             'find-favgame'     => 'Намери любимата си игра',
             'find-game'        => 'Намери игра',
             'search-members'   => 'Търси потребители',
-            'visit-collection' => 'или прегледай колекцията'
+            'visit-collection' => 'или прегледай колекцията',
+
+            'account-settings' => 'Настройки на акаунта',
+            'profile-picture'  => 'Профилна снимка',
+            'overall-info'     => 'Обща информация',
+            'login-location'   => 'Къде сте влезли',
+            'social-media'     => 'Социални медии',
+            'blocked-users'    => 'Блокирани потребители',
+            'delete-account'   => 'Изтриване на акаунт',
+
+            'display-name'     => 'Показно име',
+            'location'         => 'Местоположение',
+            'password-change'  => 'Промяна на паролата',
+            'email-change'     => 'Промяна на и-мейла',
+            'save-details'     => 'Запазване',
+
+            'display-name-info' => 'Това е името което ще виждат другите потребители',
+            'password-info'     => 'Добра идея е да използвате силна парола, която не използвате никъде другаде',
+            'email-info'        => 'Имейла който ще се използва за обратна връзка',
+            'location-info'     => 'Местоположението което ще се вижда в профила ви'
         ],
         'en' => [
             'home'    => 'Home',
@@ -228,7 +247,26 @@
             'find-favgame'     => 'Find your favourite game',
             'find-game'        => 'Search game',
             'search-members'   => 'Search members',
-            'visit-collection' => 'or take a look at the collection'
+            'visit-collection' => 'or take a look at the collection',
+
+            'account-settings' => 'Account settings',
+            'profile-picture'  => 'Profile picture',
+            'overall-info'     => 'Overall information',
+            'login-location'   => 'Login location',
+            'social-media'     => 'Social media',
+            'blocked-users'    => 'Blocked users',
+            'delete-account'   => 'Delete account',
+
+            'display-name'     => 'Display name',
+            'location'         => 'Location',
+            'password-change'  => 'Change password',
+            'email-change'     => 'Change e-mail',
+            'save-details'     => 'Save details',
+
+            'display-name-info' => 'This is the name that everyone will see',
+            'password-info'     => 'It is a good idea to use a strong password, that you don\'t use anywhere else',
+            'email-info'        => 'The email that is going to be used to contact you',
+            'location-info'     => 'This is where you\'re located'
         ]
     );
 ?>

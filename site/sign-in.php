@@ -58,7 +58,7 @@
         <?php
             if($theme == 'halloween') {
                 echo "<div id='moon-img'>
-                        <img src='\ps-classics\img\clipart457867.png'>
+                        <img src='\ps-classics\img\NicePng_halloween-png_46141.png'>
                     </div>";
             }
         ?>
