@@ -126,7 +126,7 @@
                 self::$errors[$passcField] = '';
                 return false;
             }
-            self::$dbInstance->rawQuery("insert into users (username, email, password, image, user_rank) values (?, ?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image'], 2], false);
+            self::$dbInstance->rawQuery("insert into users (username, email, password, image, user_rank, display_name) values (?, ?, ?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image'], 2, Util::random_number(10)], false);
             return true;
         }
 
@@ -377,5 +377,36 @@
             $likes = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from games order by likes desc limit 3", false, true, DB::ALL_ROWS);
             return $likes;
         }
+
+
+
+
+
+        // DELETION STUFF
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static function delete_account($userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from users where id = ?", [$userID], false, false);
+        }
+
+        public static function delete_uploads($userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from games where uploader_id = ?", [$userID], false, false);
+        }
+
+        public static function delete_followings($userID) {
+            //self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from followings where followed_by_id = ?", [$userID], false, false);
+        }
+
+        public static function delete_comments($userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from comments where comment_by_id = ?", [$userID], false, false);
+        }
+
+        public static function delete_rated_games($userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from rated_games where liked_by_user_id = ? or favourited_by_user_id = ?", [$userID, $userID], false, false);
+        }
+
+        public static function delete_rated_comments($userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from rated_comments where liked_by_user_id = ? or favourited_by_user_id = ?", [$userID, $userID], false, false);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 ?>

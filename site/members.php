@@ -153,7 +153,7 @@
                         if(_Array::size($usersList) > 0) {
                             foreach($usersList as $user) {
 
-                                $username = Str::truncate(Str::replace_all_quotes($user['username'], true), 9);
+                                $username = Str::truncate(Str::replace_all_quotes($user['display_name'], true), 9);
                                 if($theme == 'halloween') {
                                     $image = '\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png';
                                 } else {
@@ -179,7 +179,7 @@
                         if(_Array::size($usersList) > 0) {
                             foreach($usersList as $user) {
 
-                                $username = Str::truncate(Str::replace_all_quotes($user['username'], true), 9);
+                                $username = Str::truncate(Str::replace_all_quotes($user['display_name'], true), 9);
                                 if($theme == 'halloween') {
                                     $image = '\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png';
                                 } else {

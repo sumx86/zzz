@@ -101,5 +101,13 @@
                     return $language_config[$lang]['rank-member'];
             }
         }
+
+        public static function random_number($length) {
+            $result = '';
+            for($i = 0; $i < $length; $i++) {
+                $result .= mt_rand(0, 9);
+            }
+            return $result;
+        }
     }
 ?>

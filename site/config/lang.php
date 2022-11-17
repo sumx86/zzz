@@ -132,7 +132,17 @@
             'display-name-info' => 'Това е името което ще виждат другите потребители',
             'password-info'     => 'Добра идея е да използвате силна парола, която не използвате никъде другаде',
             'email-info'        => 'Имейла който ще се използва за обратна връзка',
-            'location-info'     => 'Местоположението което ще се вижда в профила ви'
+            'location-info'     => 'Местоположението което ще се вижда в профила ви',
+            
+            'facebook-info'     => 'Потребителското име или id на акаунта',
+            'instagram-info'    => 'Потребителското име в инстаграм',
+            'twitter-info'      => 'Потребителското име в туитър',
+            'youtube-info'      => 'Името на акаунта в youtube',
+            'skype-info'        => 'Потребителското име в скайп',
+            'account-deletion'  => 'Изтриването на акаунта е необратима стъпка и всички данни ще бъдат изтрити',
+
+            'unblock-user'      => 'Отблокирай',
+            'delete-account-confirmation' => 'Изтриване за постоянно ?'
         ],
         'en' => [
             'home'    => 'Home',
@@ -266,7 +276,17 @@
             'display-name-info' => 'This is the name that everyone will see',
             'password-info'     => 'It is a good idea to use a strong password, that you don\'t use anywhere else',
             'email-info'        => 'The email that is going to be used to contact you',
-            'location-info'     => 'This is where you\'re located'
+            'location-info'     => 'This is where you\'re located',
+            
+            'facebook-info'     => 'Your facebook id or username',
+            'instagram-info'    => 'Your instagram username',
+            'twitter-info'      => 'Your twitter username',
+            'youtube-info'      => 'Your youtube account name',
+            'skype-info'        => 'Your skype username',
+            'account-deletion'  => 'Once you delete your account, there is no going back. Please be certain.',
+
+            'unblock-user'      => 'Unblock user',
+            'delete-account-confirmation' => 'Delete account permanently ?'
         ]
     );
 ?>

@@ -72,10 +72,10 @@
                     $newCommentID  = $lastCommentID + 1;
                     $comment       = Str::splitfixed(Str::replace_all_quotes($comment), 200);
 
-                    $username = Server::retrieve_session('user', 'username');
-                    $userID   = intval(Server::retrieve_session('user', 'id'));
+                    $displayName = Server::retrieve_session('user', 'display_name');
+                    $userID      = intval(Server::retrieve_session('user', 'id'));
 
-                    UserCP::post_comment($comment, $newCommentID, $gameID, $username, $userID, Util::get_current_date_and_time(false));
+                    UserCP::post_comment($comment, $newCommentID, $gameID, $displayName, $userID, Util::get_current_date_and_time(false));
                     UserCP::increment_comments($gameID);
                     Response::throw_json_string(["success" => '']);
                 }

@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="\ps-classics\css\font-awesome.min.css">
 
     <link rel="stylesheet" href="\ps-classics\css\main-stylesheet-v1.css">
+    <link rel="stylesheet" href="\ps-classics\css\croppie.css">
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <meta name="title" content="ps-classics.com/collection" />
@@ -60,6 +62,7 @@
     <script type="text/javascript" src="\ps-classics\js\app-96f77c7a4023688288d96c0ec78c5ba8.js"></script>
     <script type="text/javascript" src="\ps-classics\js\cookie-util.js"></script>
     <script type="text/javascript" src="\ps-classics\js\ui.js"></script>
+    <script type="text/javascript" src="\ps-classics\js\croppie.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#moon-img').css({'top': '-120px'});
@@ -92,6 +95,7 @@
                 Util.clearFields('.social-media-input-field');
                 $('#settings-container-section').hide();
             });
+            window._uid = <?php echo $userID; ?>;
         });
     </script>
 </head>
@@ -162,11 +166,12 @@
             </div>
 
             <?php
-                $userData  = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank from users where id = ?", [$userID], true, DB::ALL_ROWS);
+                $userData    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank from users where id = ?", [$userID], true, DB::ALL_ROWS);
 
-                $username  = Str::htmlEnt(Str::replace_all_quotes($userData[0]['username'], true));
-                $userRank  = Util::get_rank($userData[0]['user_rank']);
-                $userImage = Str::htmlEnt($userData[0]['image']);
+                $username    = Str::htmlEnt(Str::replace_all_quotes($userData[0]['username'], true));
+                $displayName = Str::htmlEnt(Str::replace_all_quotes($userData[0]['display_name'], true));
+                $userRank    = Util::get_rank($userData[0]['user_rank']);
+                $userImage   = Str::htmlEnt($userData[0]['image']);
                 
                 $followers = intval($userData[0]['followers']);
                 $following = intval($userData[0]['following']);
@@ -180,7 +185,7 @@
                         </div>
                         <div id='user-info'>
                             <div id='username'>
-                                <span><?php echo $username; ?></span>
+                                <span><?php echo $displayName; ?></span>
                             </div>
                             <div id='rank'>
                                 <span><?php echo $userRank; ?></span>
@@ -226,158 +231,232 @@
                     </div>
                 </div>
             </div>
-            <div id='settings-container-section'>
-                <div id='exit-section'>
-                    <i class='fa fa-times'></i>
-                </div>
-                <div id='inner'>
-                    <div id='top'>
-                        <span><?php echo $language_config[$lang]['account-settings']; ?></span>
-                    </div>
-                    <div id='main-info'>
-                        <div id='picture-section'>
-                            <div id='top'>
-                                <span><?php echo $language_config[$lang]['profile-picture']; ?></span>
+            <?php
+                if($isLogin) {
+                    if($userID == Server::retrieve_session('user', 'id')) {
+                        echo "<div id='settings-container-section'>
+                            <div id='exit-section'>
+                                <i class='fa fa-times'></i>
                             </div>
-                            <div id='profile-picture'>
-                                <img src=''>
-                            </div>
-                            <div id='edit'>
-                                <i class='fa fa-edit'></i>
-                            </div>
-                        </div>
-
-                        <button id='confirm-changes'><?php echo $language_config[$lang]['save-details']; ?></button>
-
-                        <div id='user-data'>
-                            <div id='basic-info'>
+                            <div id='inner'>
                                 <div id='top'>
-                                    <span><?php echo $language_config[$lang]['overall-info']; ?></span>
+                                    <span>".$language_config[$lang]['account-settings']."</span>
                                 </div>
-                                <div id='display-name' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
-                                    <div class='icon'>
-                                        <i class='fa fa-file-text'></i>
+                                <div id='main-info'>
+                                    <div id='picture-section'>
+                                        <div id='top'>
+                                            <span>".$language_config[$lang]['profile-picture']."</span>
+                                        </div>
+                                        <div id='profile-picture'>
+                                            <img src=''>
+                                        </div>
+                                        <div id='edit'>
+                                            <i class='fa fa-edit'></i>
+                                        </div>
                                     </div>
-                                    <div class='heading'>
-                                        <span><?php echo $language_config[$lang]['display-name']; ?></span>
-                                    </div>
-                                    <div class='subtext'>
-                                        <span><?php echo $language_config[$lang]['display-name-info']; ?></span>
-                                    </div>
-                                </div>
-                                <div id='password-update' class='basic-info-section' data-slide-px='300px' data-initial-px='65px'>
-                                    <div class='icon'>
-                                        <i class='fa fa-key'></i>
-                                    </div>
-                                    <div class='heading'>
-                                        <span><?php echo $language_config[$lang]['password-change']; ?></span>
-                                    </div>
-                                    <div class='subtext'>
-                                        <span><?php echo $language_config[$lang]['password-info']; ?></span>
-                                    </div>
-                                </div>
-                                <div id='email-update' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
-                                    <div class='icon'>
-                                        <i class='fa fa-envelope'></i>
-                                    </div>
-                                    <div class='heading'>
-                                        <span><?php echo $language_config[$lang]['email-change']; ?></span>
-                                    </div>
-                                    <div class='subtext'>
-                                        <span><?php echo $language_config[$lang]['email-info']; ?></span>
-                                    </div>
-                                </div>
-                                <div id='location-update' class='basic-info-section' data-slide-px='150px' data-initial-px='65px'>
-                                    <div class='icon'>
-                                        <i class='fa fa-map-marker'></i>
-                                    </div>
-                                    <div class='heading'>
-                                        <span><?php echo $language_config[$lang]['location']; ?></span>
-                                    </div>
-                                    <div class='subtext'>
-                                        <span><?php echo $language_config[$lang]['location-info']; ?></span>
+            
+                                    <button id='confirm-changes'>".$language_config[$lang]['save-details']."</button>
+            
+                                    <div id='user-data'>
+                                        <div id='basic-info'>
+                                            <div id='top'>
+                                                <span>".$language_config[$lang]['overall-info']."</span>
+                                            </div>
+                                            <div id='display-name-info-section' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
+                                                <div class='icon'>
+                                                    <i class='fa fa-file-text'></i>
+                                                </div>
+                                                <div class='heading'>
+                                                    <span>".$language_config[$lang]['display-name']."</span>
+                                                </div>
+                                                <div class='subtext'>
+                                                    <span>".$language_config[$lang]['display-name-info']."</span>
+                                                </div>
+                                                <div id='display-name-field-container' class='cnt'>
+                                                    <span>Ново показно име</span>
+                                                    <input type='text' name='display-name' id='display-name-field' class='overall-info-field' value='".$displayName."'>
+                                                </div>
+                                            </div>
+                                            <div id='password-update' class='basic-info-section' data-slide-px='300px' data-initial-px='65px'>
+                                                <div class='icon'>
+                                                    <i class='fa fa-key'></i>
+                                                </div>
+                                                <div class='heading'>
+                                                    <span>".$language_config[$lang]['password-change']."</span>
+                                                </div>
+                                                <div class='subtext'>
+                                                    <span>".$language_config[$lang]['password-info']."</span>
+                                                </div>
+                                                <div id='password-update-field-container' class='cnt'>
+                                                    <span id='current-password-text'>Текуща парола</span>
+                                                    <input type='password' name='password-update' id='password-update-field' class='overall-info-field'>
+            
+                                                    <span id='new-password-text'>Нова парола</span>
+                                                    <input type='password' name='new-password-update' id='new-password-update-field' class='overall-info-field'>
+            
+                                                    <span id='new-password-confirm-text'>Потвърди новата парола</span>
+                                                    <input type='password' name='confirm-password-update' id='confirm-password-update-field' class='overall-info-field'>
+                                                </div>
+                                            </div>
+                                            <div id='email-update' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
+                                                <div class='icon'>
+                                                    <i class='fa fa-envelope'></i>
+                                                </div>
+                                                <div class='heading'>
+                                                    <span>".$language_config[$lang]['email-change']."</span>
+                                                </div>
+                                                <div class='subtext'>
+                                                    <span>".$language_config[$lang]['email-info']."</span>
+                                                </div>
+                                                <div id='email-field-container' class='cnt'>
+                                                    <span>Нов имейл</span>
+                                                    <input type='text' name='emaill' id='emaill-field' class='overall-info-field' placeholder='email@mail.com'>
+                                                </div>
+                                            </div>
+                                            <div id='location-update' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
+                                                <div class='icon'>
+                                                    <i class='fa fa-map-marker'></i>
+                                                </div>
+                                                <div class='heading'>
+                                                    <span>".$language_config[$lang]['location']."</span>
+                                                </div>
+                                                <div class='subtext'>
+                                                    <span>".$language_config[$lang]['location-info']."</span>
+                                                </div>
+                                                <div id='location-field-container' class='cnt'>
+                                                    <span>Местоположение</span>
+                                                    <input type='text' name='location' id='location-field' class='overall-info-field' placeholder='Sofia, Bulgaria'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id='location-login-info'>
+                                            <div id='top'>
+                                                <span>".$language_config[$lang]['login-location']."</span>
+                                            </div>
+                                            <div class='location-info'>
+                                                <div class='icon'>
+                                                    <i class='fa fa-desktop'></i>
+                                                </div>
+                                                <div class='heading'>
+                                                    <span>Настолен компютър с Windows · Troyan, Bulgaria</span>
+                                                </div>
+                                                <div class='subtext'>
+                                                    <span>Chrome · На линия в момента</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id='social-media'>
+                                            <div id='top'>
+                                                <span>".$language_config[$lang]['social-media']."</span>
+                                            </div>
+                                            <form action='' method='post'>
+                                                <div id='facebook'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-facebook'></i>
+                                                    </div>
+                                                    <span>Facebook</span>
+                                                    <input type='text' name='facebook'  id='facebook' class='social-media-input-field' placeholder='".$language_config[$lang]['facebook-info']."'>
+                                                </div>
+            
+                                                <div id='instagram'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-instagram'></i>
+                                                    </div>
+                                                    <span>Instagram</span>
+                                                    <input type='text' name='instagram' id='instagram' class='social-media-input-field' placeholder='".$language_config[$lang]['instagram-info']."'>
+                                                </div>
+            
+                                                <div id='twitter'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-twitter'></i>
+                                                    </div>
+                                                    <span>Twitter</span>
+                                                    <input type='text' name='twitter'   id='twitter'   class='social-media-input-field' placeholder='".$language_config[$lang]['twitter-info']."'>
+                                                </div>
+            
+                                                <div id='youtube'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-youtube'></i>
+                                                    </div>
+                                                    <span>YouTube</span>
+                                                    <input type='text' name='youtube'   id='youtube'   class='social-media-input-field' placeholder='".$language_config[$lang]['youtube-info']."'>
+                                                </div>
+            
+                                                <div id='skype'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-skype'></i>
+                                                    </div>
+                                                    <span>Skype</span>
+                                                    <input type='text' name='skype'   id='skype'   class='social-media-input-field' placeholder='".$language_config[$lang]['skype-info']."'>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div id='blocked-users'>
+                                            <div id='top'>
+                                                <span>".$language_config[$lang]['blocked-users']."</span>
+                                            </div>
+                                            <div class='blocked-user'>
+                                                <div class='image'>
+                                                    <img src='\ps-classics\img\alucard.png'>
+                                                </div>
+                                                <div class='display-name'>
+                                                    <span>Alucard</span>
+                                                </div>
+                                                <button class='unblock'>".$language_config[$lang]['unblock-user']."</button>
+                                            </div>
+                                            <div class='blocked-user'>
+                                                <div class='image'>
+                                                    <img src='\ps-classics\img\wFz5XPWb79QpekP-Pennywise-PNG-Clipart.png'>
+                                                </div>
+                                                <div class='display-name'>
+                                                    <span>devArt98</span>
+                                                </div>
+                                                <button class='unblock'>".$language_config[$lang]['unblock-user']."</button>
+                                            </div>
+                                            <div class='blocked-user'>
+                                                <div class='image'>
+                                                    <img src='\ps-classics\img\artworks-GEC8JGrX2MWmll8j-yWVYsQ-t500x500.jpg'>
+                                                </div>
+                                                <div class='display-name'>
+                                                    <span>Jason</span>
+                                                </div>
+                                                <button class='unblock'>".$language_config[$lang]['unblock-user']."</button>
+                                            </div>
+                                        </div>";
+            
+                                        
+                                            if($isLogin) {
+                                                if(Server::retrieve_session('user', 'id') == $userID) {
+                                                    echo "<div id='delete-account'>
+                                                            <div id='top'>
+                                                                <span>".$language_config[$lang]['delete-account']."</span>
+                                                            </div>
+                                                            <span>&bull; ".$language_config[$lang]['account-deletion']."</span>
+                                                            <button id='submit-deletion'>".$language_config[$lang]['delete-account']."</button>
+                                                            
+                                                            <div id='confirm-deletion'>
+                                                                <span id='message'>".$language_config[$lang]['delete-account-confirmation']."</span>
+                                                                <div id='buttons'>
+                                                                    <div id='yes'>
+                                                                        <span>".$language_config[$lang]['yes']."</span>
+                                                                    </div>
+                                                                    <div id='no'>
+                                                                        <span>".$language_config[$lang]['no']."</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>";
+                                                }
+                                            }
+                                            
+                                    echo "
                                     </div>
                                 </div>
                             </div>
-                            <div id='location-login-info'>
-                                <div id='top'>
-                                    <span><?php echo $language_config[$lang]['login-location']; ?></span>
-                                </div>
-                                <div class='location-info'>
-                                    <div class='icon'>
-                                        <i class='fa fa-desktop'></i>
-                                    </div>
-                                    <div class='heading'>
-                                        <span>Настолен компютър с Windows · Troyan, Bulgaria</span>
-                                    </div>
-                                    <div class='subtext'>
-                                        <span>Chrome · На линия в момента</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id='social-media'>
-                                <div id='top'>
-                                    <span><?php echo $language_config[$lang]['social-media']; ?></span>
-                                </div>
-                                <form action='' method='post'>
-                                    <div id='facebook'>
-                                        <div class='icon'>
-                                            <i class='fa fa-facebook'></i>
-                                        </div>
-                                        <span>Facebook</span>
-                                        <input type='text' name='facebook'  id='facebook' class='social-media-input-field' placeholder="Your facebook id or username">
-                                    </div>
-
-                                    <div id='instagram'>
-                                        <div class='icon'>
-                                            <i class='fa fa-instagram'></i>
-                                        </div>
-                                        <span>Instagram</span>
-                                        <input type='text' name='instagram' id='instagram' class='social-media-input-field' placeholder="Your instagram username">
-                                    </div>
-
-                                    <div id='twitter'>
-                                        <div class='icon'>
-                                            <i class='fa fa-twitter'></i>
-                                        </div>
-                                        <span>Twitter</span>
-                                        <input type='text' name='twitter'   id='twitter'   class='social-media-input-field' placeholder="Your twitter username">
-                                    </div>
-
-                                    <div id='youtube'>
-                                        <div class='icon'>
-                                            <i class='fa fa-youtube'></i>
-                                        </div>
-                                        <span>YouTube</span>
-                                        <input type='text' name='youtube'   id='youtube'   class='social-media-input-field' placeholder="Your youtube account name">
-                                    </div>
-
-                                    <div id='skype'>
-                                        <div class='icon'>
-                                            <i class='fa fa-skype'></i>
-                                        </div>
-                                        <span>Skype</span>
-                                        <input type='text' name='skype'   id='skype'   class='social-media-input-field' placeholder="Your skype username">
-                                    </div>
-                                </form>
-                            </div>
-                            <div id='blocked-users'>
-                                <div id='top'>
-                                    <span><?php echo $language_config[$lang]['blocked-users']; ?></span>
-                                </div>
-                            </div>
-
-                            <div id='delete-account'>
-                                <div id='top'>
-                                    <span><?php echo $language_config[$lang]['delete-account']; ?></span>
-                                </div>
-                                <span>&bull; Once you delete your account, there is no going back. Please be certain.</span>
-                                <button id='submit-deletion'><?php echo $language_config[$lang]['delete-account']; ?></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </div>";
+                    }
+                }
+            ?>
         </section>
 
         <div id='lang-container'>

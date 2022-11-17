@@ -4,6 +4,7 @@
     require_once "../config/db.php";
     require_once "../helpers/string.php";
     require_once "../helpers/array.php";
+    require_once "../helpers/util.php";
     require_once "../server.php";
     require_once "../http/response.php";
     require_once "../usercp.php";

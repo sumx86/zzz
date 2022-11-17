@@ -30,7 +30,7 @@
     ];
     $action = trim($_POST['action']);
     $data   = json_decode($_POST['data']);
-    if(!Str::is_in($action, $actionTypes) || !isProperData($data)) {
+    if(!Str::is_in($action, $actionTypes) || !isProperData($data, $action)) {
         return;
     }
     //////////////////////////////////////////////////////////////////////////////////////
@@ -41,10 +41,12 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     // initialize database object
     $db = new DB(false);
-
-    // Check if the given item exists
-    if(!ItemExists($data->item, $data->item_type, $db)) {
-        return;
+    
+    // Check if the given item exists only if we're not updating user information
+    if(!Str::equal($action, 'user')) {
+        if(!ItemExists($data->item, $data->item_type, $db)) {
+            return;
+        }
     }
 
     UserCP::setDB($db);
@@ -142,6 +144,7 @@
     // UPDATE USER INFORMATION
     ////////////////////////////////////////////////////////////////////////////////////////
     if(Str::equal($action, 'user')) {
+        echo "fuck yes";
         return;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -161,9 +164,13 @@
         return _Array::size($result) > 0;
     }
 
-    function isProperData($data) {
+
+    function isProperData($data, $action) {
         if(!is_object($data)) {
             return false;
+        }
+        if(Str::equal($action, 'user')) {
+            return true;
         }
         if(!property_exists($data, 'item') || !property_exists($data, 'item_type')) {
             return false;
