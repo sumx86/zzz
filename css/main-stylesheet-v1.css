@@ -3978,7 +3978,7 @@ footer {
 
 #settings-container-section > #inner > #main-info > #user-data > #blocked-users {
     width: 90%;
-    height: 130px;
+    height: auto;
     margin-top: 3%;
     left: 5%;
     border: 1px solid #2f394d;
@@ -4006,6 +4006,68 @@ footer {
     font-family: 'prototype', 'Jura-Bold', sans-serif;
 }
 
+.blocked-user {
+    width: 100%;
+    height: 120px;
+    background-color: transparent;
+}
+
+.blocked-user > .image {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    margin-left: 5%;
+    margin-top: 2px;
+    border-radius: 100%;
+    background-color: black;
+}
+
+.blocked-user > .image > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+.blocked-user > .display-name {
+    position: absolute;
+    width: 35%;
+    height: 80px;
+    margin-left: 16.5%;
+    margin-top: 17px;
+    background-color: transparent;
+}
+
+.blocked-user > .display-name > span {
+    position: relative;
+    top: 30%;
+    left: 4%;
+    font-size: 1.5em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+}
+
+.blocked-user:last-child {
+    border-bottom: none;
+}
+
+.unblock {
+    width: 15%;
+    height: 35px;
+    margin-top: 4.5%;
+    margin-left: 74%;
+    color: #82a0db;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    background-color: #161d28;
+    border: 1px solid #2f394d;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.unblock:hover {
+    color: white;
+}
+
 
 
 
@@ -4014,7 +4076,7 @@ footer {
 
 #settings-container-section > #inner > #main-info > #user-data > #delete-account {
     width: 90%;
-    height: 130px;
+    height: 160px;
     margin-top: 3%;
     left: 5%;
     border-radius: 5px;
@@ -4024,7 +4086,7 @@ footer {
 
 #settings-container-section > #inner > #main-info > #user-data > #delete-account > #top {
     width: 100%;
-    height: 50px;
+    height: 45px;
     border-bottom: 1px solid #2f394d;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -4066,6 +4128,72 @@ footer {
 
 #settings-container-section > #inner > #main-info > #user-data > #delete-account > button:hover {
     color: white;
+}
+
+#confirm-deletion {
+    position: relative;
+    display: none;
+    width: 50%;
+    height: 40px;
+    top: 49%;
+    left: 2.2%;
+    border: 1px solid #2f394d;
+    border-radius: 3px;
+    background-color: #161d28;
+}
+
+#confirm-deletion > #message {
+    position: absolute;
+    margin-top: 9px;
+    left: 5px;
+    color: #82a0db;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+}
+
+#confirm-deletion > #buttons {
+    position: relative;
+    left: 50%;
+    width: 20%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#confirm-deletion > #buttons > #yes {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#confirm-deletion > #buttons > #yes > span {
+    position: absolute;
+    margin-top: 9px;
+    color: #f85149;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    cursor: pointer;
+}
+
+#confirm-deletion > #buttons > #no {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    left: 50%;
+    background-color: transparent;
+}
+
+#confirm-deletion > #buttons > #no > span {
+    position: absolute;
+    margin-top: 9px;
+    color: #f85149;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    cursor: pointer;
 }
 
 
@@ -4515,6 +4643,189 @@ footer {
     height: 18%;
     background-color: rgb(43, 43, 146); /* #5150a6 */
 }
+
+
+
+
+
+
+
+
+#display-name-info-section {
+    height: auto;
+}
+
+#display-name-field-container {
+    position: relative;
+    display: none;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+}
+
+#display-name-field-container > input {
+    position: absolute;
+    width: 40%;
+    height: 29px;
+    margin-top: 45px;
+    padding-left: 10px;
+    font-size: 0.9em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: #090c10;
+    outline: none;
+    border: 1px solid #2a3649;
+    border-radius: 3px;
+}
+
+#display-name-field-container > span {
+    position: absolute;
+    margin-top: 23px;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #f85149;
+}
+
+
+
+
+
+
+#password-update-field-container {
+    position: relative;
+    display: none;
+    justify-content: center;
+    width: 100%;
+    height: 230px;
+    background-color: transparent;
+}
+
+#password-update-field-container > input {
+    position: absolute;
+    width: 40%;
+    height: 29px;
+    padding-left: 10px;
+    font-size: 0.9em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: #090c10;
+    outline: none;
+    border: 1px solid #2a3649;
+    border-radius: 3px;
+}
+
+#password-update-field-container > span {
+    position: absolute;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #f85149;
+}
+
+
+
+#password-update-field {
+    margin-top: 40px;
+}
+
+#password-update-field-container > #current-password-text {
+    margin-top: 18px;
+}
+
+
+
+#new-password-update-field {
+    margin-top: 105px;
+}
+
+#password-update-field-container > #new-password-text {
+    margin-top: 83px;
+}
+
+
+
+#confirm-password-update-field {
+    margin-top: 175px;
+}
+
+#password-update-field-container > #new-password-confirm-text {
+    margin-top: 153px;
+}
+
+
+
+
+#email-field-container {
+    position: relative;
+    display: none;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+}
+
+#email-field-container > input {
+    position: absolute;
+    width: 40%;
+    height: 29px;
+    margin-top: 45px;
+    padding-left: 10px;
+    font-size: 0.9em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: #090c10;
+    outline: none;
+    border: 1px solid #2a3649;
+    border-radius: 3px;
+}
+
+#email-field-container > span {
+    position: absolute;
+    margin-top: 23px;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #f85149;
+}
+
+
+
+
+#location-field-container {
+    position: relative;
+    display: none;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+}
+
+#location-field-container > input {
+    position: absolute;
+    width: 40%;
+    height: 29px;
+    margin-top: 45px;
+    padding-left: 10px;
+    font-size: 0.9em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: #090c10;
+    outline: none;
+    border: 1px solid #2a3649;
+    border-radius: 3px;
+}
+
+#location-field-container > span {
+    position: absolute;
+    margin-top: 23px;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #f85149;
+}
+
+
+
+
+
 
 ::-webkit-scrollbar { width: 10px;}
 ::-webkit-scrollbar-track { background: #555; }
