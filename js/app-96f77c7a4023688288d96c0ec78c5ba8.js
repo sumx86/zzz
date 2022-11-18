@@ -1062,7 +1062,7 @@ var Util = {
         }
     });
 })(jQuery);
-(function($){
+(function($) {
     $.initCall('user-settings', {
         initialize: function() {
             var _self = this;
@@ -1072,8 +1072,25 @@ var Util = {
                     _self._slideToggle(parent);
                 });
                 $('#confirm-changes').click(function() {
+                    $('#spinner').css('display', 'block');
                     _self._saveAccountSettings(['.overall-info-field', '.social-media-input-field']);
                 });
+                $._on(document, null, {
+                    'click' : function(e) {
+                        if($('#settings-container-section').css('display') == 'block') {
+                            if($(e.target).attr('data-gr') != undefined) {
+                                $('#user-data').scrollTop(0);
+                                $('#settings-container-section').hide();
+                            }
+                        }
+                    },
+                    'keydown' : function(e) {
+                        if(e.key.toLowerCase() == "escape" && $('#settings-container-section').css('display') == 'block') {
+                            $('#user-data').scrollTop(0);
+                            $('#settings-container-section').hide();
+                        }
+                    }
+                }, null);
             });
         },
         _slideToggle: function(element) {
@@ -1097,17 +1114,31 @@ var Util = {
             var data = {};
             $(fieldClasses).each(function(i, e) {
                 $(e).each(function(i, e) {
-                    data[$(e).attr('name')] = $(e).val();
+                    var value = $(e).val();
+                    if(value) {
+                        data[$(e).attr('name')] = value;
+                    }
                 });
             });
             this._saveData(JSON.stringify(data));
         },
         _saveData: function(data) {
+            var _self = this;
             $.doAjax({url: '/ajax/update', data: 'action=user&id=' + parseInt(window._uid) + '&data=' + data}, true, null)
             .done(function(jqXHR, status, req) {
-                //var response = $.parseJSON(jqXHR);
-                console.log(jqXHR);
+                if(jqXHR) {
+                    var response = $.parseJSON(jqXHR);
+                    if(response.hasOwnProperty('success')) {
+                        console.log('a');
+                    } else {
+                        _self._handleError(response.error, Object.keys(response.error)[0]);
+                    }
+                }
+                $('#spinner').css('display', 'none');
             });
+        },
+        _handleError: function(error, errorType) {
+            $('#password-update > #password-error').css('display', 'flex').find('span:first').text(error.password);
         }
     });
 })(jQuery);
@@ -1124,7 +1155,7 @@ var Util = {
                             'element'   : '#confirm-deletion',
                             'frames'    : '8'
                         });
-                        $("#user-data").animate({scrollTop: $(window).height()}, "slow");
+                        $("#user-data").animate({scrollTop: $(window).height() + 2000}, "slow");
                     });
                     $('#confirm-deletion > #buttons > #yes').click(function() {
                         $.doAjax({url: '/ajax/delete-account', data: 'id=' + parseInt(window._uid)}, true, null)
