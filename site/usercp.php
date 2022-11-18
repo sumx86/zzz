@@ -51,6 +51,22 @@
         }
 
         /*
+         * Validate that the user with id $userID has password $password
+         */
+        public static function validatePassword($password, $userID) {
+            global $language_config;
+            global $lang;
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select password from users where id = ?", [$userID], true, DB::ALL_ROWS);
+            if( _Array::size($result) > 0 ) {
+                if(password_verify($password, $result[0]['password'])) {
+                    return true;
+                }
+            }
+            self::$errors['password'] = $language_config[$lang]['login-errors']['wrong-p'];
+            return false;
+        }
+
+        /*
          * Determine if the provided email exists
          */
         public static function validateEmail($req, $data) {
@@ -153,6 +169,21 @@
         public static function email_exists($email) {
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where email = ?", [$email], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
+        }
+
+        /*
+         * Check if a given email already exists in the database
+         */
+        public static function email_exists2($email) {
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select id from users where email = ?", [$email], true, DB::ALL_ROWS);
+            if(_Array::size($result) > 0) {
+                if(intval($result[0]['id']) == Server::retrieve_session('user', 'id')) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /*

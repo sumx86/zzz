@@ -166,10 +166,12 @@
             </div>
 
             <?php
-                $userData    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank from users where id = ?", [$userID], true, DB::ALL_ROWS);
+                $userData    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank, location from users where id = ?", [$userID], true, DB::ALL_ROWS);
 
                 $username    = Str::htmlEnt(Str::replace_all_quotes($userData[0]['username'], true));
                 $displayName = Str::htmlEnt(Str::replace_all_quotes($userData[0]['display_name'], true));
+                $location    = Str::htmlEnt(Str::replace_all_quotes($userData[0]['location'], true));
+                $email       = Str::htmlEnt(Str::replace_all_quotes($userData[0]['email'], true));
                 $userRank    = Util::get_rank($userData[0]['user_rank']);
                 $userImage   = Str::htmlEnt($userData[0]['image']);
                 
@@ -193,7 +195,7 @@
                         </div>
                     </div>
                     <input type="color" id="color" name="color" value="#e66465" style='position: absolute; visibility: hidden; left: 11%; top: 20%;'>
-                    <label for="color" style='position: absolute; width: 30px; height: 30px; cursor: pointer; border-radius: 100px; left: 12%; top: 25%;'><i class="material-icons" style='color: white;'>palette</i></label>
+                    <label for="color" style='position: absolute; width: 30px; height: 30px; cursor: pointer; border-radius: 100px; left: 10.3%; top: 25%;'><i class="material-icons" style='color: white;'>palette</i></label>
                 </div>
                 <div id='bottom-navbar'>
                     <?php
@@ -219,6 +221,12 @@
                     ?>
                 </div>
             </div>
+            
+            <div id='user-info-container'>
+                <span id='email'><i class='fa fa-envelope'></i> &nbsp;<?php echo $email; ?></span>
+                <span id='location'><i class='fa fa-map-marker' style='font-size: 1.1em;'></i> &nbsp;&nbsp;<?php echo $location; ?></span>
+            </div>
+
             <div id='user-image-preview-container'>
                 <div id='inner' data-gr>
                     <div id='top' data-gr>
@@ -234,7 +242,7 @@
             <?php
                 if($isLogin) {
                     if($userID == Server::retrieve_session('user', 'id')) {
-                        echo "<div id='settings-container-section'>
+                        echo "<div id='settings-container-section' data-gr>
                             <div id='exit-section'>
                                 <i class='fa fa-times'></i>
                             </div>
@@ -254,7 +262,8 @@
                                             <i class='fa fa-edit'></i>
                                         </div>
                                     </div>
-            
+
+                                    <i class='fa fa-spinner fa-spin' id='spinner' style='position: absolute; display: none; top: 70%; left: 10%; font-size: 3.5em; color: white;'></i>
                                     <button id='confirm-changes'>".$language_config[$lang]['save-details']."</button>
             
                                     <div id='user-data'>
@@ -274,10 +283,10 @@
                                                 </div>
                                                 <div id='display-name-field-container' class='cnt'>
                                                     <span>Ново показно име</span>
-                                                    <input type='text' name='display-name' id='display-name-field' class='overall-info-field' value='".$displayName."'>
+                                                    <input type='text' name='display_name' id='display-name-field' class='overall-info-field' value='".$displayName."'>
                                                 </div>
                                             </div>
-                                            <div id='password-update' class='basic-info-section' data-slide-px='300px' data-initial-px='65px'>
+                                            <div id='password-update' class='basic-info-section' data-slide-px='360px' data-initial-px='65px'>
                                                 <div class='icon'>
                                                     <i class='fa fa-key'></i>
                                                 </div>
@@ -289,16 +298,19 @@
                                                 </div>
                                                 <div id='password-update-field-container' class='cnt'>
                                                     <span id='current-password-text'>Текуща парола</span>
-                                                    <input type='password' name='password-update' id='password-update-field' class='overall-info-field'>
+                                                    <input type='password' name='current_password' id='password-update-field' class='overall-info-field'>
             
                                                     <span id='new-password-text'>Нова парола</span>
-                                                    <input type='password' name='new-password-update' id='new-password-update-field' class='overall-info-field'>
+                                                    <input type='password' name='new_password_update' id='new-password-update-field' class='overall-info-field'>
             
                                                     <span id='new-password-confirm-text'>Потвърди новата парола</span>
-                                                    <input type='password' name='confirm-password-update' id='confirm-password-update-field' class='overall-info-field'>
+                                                    <input type='password' name='confirm_password_update' id='confirm-password-update-field' class='overall-info-field'>
+                                                </div>
+                                                <div id='password-error'>
+                                                    <span>Паролите не съвпадат!</span>
                                                 </div>
                                             </div>
-                                            <div id='email-update' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
+                                            <div id='email-update' class='basic-info-section' data-slide-px='230px' data-initial-px='65px'>
                                                 <div class='icon'>
                                                     <i class='fa fa-envelope'></i>
                                                 </div>
@@ -310,7 +322,10 @@
                                                 </div>
                                                 <div id='email-field-container' class='cnt'>
                                                     <span>Нов имейл</span>
-                                                    <input type='text' name='emaill' id='emaill-field' class='overall-info-field' placeholder='email@mail.com'>
+                                                    <input type='text' name='emaill' id='emaill-field' class='overall-info-field' placeholder='email@mail.com' value='".$email."'>
+                                                </div>
+                                                <div id='email-error'>
+                                                    <span>Вече съществува такъв имейл!</span>
                                                 </div>
                                             </div>
                                             <div id='location-update' class='basic-info-section' data-slide-px='180px' data-initial-px='65px'>
@@ -325,7 +340,7 @@
                                                 </div>
                                                 <div id='location-field-container' class='cnt'>
                                                     <span>Местоположение</span>
-                                                    <input type='text' name='location' id='location-field' class='overall-info-field' placeholder='Sofia, Bulgaria'>
+                                                    <input type='text' name='location' id='location-field' class='overall-info-field' placeholder='Sofia, Bulgaria' value='".$location."'>
                                                 </div>
                                             </div>
                                         </div>

@@ -84,7 +84,8 @@
 
             'login-errors' => [
                 'empty' => 'Това поле е задължително!',
-                'wrong-u-p' => 'Грешен потребител / парола!'
+                'wrong-u-p' => 'Грешен потребител / парола!',
+                'wrong-p'   => 'Паролата е невалидна!'
             ],
             'register-errors' => [
                 'empty-username'      => 'Полето за потребителско име е празно!',
@@ -226,9 +227,10 @@
             'filter-genre' => 'Filter',
             'empty-fields' => 'Not all fields are filled!',
             'platform-not-specified' => 'Must choose a platform!',
-            'login-errors' => [
-                'empty' => 'This field is required!',
-                'wrong-u-p' => 'Wrong username / password!'
+            'login-errors'  => [
+                'empty'     => 'This field is required!',
+                'wrong-u-p' => 'Wrong username / password!',
+                'wrong-p'   => 'Invalid password!'
             ],
             'register-errors' => [
                 'empty-username'      => 'Username field is required!',
