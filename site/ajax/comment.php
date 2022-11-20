@@ -157,12 +157,13 @@
         $commentBluePrint = [
             'comment'  => [
                 'text' => '',
-                'username' => '',
-                'user_id'  => 0,
-                'likes'    => '',
-                'date'     => '',
-                'item_id'  => 0,
+                'username'   => '',
+                'user_id'    => 0,
+                'likes'      => '',
+                'date'       => '',
+                'item_id'    => 0,
                 'comment_id' => 0,
+                'image'      => '',
                 'reply-meta' => $language_config[$lang]['reply'],
                 'delete' => false,
                 'edit'   => false
@@ -173,10 +174,11 @@
         foreach($commentsDBResult as $comment) {
             $commentID = $comment['comment_id'];
             $commentUsername = $comment['comment_by'];
-            $userID        = $comment['comment_by_id'];
-            $commentDate   = $comment['comment_date'];
-            $commentLikes  = $comment['comment_likes'];
-            $commentItemID = $comment['item_id'];
+            $userID          = $comment['comment_by_id'];
+            $commentDate     = $comment['comment_date'];
+            $commentLikes    = $comment['comment_likes'];
+            $commentItemID   = $comment['item_id'];
+            $image           = $comment['image'];
 
             // Store the $commendID in the $commentIDList to now in the future that it was already processed
             if(!in_array($commentID, $commentIDList)) {
@@ -186,12 +188,13 @@
                 foreach($commentsDBResult as $_comment) {
                     if($_comment['comment_id'] == $commentID) {
                         $commentBluePrint['comment']['text'] .= $_comment['comment'];
-                        $commentBluePrint['comment']['username']   = Str::htmlEnt(Str::replace_all_quotes($commentUsername, true), ENT_QUOTES, 'UTF-8');
+                        $commentBluePrint['comment']['username']   = Str::htmlEnt(Str::replace_all_quotes($commentUsername, true));
                         $commentBluePrint['comment']['likes']      = intval($commentLikes);
                         $commentBluePrint['comment']['item_id']    = intval($commentItemID);
                         $commentBluePrint['comment']['comment_id'] = intval($commentID);
                         $commentBluePrint['comment']['user_id']    = intval($userID);
-                        $commentBluePrint['comment']['date']       = Str::htmlEnt($commentDate, ENT_QUOTES, 'UTF-8');
+                        $commentBluePrint['comment']['date']       = Str::htmlEnt($commentDate);
+                        $commentBluePrint['comment']['image']      = Str::htmlEnt(Str::replace_all_quotes($image));
 
                         if(Server::is_active_session('user')) {
                             if(Server::retrieve_session('user', 'id') == $userID) {

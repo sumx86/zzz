@@ -160,13 +160,17 @@
         }
 
         if(property_exists($data, 'emaill')) {
+            $error = false;
             $email = Str::replace_all_quotes($data->emaill);
+
             if(UserCP::email_exists2($email)) {
                 Response::throw_json_string(["error" => ['email' => $language_config[$lang]['register-errors']['existing-email']]]);
-                return;
+                $error = true;
             }
-            $query = 'update users set email = ? where id = ?';
-            $db->rawQuery($query, [$email, $userID], false);
+            if(!$error) {
+                $query = 'update users set email = ? where id = ?';
+                $db->rawQuery($query, [$email, $userID], false);
+            }
         }
 
         if(property_exists($data, 'location')) {
@@ -182,6 +186,7 @@
                 if(Str::equal($newPassword1, $newPassword2)) {
                     $query = 'update users set password = ? where id = ?';
                     $db->rawQuery($query, [password_hash($newPassword1, PASSWORD_BCRYPT), $userID], false);
+                    Response::throw_json_string(["success" => '']);
                 } else {
                     Response::throw_json_string(["error" => ['password' => $language_config[$lang]['register-errors']['passwords-match']]]);
                 }

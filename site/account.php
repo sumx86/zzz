@@ -219,12 +219,44 @@
                                   </div>";
                         }
                     ?>
+                    <div id='stats'>
+                        <div class='stat' id='followings'>
+                            <div class='top'>
+                                <span>Следвания</span>
+                            </div>
+                            <div class='bottom'>
+                                <span>1000</span>
+                                <div class='line'></div>
+                            </div>
+                        </div>
+                        <div class='stat' id='followers'>
+                            <div class='top'>
+                                <span>Последователи</span>
+                            </div>
+                            <div class='bottom'>
+                                <span>1000</span>
+                                <div class='line'></div>
+                            </div>
+                        </div>
+                        <div class='stat' id='likes'>
+                            <div class='top'>
+                                <span>Харесвания</span>
+                            </div>
+                            <div class='bottom'>
+                                <span>1000</span>
+                                <div class='line'></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div id='user-info-container'>
-                <span id='email'><i class='fa fa-envelope'></i> &nbsp;<?php echo $email; ?></span>
-                <span id='location'><i class='fa fa-map-marker' style='font-size: 1.1em;'></i> &nbsp;&nbsp;<?php echo $location; ?></span>
+                <!--<span id='email'><i class='fa fa-envelope'></i> &nbsp;<?php echo $email; ?></span>
+                <span id='location'><i class='fa fa-map-marker' style='font-size: 1.1em;'></i> &nbsp;&nbsp;<?php echo $location; ?></span> -->
+                <div id='top'>
+                    <span>Basic info</span>
+                </div>
             </div>
 
             <div id='user-image-preview-container'>

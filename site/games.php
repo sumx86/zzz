@@ -235,7 +235,9 @@
                                     'iso'           => $item['link']
                                 ]);
 
-                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".Str::htmlEnt(Str::replace_all_quotes($item['name'], true))."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-uploaderid=".$item['uploader_id']." data-metadata='".$gameMetadata."'>
+                                $uploaderImage = Str::htmlEnt(Str::replace_all_quotes($item['uploader_image'], true));
+
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".Str::htmlEnt(Str::replace_all_quotes($item['name'], true))."' data-uploader='".Str::htmlEnt($item['uploader'])."' data-uploaderid=".$item['uploader_id']." data-uploader-image='".$uploaderImage."' data-metadata='".$gameMetadata."'>
                                     <div class='cover ".$platform."-cover'>
                                         <img src='\\ps-classics\\img\\collection\\".$platform."\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                                     </div>
@@ -276,7 +278,9 @@
                                     'platforms'     => $item['platforms']
                                 ]);
 
-                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".Str::htmlEnt(Str::replace_all_quotes($item['name'], true))."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-uploaderid=".$item['uploader_id']." data-metadata='".$gameMetadata."'>
+                                $uploaderImage = Str::htmlEnt(Str::replace_all_quotes($item['uploader_image'], true));
+
+                                echo "<div class='collection-item ".intval($item['id'])."' data-name='".Str::htmlEnt(Str::replace_all_quotes($item['name'], true))."' data-uploader='".htmlentities($item['uploader'], ENT_QUOTES, 'UTF-8')."' data-uploaderid=".$item['uploader_id']." data-uploader-image='".$uploaderImage."' data-metadata='".$gameMetadata."'>
                                     <div class='cover ".$platform."'>
                                         <img src='\\ps-classics\\img\\collection\\".$platform."\\".htmlentities($item['cover'], ENT_QUOTES, 'UTF-8')."'>
                                     </div>
