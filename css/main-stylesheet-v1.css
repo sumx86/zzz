@@ -3434,11 +3434,11 @@ footer {
 
 #bottom-navbar {
     position: absolute;
-    width: 75%;
+    width: 70%;
     height: 6%;
-    left: 21%;
+    left: 25%;
     top: 26.5%;
-    border-bottom: 2px solid rgb(85, 85, 85);
+    border-bottom: 1px solid #2f394d;
     background-color: transparent;
 }
 
@@ -3459,6 +3459,87 @@ footer {
     position: absolute;
     top: 15%;
     color: black;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#bottom-navbar > #stats {
+    position: relative;
+    width: 52%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#bottom-navbar > #stats > .stat {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#bottom-navbar > #stats > .stat > .top {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 50%;
+    padding-left: 18px;
+    padding-right: 18px;
+    background-color: transparent;
+}
+
+#bottom-navbar > #stats > .stat > .bottom {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 50%;
+    padding-left: 18px;
+    padding-right: 18px;
+    background-color: transparent;
+}
+
+#bottom-navbar > #stats > .stat > .bottom > .line {
+    position: absolute;
+    width: 80px;
+    height: 50%;
+    top: 50%;
+    border-bottom: 1px solid #2ed660;
+    background-color: transparent;
+}
+
+#bottom-navbar > #stats > #followers {
+   
+}
+
+#bottom-navbar > #stats > #likes {
+    
+}
+
+#bottom-navbar > #stats > .stat > .top > span {
+    position: relative;
+    color: white;
+    top: 10%;
+    font-size: 1em;
+    font-family: 'Roboto-Bold', 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#bottom-navbar > #stats > .stat > .bottom > span {
+    position: relative;
+    color: rgb(192, 192, 192);
+    top: 10%;
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     -webkit-user-select: none;
@@ -4813,7 +4894,7 @@ footer {
 
 #email-update > #email-error {
     position: relative;
-    display: flex;
+    display: none;
     justify-content: center;
     width: 60%;
     height: 40px;
@@ -4873,10 +4954,32 @@ footer {
 #user-info-container {
     position: absolute;
     width: 13%;
-    height: 40%;
-    left: 17.2%;
+    height: 20%;
+    left: 15.7%;
     top: 35%;
+    border: 1px solid #2f394d;
+    border-radius: 5px;
     background-color: transparent;
+}
+
+#user-info-container > #top {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 35px;
+    border-bottom: 1px solid #2f394d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #161d28;
+}
+
+#user-info-container > #top > span {
+    position: absolute;
+    margin-top: 7px;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #82a0db;
 }
 
 #user-info-container > #email {
