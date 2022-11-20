@@ -625,6 +625,7 @@ var Util = {
 
                     // METADATA START
                     var metadata = $.parseJSON($(this).attr('data-metadata'));
+                    $('#item-information > #inner > #uploader  > #image > img:first').attr('src', $(this).attr('data-uploader-image'));
                     $('#item-information > #inner > #uploader  > #display-name > span:first').text($(this).attr('data-uploader'));
                     $('#item-information > #inner > #game-info > #release-date > span').eq(1).find('span:first').text(metadata['release-dates']);
                     $('#item-information > #inner > #game-info > #genre        > span').eq(1).find('span:first').text(metadata['genres']);
@@ -685,7 +686,7 @@ var Util = {
                 var html = "<div class='comment-box x"+commentsData[i]['comment']['user_id']+" box-"+commentsData[i]['comment']['comment_id']+"' data-fl-idx="+i+" data-cbox="+commentsData[i]['comment']['comment_id']+">\
                     <div class='inner'>\
                         <div class='user-pic'>\
-                            <img src='\\ps-classics\\img\\—Pngtree—halloween pumpkin sticker_6787055.png'>\
+                            <img src='"+commentsData[i]['comment']['image']+"'>\
                         </div>\
                         <div class='comment-info-top'>\
                             <div class='username info'>\
@@ -1120,6 +1121,7 @@ var Util = {
                     }
                 });
             });
+            this._resetErrors();
             this._saveData(JSON.stringify(data));
         },
         _saveData: function(data) {
@@ -1127,18 +1129,35 @@ var Util = {
             $.doAjax({url: '/ajax/update', data: 'action=user&id=' + parseInt(window._uid) + '&data=' + data}, true, null)
             .done(function(jqXHR, status, req) {
                 if(jqXHR) {
-                    var response = $.parseJSON(jqXHR);
-                    if(response.hasOwnProperty('success')) {
+                    var errors = {
+                        'email'    : new RegExp("\"email\":\"(.+)(\"}}.*)", "g").exec(jqXHR),
+                        'password' : new RegExp("\"password\":\"(.+)(\"}}.*)", "g").exec(jqXHR)
+                    };
+                    if(jqXHR.indexOf('{"success":') != -1) {
                         console.log('a');
                     } else {
-                        _self._handleError(response.error, Object.keys(response.error)[0]);
+                        _self._handleErrors(errors);
                     }
                 }
                 $('#spinner').css('display', 'none');
             });
         },
-        _handleError: function(error, errorType) {
-            $('#password-update > #password-error').css('display', 'flex').find('span:first').text(error.password);
+        _handleErrors: function(errors) {
+            var _self = this;
+            $(Object.keys(errors)).each(function(index, key) {
+                var match = errors[key];
+                if(match) {
+                    var text = match[1].indexOf("\"}}") != -1
+                             ? match[1].substring(0, match[1].indexOf("\"}}"))
+                             : match[1];
+
+                    $('#'+key+'-update > #'+key+'-error').css('display', 'flex').find('span:first').text(text);
+                }
+            });
+        },
+        _resetErrors: function() {
+            $('#email-update > #email-error').hide().find('span:first').text('');
+            $('#password-update > #password-error').hide().find('span:first').text('');
         }
     });
 })(jQuery);
