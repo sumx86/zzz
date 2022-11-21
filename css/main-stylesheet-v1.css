@@ -3318,6 +3318,9 @@ footer {
 
 
 
+
+
+
 #game-filters-container {
     position: absolute;
     display: none;
@@ -3335,6 +3338,12 @@ footer {
 
 
 
+
+
+
+
+/* ACCOUNT PAGE USER SECTION START */
+/*####################################################################################################*/
 #user-section {
     position: absolute;
     width: 100%;
@@ -3434,9 +3443,8 @@ footer {
 
 #bottom-navbar {
     position: absolute;
-    width: 70%;
+    width: 100%;
     height: 6%;
-    left: 25%;
     top: 26.5%;
     border-bottom: 1px solid #2f394d;
     background-color: transparent;
@@ -3446,7 +3454,7 @@ footer {
     position: absolute;
     display: flex;
     justify-content: center;
-    width: 9%;
+    width: 7.5%;
     height: 61%;
     left: 87%;
     top: 18%;
@@ -3472,13 +3480,14 @@ footer {
     position: relative;
     width: 52%;
     height: 100%;
+    left: 25%;
     background-color: transparent;
 }
 
 #bottom-navbar > #stats > .stat {
     position: relative;
     display: inline-block;
-    width: auto;
+    width: 100px;
     height: 100%;
     background-color: transparent;
     cursor: pointer;
@@ -3508,11 +3517,16 @@ footer {
 
 #bottom-navbar > #stats > .stat > .bottom > .line {
     position: absolute;
-    width: 80px;
+    display: none;
+    width: 100%;
     height: 50%;
     top: 50%;
     border-bottom: 1px solid #2ed660;
     background-color: transparent;
+}
+
+#bottom-navbar > #stats > .stat:nth-child(1) > .bottom > .line {
+    display: block;
 }
 
 #bottom-navbar > #stats > #followers {
@@ -3548,10 +3562,6 @@ footer {
     -o-user-select: none;
     user-select: none;
 }
-
-
-
-
 
 #bottom-navbar > #inbox-button {
     position: absolute;
@@ -3602,6 +3612,19 @@ footer {
     color: white;
     font-size: 1.4em;
 }
+/* ACCOUNT PAGE USER SECTION END*/
+/*####################################################################################################*/
+
+
+
+
+
+
+
+
+
+
+
 
 #settings-container-section {
     position: absolute;
@@ -4951,57 +4974,14 @@ footer {
     color: #82a0db;
 }
 
-#user-info-container {
+#main-info-panel {
     position: absolute;
-    width: 13%;
-    height: 20%;
-    left: 15.7%;
-    top: 35%;
-    border: 1px solid #2f394d;
-    border-radius: 5px;
-    background-color: transparent;
-}
-
-#user-info-container > #top {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 35px;
-    border-bottom: 1px solid #2f394d;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color: #161d28;
-}
-
-#user-info-container > #top > span {
-    position: absolute;
-    margin-top: 7px;
-    font-size: 1em;
-    font-family: 'prototype', 'Jura-Bold', sans-serif;
-    color: #82a0db;
-}
-
-#user-info-container > #email {
-    position: absolute;
-    margin-top: 13px;
-    left: 10%;
-    font-size: 1em;
-    font-family: 'Roboto-Bold', Arial, sans-serif;
-    color: white;
-}
-
-#user-info-container > #location {
-    position: absolute;
-    margin-top: 48px;
-    left: 10%;
-    font-size: 1em;
-    font-family: 'Roboto-Bold', Arial, sans-serif;
-    color: white;
-}
-
-#user-info-container > span > i {
-    color: #8b949e;
+    width: 80%;
+    height: 70%;
+    top: 33%;
+    left: 20%;
+    border-radius: 2px;
+    background-color: rgb(14, 18, 31);
 }
 
 
