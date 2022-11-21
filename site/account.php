@@ -66,6 +66,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#moon-img').css({'top': '-120px'});
+            //======================================================================================
             $('#user-image').click(function() {
                 var src   = $(this).find('img:first').attr('src');
                 var image = $('#user-image-preview-container > #inner > #image-preview > img');
@@ -74,6 +75,7 @@
                 $('#user-image-preview-container').css('display', 'block');
                 Util.rescaleImage(image);
             });
+            //======================================================================================
             $('#exit-profile-pic').click(function() {
                 Util.userImageHidePreview();
             });
@@ -167,7 +169,6 @@
 
             <?php
                 $userData    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank, location from users where id = ?", [$userID], true, DB::ALL_ROWS);
-
                 $username    = Str::htmlEnt(Str::replace_all_quotes($userData[0]['username'], true));
                 $displayName = Str::htmlEnt(Str::replace_all_quotes($userData[0]['display_name'], true));
                 $location    = Str::htmlEnt(Str::replace_all_quotes($userData[0]['location'], true));
@@ -202,7 +203,7 @@
                         if($isLogin) {
                             if($userID != Server::retrieve_session('user', 'id')) {
                                 echo "<div id='follow-button' class='cx-x-".$userID."'>
-                                          <span><i class='fa fa-user'></i> Follow</span>
+                                          <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['follow']."</span>
                                       </div>";
                             } else {
                                 echo "<div id='inbox-button'>
@@ -215,48 +216,44 @@
                             }
                         } else {
                             echo "<div id='follow-button' class='cx-x-".$userID."'>
-                                      <span><i class='fa fa-user'></i> Follow</span>
+                                      <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['follow']."</span>
                                   </div>";
                         }
                     ?>
+                    <?php
+                        $data = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select followers, following, likes from users where id = ?", [$userID], true, DB::ALL_ROWS);
+                    ?>
                     <div id='stats'>
-                        <div class='stat' id='followings'>
+                        <div class='stat' id='followings' data-section='#followings-section'>
                             <div class='top'>
-                                <span>Следвания</span>
+                                <span><?php echo $language_config[$lang]['following']; ?></span>
                             </div>
                             <div class='bottom'>
-                                <span>1000</span>
+                                <span><?php echo $data[0]['following']; ?></span>
                                 <div class='line'></div>
                             </div>
                         </div>
-                        <div class='stat' id='followers'>
+                        <div class='stat' id='followers' data-section='#followers-section'>
                             <div class='top'>
-                                <span>Последователи</span>
+                                <span><?php echo $language_config[$lang]['followers']; ?></span>
                             </div>
                             <div class='bottom'>
-                                <span>1000</span>
+                                <span><?php echo $data[0]['followers']; ?></span>
                                 <div class='line'></div>
                             </div>
                         </div>
-                        <div class='stat' id='likes'>
+                        <div class='stat' id='likes' data-section='#likes-section'>
                             <div class='top'>
-                                <span>Харесвания</span>
+                                <span><?php echo $language_config[$lang]['likes']; ?></span>
                             </div>
                             <div class='bottom'>
-                                <span>1000</span>
+                                <span><?php echo $data[0]['likes']; ?></span>
                                 <div class='line'></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div id='user-info-container'>
-                <!--<span id='email'><i class='fa fa-envelope'></i> &nbsp;<?php echo $email; ?></span>
-                <span id='location'><i class='fa fa-map-marker' style='font-size: 1.1em;'></i> &nbsp;&nbsp;<?php echo $location; ?></span> -->
-                <div id='top'>
-                    <span>Basic info</span>
-                </div>
+                <div id='main-info-panel'></div>
             </div>
 
             <div id='user-image-preview-container'>
@@ -271,6 +268,7 @@
                     </div>
                 </div>
             </div>
+
             <?php
                 if($isLogin) {
                     if($userID == Server::retrieve_session('user', 'id')) {
@@ -542,6 +540,25 @@
                 days: 365
             }
         );
+    });
+    $('#bottom-navbar > #stats > .stat').click(function(e) {
+        var self = $(this);
+        $('#bottom-navbar > #stats > .stat').each(function(index, element) {
+            var id = $(element).attr('id');
+            if(self.attr('id') != id) {
+                $(element).find('.bottom > .line').fadeOut('fast');
+                $($(element).attr('data-section')).hide();
+            }
+        });
+        self.find('.bottom > .line').fadeIn('fast');
+    });
+</script>
+<script type='text/javascript'>
+    $(document).ready(function() {
+        var lang = cookieUtil.get('lang');
+        if(lang != 'en') {
+            $('#bottom-navbar > #stats > .stat').css('width', '150px');
+        }
     });
 </script>
 <footer>

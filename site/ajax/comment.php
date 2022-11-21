@@ -73,9 +73,10 @@
                     $comment       = Str::splitfixed(Str::replace_all_quotes($comment), 200);
 
                     $displayName = Server::retrieve_session('user', 'display_name');
+                    $userImage   = Str::replace_all_quotes(Server::retrieve_session('user', 'image'));
                     $userID      = intval(Server::retrieve_session('user', 'id'));
 
-                    UserCP::post_comment($comment, $newCommentID, $gameID, $displayName, $userID, Util::get_current_date_and_time(false));
+                    UserCP::post_comment($comment, $newCommentID, $gameID, $displayName, $userID, $userImage, Util::get_current_date_and_time(false));
                     UserCP::increment_comments($gameID);
                     Response::throw_json_string(["success" => '']);
                 }
@@ -134,10 +135,10 @@
 
                 if(!Str::is_empty($comment)) {
                     $comment = Str::splitfixed(Str::replace_all_quotes($comment), 200);
-                    UserCP::update_comment($comment, $commentID, intval(Server::retrieve_session('user', 'id')), Util::get_current_date_and_time(false));
+                    UserCP::update_comment($comment, $commentID, $userID, Util::get_current_date_and_time(false));
                     Response::throw_json_string(
                         ["success" => [
-                            "text" => utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true)),
+                            "text" => Str::htmlEnt(utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true))),
                             'item' => $commentID]
                         ]
                     );
@@ -194,7 +195,7 @@
                         $commentBluePrint['comment']['comment_id'] = intval($commentID);
                         $commentBluePrint['comment']['user_id']    = intval($userID);
                         $commentBluePrint['comment']['date']       = Str::htmlEnt($commentDate);
-                        $commentBluePrint['comment']['image']      = Str::htmlEnt(Str::replace_all_quotes($image));
+                        $commentBluePrint['comment']['image']      = Str::htmlEnt(Str::replace_all_quotes($image, true));
 
                         if(Server::is_active_session('user')) {
                             if(Server::retrieve_session('user', 'id') == $userID) {

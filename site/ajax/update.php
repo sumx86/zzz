@@ -68,8 +68,10 @@
                 $gameID = intval($data->item);
                 if(!UserCP::hasRatedGame($userID, $gameID, 'like')) {
                     UserCP::rateGame($userID, $gameID, 'like');
+                    UserCP::increment_likes($userID);
                 } else {
                     UserCP::unrateGame($userID, $gameID, 'like');
+                    UserCP::decrement_likes($userID);
                 }
                 $successData['item_type'] = 'game';
                 $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select likes from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
@@ -156,7 +158,11 @@
 
         if(property_exists($data, 'display_name')) {
             $query = 'update users set display_name = ? where id = ?';
-            $db->rawQuery($query, [Str::replace_all_quotes($data->display_name), $userID], false);
+            $displayName = Str::replace_all_quotes($data->display_name);
+            
+            $db->rawQuery($query, [$displayName, $userID], false);
+            // update the session's display_name too
+            Server::set_session_data('user', 'display_name', $displayName);
         }
 
         if(property_exists($data, 'emaill')) {

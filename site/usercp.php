@@ -217,8 +217,12 @@
 
 
 
+        
 
 
+
+        // GAME RATING
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
         /*
          * Check if a $userId has rated (liked or favourited) a $gameID
          */
@@ -264,8 +268,52 @@
             }
             self::$dbInstance->rawQuery($query, [$gameID, $gameID, $userId], false, false, true);
         }
+        // GAME RATING
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
+
+
+
+
+        // INCREMENT / DECREMENT LIKES AND FOLLOWINGS
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*
+         * Increment the game likes or the user with id $userID
+         */
+        public static function increment_likes($userID) {
+            self::$dbInstance->rawQuery("update users set likes=likes+1 where id=?", [$userID], false, false, true);
+        }
+
+        /*
+         * Decrement the game likes or the user with id $userID
+         */
+        public static function decrement_likes($userID) {
+            self::$dbInstance->rawQuery("update users set likes=likes-1 where id=?", [$userID], false, false, true);
+        }
+
+        /*
+         * Increment the followings of user $userID
+         */
+        public static function increment_followings($userID) {
+            self::$dbInstance->rawQuery("update users set following=following+1 where id=?", [$userID], false, false, true);
+        }
+
+        /*
+         * Decrement the followings of user $userID
+         */
+        public static function decrement_followings($userID) {
+            self::$dbInstance->rawQuery("update users set following=following-1 where id=?", [$userID], false, false, true);
+        }
+        // INCREMENT / DECREMENT LIKES AND FOLLOWINGS
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        
 
 
 
@@ -296,10 +344,10 @@
         /*
          * Post a comment
          */
-        public static function post_comment($comment, $commentID, $gameID, $username, $userID, $date) {
+        public static function post_comment($comment, $commentID, $gameID, $username, $userID, $userImage, $date) {
             // $comment is an array of strings
             foreach($comment as $commentText) {
-                self::$dbInstance->rawQuery("insert into comments (comment, item_id, comment_by, comment_by_id, comment_date, comment_id) values (?, ?, ?, ?, ?, ?)", [$commentText, $gameID, $username, $userID, $date, $commentID], false, false, true);
+                self::$dbInstance->rawQuery("insert into comments (comment, item_id, comment_by, comment_by_id, comment_date, comment_id, image) values (?, ?, ?, ?, ?, ?, ?)", [$commentText, $gameID, $username, $userID, $date, $commentID, $userImage], false, false, true);
             }
         }
 
