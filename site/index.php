@@ -77,6 +77,15 @@
                 }
             }, null);
 
+            $._on('#ghost-img', null, {
+                'mouseenter' : function() {
+                    $(this).attr('src', '\\ps-classics\\img\\adb\\White Ghost 1.png');
+                },
+                'mouseleave' : function() {
+                    $(this).attr('src', '\\ps-classics\\img\\adb\\Asset 8.png');
+                }
+            }, null);
+
             $._on('.register-input', null, {
                 'focus' : function(e) {
                     var field = $(e.target);
@@ -254,13 +263,13 @@
                 <i class='fa fa-arrow-down'></i>
             </div>
             <div id='bottom'>
-                <div id='members-redirect' class='inactive-circle'>
                     <?php
                         if($theme == 'halloween') {
-                            echo "<img src='\ps-classics\img\pngegg.png'>";
+                            echo "<img id='ghost-img' src='\ps-classics\img\adb\Asset 8.png' style='position: absolute; width: 75px; height: 125px; top: 35%; cursor: pointer;' onclick=\"$.redirect('/members?page=1');\">";
+                        } else {
+                            echo "<div id='members-redirect' class='inactive-circle' style='border-radius: 100%;'></div>";
                         }
                     ?>
-                </div>
             </div>
         </div>
 
@@ -278,10 +287,10 @@
             <img src='\ps-classics\img\halloween-u.png'>
         </div>
         <?php
-            if($theme == 'halloween') {
+            /*if($theme == 'halloween') {
                 echo "<span id='halloween-web-left'>W</span>
                       <span id='halloween-web-right'>W</span>";
-            }
+            }*/
         ?>
     </div>
     <div id='emulators'>

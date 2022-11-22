@@ -166,6 +166,20 @@
             <div id='page-under-development'>
                 <span><?php echo $language_config[$lang]['under-development']; ?></span>
             </div>
+            
+            <?php
+                if($theme == 'halloween') {
+                    echo "<div id='ghost-1' class='ghost-img' style='position: absolute; width: 150px; height: 140px; top: 3%; left: 5%;'>
+                            <img src='\ps-classics\img\adb\Asset 1.png' style='position: absolute; width: 100%; height: 100%;'>
+                        </div>
+                        
+                        <div id='ghost-2' class='ghost-img' style='position: absolute; width: 150px; height: 140px; top: 3%; left: 87%;transform: scaleX(-1);'>
+                            <img src='\ps-classics\img\adb\Asset 1.png' style='position: absolute; width: 100%; height: 100%;'>
+                        </div>";
+                }
+            ?>
+            
+            
 
             <?php
                 $userData    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank, location from users where id = ?", [$userID], true, DB::ALL_ROWS);
