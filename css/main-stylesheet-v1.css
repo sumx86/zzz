@@ -1049,13 +1049,14 @@ body {
     height: 120px;
     top: 45%;
     cursor: pointer;
+    opacity: 0;
 }
 
 #members-redirect-container > #bottom > #members-redirect > img {
     position: absolute;
-    width: 70%;
-    height: 75%;
-    top: 9%;
+    width: 95%;
+    height: 95%;
+    top: 2.5%;
 }
 
 
@@ -2802,6 +2803,7 @@ body {
     left: 19.3%;
     border-radius: 100%;
     cursor: pointer;
+    opacity: 0;
 }
 
 .active-circle {
@@ -3443,7 +3445,7 @@ footer {
 #bottom-navbar {
     position: absolute;
     width: 100%;
-    height: 6%;
+    height: 49px;
     top: 26.5%;
     border-bottom: 1px solid #2f394d;
     background-color: transparent;
@@ -4975,13 +4977,119 @@ footer {
 
 #main-info-panel {
     position: absolute;
-    width: 80%;
+    width: 100%;
     height: 70%;
     top: 33%;
-    left: 20%;
     border-radius: 2px;
-    background-color: rgb(14, 18, 31);
+    background-color: #090c14;
 }
+
+
+
+
+
+
+
+
+#side-info-panel {
+    position: absolute;
+    width: 20%;
+    height: 400px;
+    top: 3%;
+    left: 1%;
+    border-radius: 2px;
+    background-color: transparent; /* green */
+}
+
+#side-info-panel > #top {
+    width: 100%;
+    height: 60px;
+    border-radius: 2px;
+    background-color: transparent;
+}
+
+#side-info-panel > #top > #inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #111624;
+}
+
+#side-info-panel > #top > #inner > #display-name {
+    position: absolute;
+    font-size: 1.5em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+}
+
+#side-info-panel > #top > #inner > #joined-date {
+    position: absolute;
+    font-size: 0.9em;
+    top: 32px;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #b7bdc9;
+}
+
+
+
+
+#side-info-panel > #mid {
+    width: 100%;
+    height: 90px;
+    border-radius: 2px;
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+#side-info-panel > #mid > #inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background-color: #111624;
+}
+
+
+
+
+#side-info-panel > #bottom {
+    width: 100%;
+    height: 90px;
+    border-radius: 2px;
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+#side-info-panel > #bottom > #inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background-color: #111624;
+}
+
+#side-info-panel > #bottom > #inner > #location {
+    position: absolute;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+}
+
+#side-info-panel > #bottom > #inner > #email {
+    position: absolute;
+    font-size: 1em;
+    top: 32px;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #b7bdc9;
+}
+
 
 
 
