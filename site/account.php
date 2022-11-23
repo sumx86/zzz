@@ -200,14 +200,14 @@
                         <div id='user-image' data-gr>
                             <img src='<?php echo $userImage; ?>' data-gr>
                         </div>
-                        <div id='user-info'>
+                        <!--<div id='user-info'>
                             <div id='username'>
                                 <span><?php echo $displayName; ?></span>
                             </div>
                             <div id='rank'>
                                 <span><?php echo $userRank; ?></span>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <input type="color" id="color" name="color" value="#e66465" style='position: absolute; visibility: hidden; left: 11%; top: 20%;'>
                     <label for="color" style='position: absolute; width: 30px; height: 30px; cursor: pointer; border-radius: 100px; left: 10.3%; top: 25%;'><i class="material-icons" style='color: white;'>palette</i></label>
@@ -267,7 +267,27 @@
                         </div>
                     </div>
                 </div>
-                <div id='main-info-panel'></div>
+                <div id='main-info-panel'>
+                    <div id='side-info-panel'>
+                        <div id='top'>
+                            <div id='inner'>
+                                <span id='display-name'><?php echo $displayName; ?></span>
+                                <span id='joined-date'>Joined: 25/10/2022</span>
+                            </div>
+                        </div>
+                        <div id='mid'>
+                            <div id='inner'>
+                                <span id='bio'>Aside from being awesome, I'm super mega awesome hahahahaahahahah!</span>
+                            </div>
+                        </div>
+                        <div id='bottom'>
+                            <div id='inner'>
+                                <span id='location'>Madrid, Spain</span>
+                                <span id='email'>somemail@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id='user-image-preview-container'>

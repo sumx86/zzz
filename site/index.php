@@ -101,6 +101,8 @@
                 }
             }, null);
             $('#moon-img').animate({'top': '15px'}, 1000);
+
+            $('#collection-redirect-container, #members-redirect').animate({'opacity': '1'}, 800);
         });
     </script>
 </head>
@@ -267,7 +269,7 @@
                         if($theme == 'halloween') {
                             echo "<img id='ghost-img' src='\ps-classics\img\adb\Asset 8.png' style='position: absolute; width: 75px; height: 125px; top: 35%; cursor: pointer;' onclick=\"$.redirect('/members?page=1');\">";
                         } else {
-                            echo "<div id='members-redirect' class='inactive-circle' style='border-radius: 100%;'></div>";
+                            echo "<div id='members-redirect' class='inactive-circle' style='border-radius: 100%;'><img src='\ps-classics\img\adb\black face 2 (2).png'></div>";
                         }
                     ?>
             </div>
