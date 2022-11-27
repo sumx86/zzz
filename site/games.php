@@ -28,7 +28,7 @@
         'db' => $db
     ]);
     //UserCP::setDB($db);
-    //UserCP::move_game('Alice: Madness');
+    //UserCP::move_game('Tomb Raider 2013');
     //echo Util::transform_links("Here is a link [link]https://example1.com[/link], \nand one more [link]https://example2.com[/link] is the next");
 ?>
 <!DOCTYPE html>

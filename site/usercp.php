@@ -308,6 +308,20 @@
         public static function decrement_followings($userID) {
             self::$dbInstance->rawQuery("update users set following=following-1 where id=?", [$userID], false, false, true);
         }
+
+        /*
+         * Increment the followers of user $userID
+         */
+        public static function increment_followers($userID) {
+            self::$dbInstance->rawQuery("update users set followers=followers+1 where id=?", [$userID], false, false, true);
+        }
+
+        /*
+         * Decrement the followers of user $userID
+         */
+        public static function decrement_followers($userID) {
+            self::$dbInstance->rawQuery("update users set followers=followers-1 where id=?", [$userID], false, false, true);
+        }
         // INCREMENT / DECREMENT LIKES AND FOLLOWINGS
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -417,15 +431,16 @@
             $link          = utf8_encode(Str::replace_all_quotes($metadata['game-iso']));
             $platform      = Str::replace_all_quotes($metadata['platform']);
 
-            $cover      = $filename;
-            $uploader   = Server::retrieve_session('user', 'username');
-            $uploaderID = intval(Server::retrieve_session('user', 'id'));
-            $date       = Util::get_current_date_and_time(true);
+            $cover         = $filename;
+            $uploader      = Str::replace_all_quotes(Server::retrieve_session('user', 'display_name'));
+            $uploaderID    = intval(Server::retrieve_session('user', 'id'));
+            $uploaderImage = Str::replace_all_quotes(Server::retrieve_session('user', 'image'));
+            $date          = Util::get_current_date_and_time(true);
 
             self::$dbInstance->rawQuery("insert into pending_uploads
-                                        (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, release_dates, platforms, date) values
-                                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                                        [$name, $platform, $cover, $uploader, $uploaderID, $link, $genres, $developers, $publishers, $release_dates, $platforms, $date],
+                                        (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, release_dates, platforms, date, uploader_image) values
+                                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                        [$name, $platform, $cover, $uploader, $uploaderID, $link, $genres, $developers, $publishers, $release_dates, $platforms, $date, $uploaderImage],
                                         false, false, false);
         }
 
@@ -446,7 +461,7 @@
         }
 
         public static function move_game($gameName) {
-            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("insert into games (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates) select name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates from pending_uploads where name like '".$gameName."%'", false, false, false);
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("insert into games (name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates, uploader_image) select name, platform, cover, uploader, uploader_id, link, genres, developers, publishers, platforms, release_dates, uploader_image from pending_uploads where name like '".$gameName."%'", false, false, false);
         }
 
         /*
@@ -487,5 +502,32 @@
             self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from rated_comments where liked_by_user_id = ? or favourited_by_user_id = ?", [$userID, $userID], false, false);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+        // DELETION STUFF
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static function is_followed_by_user($followedUserID, $followerID) {
+            $isFollowed = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from followings where followed_user_id = ? and followed_by_user_id = ?", [$followedUserID, $followerID], true, DB::ALL_ROWS);
+            return $isFollowed;
+        }
+
+        public static function follow_user($data) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("insert into followings (followed_user_id, followed_username, followed_by_user_id, followed_by_username, follower_image) values (?, ?, ?, ?, ?)", [$data['followed_user_id'], $data['followed_username'], $data['followed_by_user_id'], $data['followed_by_username'], $data['follower_image']], false, false, false);
+        }
+
+        public static function unfollow_user($followedUserID, $followerID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from followings where followed_user_id = ? and followed_by_user_id = ?", [$followedUserID, $followerID], true, DB::ALL_ROWS);
+        }
+
+        public static function get_username_by_id($userID) {
+            $data = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select username from users where id = ?", [$userID], true, DB::ALL_ROWS);
+            return $data[0]['username'];
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 ?>

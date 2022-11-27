@@ -79,10 +79,10 @@
 
             $._on('#ghost-img', null, {
                 'mouseenter' : function() {
-                    $(this).attr('src', '\\ps-classics\\img\\adb\\White Ghost 1.png');
+                    $(this).attr('src', '\\ps-classics\\img\\adb\\Asset 8.png');
                 },
                 'mouseleave' : function() {
-                    $(this).attr('src', '\\ps-classics\\img\\adb\\Asset 8.png');
+                    $(this).attr('src', '\\ps-classics\\img\\adb\\White Ghost 1.png');
                 }
             }, null);
 
@@ -267,7 +267,7 @@
             <div id='bottom'>
                     <?php
                         if($theme == 'halloween') {
-                            echo "<img id='ghost-img' src='\ps-classics\img\adb\Asset 8.png' style='position: absolute; width: 75px; height: 125px; top: 35%; cursor: pointer;' onclick=\"$.redirect('/members?page=1');\">";
+                            echo "<img id='ghost-img' src='\ps-classics\img\adb\White Ghost 1.png' style='position: absolute; width: 75px; height: 125px; top: 35%; cursor: pointer;' onclick=\"$.redirect('/members?page=1');\">";
                         } else {
                             echo "<div id='members-redirect' class='inactive-circle' style='border-radius: 100%;'><img src='\ps-classics\img\adb\black face 2 (2).png'></div>";
                         }

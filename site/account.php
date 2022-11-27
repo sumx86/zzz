@@ -97,7 +97,9 @@
                 Util.clearFields('.social-media-input-field');
                 $('#settings-container-section').hide();
             });
-            window._uid = <?php echo $userID; ?>;
+            window._uid  = <?php echo $userID; ?>;
+            window._lang = '<?php echo $lang; ?>';
+            window._isLogin = <?php echo $isLogin ? 1 : 0; ?>;
         });
     </script>
 </head>
@@ -169,11 +171,11 @@
             
             <?php
                 if($theme == 'halloween') {
-                    echo "<div id='ghost-1' class='ghost-img' style='position: absolute; width: 150px; height: 140px; top: 3%; left: 5%;'>
+                    echo "<div id='ghost-1' class='ghost-img' style='position: absolute; width: 100px; height: 100px; top: 3%; left: 3%;'>
                             <img src='\ps-classics\img\adb\Asset 1.png' style='position: absolute; width: 100%; height: 100%;'>
                         </div>
                         
-                        <div id='ghost-2' class='ghost-img' style='position: absolute; width: 150px; height: 140px; top: 3%; left: 87%;transform: scaleX(-1);'>
+                        <div id='ghost-2' class='ghost-img' style='position: absolute; width: 100px; height: 100px; top: 3%; left: 92%;transform: scaleX(-1);'>
                             <img src='\ps-classics\img\adb\Asset 1.png' style='position: absolute; width: 100%; height: 100%;'>
                         </div>";
                 }
@@ -210,15 +212,21 @@
                         </div> -->
                     </div>
                     <input type="color" id="color" name="color" value="#e66465" style='position: absolute; visibility: hidden; left: 11%; top: 20%;'>
-                    <label for="color" style='position: absolute; width: 30px; height: 30px; cursor: pointer; border-radius: 100px; left: 10.3%; top: 25%;'><i class="material-icons" style='color: white;'>palette</i></label>
+                    <label for="color" style='position: absolute; width: 30px; height: 30px; cursor: pointer; border-radius: 100px; left: 9.5%; top: 25%;'><i class="material-icons" style='color: white;'>palette</i></label>
                 </div>
                 <div id='bottom-navbar'>
                     <?php
                         if($isLogin) {
                             if($userID != Server::retrieve_session('user', 'id')) {
-                                echo "<div id='follow-button' class='cx-x-".$userID."'>
-                                          <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['follow']."</span>
-                                      </div>";
+                                if(UserCP::is_followed_by_user($userID, Server::retrieve_session('user', 'id'))) {
+                                    echo "<div class='unfollow cx-x-".$userID."'>
+                                              <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['unfollow']."</span>
+                                          </div>";
+                                } else {
+                                    echo "<div class='follow-button cx-x-".$userID."'>
+                                            <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['follow']."</span>
+                                        </div>";
+                                }
                             } else {
                                 echo "<div id='inbox-button'>
                                         <span><i class='fa fa-envelope-o'></i> Inbox</span>
@@ -229,13 +237,14 @@
                                       </div>";
                             }
                         } else {
-                            echo "<div id='follow-button' class='cx-x-".$userID."'>
+                            echo "<div class='follow-button cx-x-".$userID."'>
                                       <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['follow']."</span>
                                   </div>";
                         }
                     ?>
                     <?php
-                        $data = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select followers, following, likes from users where id = ?", [$userID], true, DB::ALL_ROWS);
+                        $data    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select followers, following, likes from users where id = ?", [$userID], true, DB::ALL_ROWS);
+                        $uploads = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select count(*) as count from games where uploader_id = ?", [$userID], true, DB::ALL_ROWS);
                     ?>
                     <div id='stats'>
                         <div class='stat' id='followings' data-section='#followings-section'>
@@ -265,6 +274,15 @@
                                 <div class='line'></div>
                             </div>
                         </div>
+                        <div class='stat' id='uploads' data-section='#uploads-section'>
+                            <div class='top'>
+                                <span><?php echo $language_config[$lang]['uploads']; ?></span>
+                            </div>
+                            <div class='bottom'>
+                                <span><?php echo $uploads[0]['count']; ?></span>
+                                <div class='line'></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id='main-info-panel'>
@@ -272,7 +290,7 @@
                         <div id='top'>
                             <div id='inner'>
                                 <span id='display-name'><?php echo $displayName; ?></span>
-                                <span id='joined-date'>Joined: 25/10/2022</span>
+                                <span id='joined-date'><?php echo $language_config[$lang]['joined']; ?>: 25/10/2022</span>
                             </div>
                         </div>
                         <div id='mid'>
@@ -282,9 +300,55 @@
                         </div>
                         <div id='bottom'>
                             <div id='inner'>
-                                <span id='location'>Madrid, Spain</span>
+                                <span id='location'>Varna, Bulgaria</span>
                                 <span id='email'>somemail@gmail.com</span>
                             </div>
+                        </div>
+                    </div>
+                    <div id='followers'>
+                        <div id='top'>
+                            <div id='inner'>
+                                <span><?php echo $language_config[$lang]['followers']; ?> <span style="font-family: 'Roboto-Regular', 'prototype', 'Jura-Bold', sans-serif;">( <?php echo $followers; ?> )</span></span>
+                            </div>
+                        </div>
+                        <div id='inner'>
+                            <?php
+                                $followers = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from followings where followed_user_id = ? limit 3", [$userID], true, DB::ALL_ROWS);
+                                if(_Array::size($followers) > 0) {
+                                    foreach($followers as $follower) {
+                                        $followerImage = Str::htmlEnt(Str::replace_all_quotes($follower['follower_image'], true));
+                                        $followerName  = Str::htmlEnt(Str::replace_all_quotes($follower['followed_by_username'], true));
+                                        $followerID    = intval($follower['followed_by_user_id'], true);
+
+                                        $text = $language_config[$lang]['follow'];
+                                        if($isLogin) {
+                                            if(UserCP::is_followed_by_user($followerID, Server::retrieve_session('user', 'id'))) {
+                                                $text = $language_config[$lang]['unfollow'];
+                                            } else {
+                                                $text = $language_config[$lang]['follow'];
+                                            }
+                                        }
+                                        
+                                        echo "<div class='follower' data-uid='".$followerID."'>
+                                                <div class='inner image'>
+                                                    <img src='".$followerImage."'>
+                                                </div>
+                                                <div class='inner username'>
+                                                    <div class='inner'>
+                                                        <span>".$followerName."</span>
+                                                    </div>
+                                                </div>
+                                                <div class='inner check'>
+                                                    <div class='inner'>
+                                                        <div class='follow-button cx-x-".$followerID."'>
+                                                            <span><i class='fa fa-user'></i> ".$text."</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>";
+                                    }
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -593,6 +657,12 @@
         if(lang != 'en') {
             $('#bottom-navbar > #stats > .stat').css('width', '150px');
         }
+        $('.follower').each(function(i, e) {
+            var follower = $(e);
+            follower.find('.username > .inner > span, .image').click(function() {
+                $.redirect('/account/uid/' + follower.attr('data-uid'));
+            });
+        });
     });
 </script>
 <footer>
