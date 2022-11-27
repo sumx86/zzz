@@ -3354,9 +3354,9 @@ footer {
 
 #user-section > #inner {
     position: absolute;
-    width: 70%;
+    width: 80%;
     height: 92%;
-    left: 15%;
+    left: 10%;
     top: 4%;
     border-radius: 10px;
     background-color: transparent; /* #04070a */
@@ -3451,20 +3451,27 @@ footer {
     background-color: transparent;
 }
 
-#bottom-navbar > #follow-button {
+
+
+
+
+
+
+
+#bottom-navbar > .follow-button {
     position: absolute;
     display: flex;
     justify-content: center;
-    width: 7.5%;
+    width: 6.5%;
     height: 61%;
-    left: 87%;
+    left: 90%;
     top: 18%;
     border-radius: 3px;
     background-color: #96afff;
     cursor: pointer;
 }
 
-#bottom-navbar > #follow-button > span {
+#bottom-navbar > .follow-button > span {
     position: absolute;
     top: 15%;
     color: black;
@@ -3476,6 +3483,45 @@ footer {
     -o-user-select: none;
     user-select: none;
 }
+
+
+
+
+
+
+
+
+.unfollow {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 6.5%;
+    height: 61%;
+    left: 90%;
+    top: 18%;
+    border-radius: 3px;
+    background-color: #1b3146; /* #96afff */
+    cursor: pointer;
+}
+
+.unfollow > span {
+    position: absolute;
+    top: 15%;
+    color: rgb(252, 86, 3);
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+
+
+
+
 
 #bottom-navbar > #stats {
     position: relative;
@@ -3568,9 +3614,9 @@ footer {
     position: absolute;
     display: flex;
     justify-content: center;
-    width: 9%;
+    width: 6.5%;
     height: 61%;
-    left: 84%;
+    left: 89%;
     top: 18%;
     border-radius: 3px;
     background-color: #1b3146; /* #96afff */
@@ -4993,10 +5039,10 @@ footer {
 
 #side-info-panel {
     position: absolute;
-    width: 20%;
+    width: 17%;
     height: 400px;
     top: 3%;
-    left: 1%;
+    left: 1.5%;
     border-radius: 2px;
     background-color: transparent; /* green */
 }
@@ -5037,6 +5083,7 @@ footer {
 
 
 #side-info-panel > #mid {
+    display: none;
     width: 100%;
     height: 90px;
     border-radius: 2px;
@@ -5058,6 +5105,7 @@ footer {
 
 
 #side-info-panel > #bottom {
+    display: none;
     width: 100%;
     height: 90px;
     border-radius: 2px;
@@ -5092,6 +5140,139 @@ footer {
 
 
 
+
+
+
+#main-info-panel > #followers {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    height: 370px;
+    left: 79%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #top {
+    position: absolute;
+    width: 70%;
+    height: 35px;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #top > #inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #top > #inner > span {
+    position: relative;
+    font-size: 0.95em;
+    top: 30%;
+    font-family: 'Roboto-Regular', 'prototype', 'Jura-Bold', sans-serif;
+    color: white;
+}
+
+#main-info-panel > #followers > #inner {
+    position: absolute;
+    width: 95%;
+    height: 240px;
+    top: 39px;
+    border-left: 1px solid #38445c;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #inner > .follower {
+    width: 95%;
+    height: 70px;
+    margin-left: 2.5%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #inner > .follower > .inner {
+    position: relative;
+    display: inline-block;
+}
+
+#main-info-panel > #followers > #inner > .follower > .image {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-color: black;
+    cursor: pointer;
+}
+
+#main-info-panel > #followers > #inner > .follower > .image > img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+#main-info-panel > #followers > #inner > .follower > .username {
+    width: 43%;
+    height: 92%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #inner > .follower > .username > .inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #inner > .follower > .username > .inner > span {
+    position: absolute;
+    font-size: 1.1em;
+    top: 20px;
+    left: 10px;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #c8c3bc;
+    cursor: pointer;
+}
+
+#main-info-panel > #followers > #inner > .follower > .check {
+    width: 27%;
+    height: 92%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #inner > .follower > .check > .inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#main-info-panel > #followers > #inner > .follower > .check > .inner > .follow-button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: -30%;
+    width: 100%;
+    height: 40%;
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#main-info-panel > #followers > #inner > .follower > .check > .inner > .follow-button > span {
+    position: absolute;
+    font-size: 0.8em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    color: #c8c3bc;
+    top: 18%;
+}
 
 
 
