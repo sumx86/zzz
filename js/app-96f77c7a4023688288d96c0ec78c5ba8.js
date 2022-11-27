@@ -29,6 +29,16 @@ var globalSettings = {
         'acc': '/account/uid/',
         'members': '/members',
         'sign': '/sign-in'
+    },
+    lang : {
+        'bg' : {
+            'follow'   : 'Следвай',
+            'unfollow' : 'Спри'
+        },
+        'en' : {
+            'follow'   : 'Follow',
+            'unfollow' : 'Unfollow'          
+        }
     }
 };
 
@@ -1052,9 +1062,42 @@ var Util = {
 (function($) {
     $.initCall('user-follow-module', {
         initialize: function() {
+            var _self = this;
             $(document).ready(function() {
-                $('#follow-button').click(function() {
-                    $.doAjax({url: '/ajax/followuser', data: ''}, true, null)
+                $('.follow-button, .unfollow').click(function() {
+                    if(window._isLogin) {
+                        var button = $(this);
+                        $.doAjax({url: '/ajax/followuser', data: 'data=' + JSON.stringify({'id':$(this).attr('class').split('-').pop()})}, true, null)
+                        .done(function(jqXHR, status, req) {
+                            if(jqXHR) {
+                                var response = $.parseJSON(jqXHR);
+                                if(response.hasOwnProperty('success')) {
+                                    _self._toggleButton(button);
+                                }
+                            }
+                        });
+                    } else {
+                        $.redirect('/sign-in');
+                    }
+                });
+            });
+        },
+        _toggleButton: function(button) {
+            var buttonClass = button.attr('class').split(' ');
+            if(buttonClass[0] == 'follow-button') {
+                button.attr('class', 'unfollow ' + buttonClass[1]).find('span:first').html("<i class='fa fa-user'></i> " + globalSettings.lang[window._lang]['unfollow']);
+            } else {
+                button.attr('class', 'follow-button ' + buttonClass[1]).find('span:first').html("<i class='fa fa-user'></i> " + globalSettings.lang[window._lang]['follow']);
+            }
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('user-blocking-module', {
+        initialize: function() {
+            $(document).ready(function() {
+                $('.block-user-button, .unblock-user-button').click(function() {
+                    $.doAjax({url: '/ajax/block', data: 'data=' + JSON.stringify({'id':$(this).attr('class').split('-').pop()})}, true, null)
                     .done(function(jqXHR, status, req) {
                         console.log(jqXHR);
                     });
