@@ -100,6 +100,12 @@
             window._uid  = <?php echo $userID; ?>;
             window._lang = '<?php echo $lang; ?>';
             window._isLogin = <?php echo $isLogin ? 1 : 0; ?>;
+
+            var followersInner = $('#followers > #inner');
+            if(followersInner.find('#no-followers').length > 0) {
+                followersInner.css('height', '100px');
+                $('#main-info-panel > #followers').css('height', '170px');
+            }
         });
     </script>
 </head>
@@ -347,6 +353,8 @@
                                                 </div>
                                             </div>";
                                     }
+                                } else {
+                                    echo "<div id='no-followers'><span>".$language_config[$lang]['no-followers']."</span></div>";
                                 }
                             ?>
                         </div>
