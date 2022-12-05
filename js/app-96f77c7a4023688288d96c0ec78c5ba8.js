@@ -1108,6 +1108,8 @@ var Util = {
 })(jQuery);
 (function($) {
     $.initCall('user-settings', {
+        _imageSelected: false,
+
         initialize: function() {
             var _self = this;
             $(document).ready(function() {
@@ -1117,7 +1119,7 @@ var Util = {
                 });
                 $('#confirm-changes').click(function() {
                     $('#spinner').css('display', 'block');
-                    _self._saveAccountSettings(['.overall-info-field', '.social-media-input-field']);
+                    _self._saveAccountSettings(['.overall-info-field', '.social-media-input-field'], _self._imageSelected);
                 });
                 $._on(document, null, {
                     'click' : function(e) {
@@ -1154,7 +1156,7 @@ var Util = {
                     break;
             }
         },
-        _saveAccountSettings: function(fieldClasses) {
+        _saveAccountSettings: function(fieldClasses, imageSelected) {
             var data = {};
             $(fieldClasses).each(function(i, e) {
                 $(e).each(function(i, e) {
