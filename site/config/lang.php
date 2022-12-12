@@ -147,7 +147,9 @@
             'account-deletion'  => 'Изтриването на акаунта е необратима стъпка и всички данни ще бъдат изтрити',
 
             'unblock-user'      => 'Отблокирай',
-            'delete-account-confirmation' => 'Изтриване за постоянно ?'
+            'delete-account-confirmation' => 'Изтриване за постоянно ?',
+            'profile-picture-update' => 'Смяна на профилната',
+            'crop' => 'Изрежи'
         ],
         'en' => [
             'home'    => 'Home',
@@ -296,7 +298,9 @@
             'account-deletion'  => 'Once you delete your account, there is no going back. Please be certain.',
 
             'unblock-user'      => 'Unblock user',
-            'delete-account-confirmation' => 'Delete account permanently ?'
+            'delete-account-confirmation' => 'Delete account permanently ?',
+            'profile-picture-update' => 'Update profile picture',
+            'crop' => 'Crop image'
         ]
     );
 ?>

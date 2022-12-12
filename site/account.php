@@ -249,7 +249,7 @@
                         }
                     ?>
                     <?php
-                        $data    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select followers, following, likes from users where id = ?", [$userID], true, DB::ALL_ROWS);
+                        $data    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select followers, following, likes, registration_date from users where id = ?", [$userID], true, DB::ALL_ROWS);
                         $uploads = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select count(*) as count from games where uploader_id = ?", [$userID], true, DB::ALL_ROWS);
                     ?>
                     <div id='stats'>
@@ -296,7 +296,7 @@
                         <div id='top'>
                             <div id='inner'>
                                 <span id='display-name'><?php echo $displayName; ?></span>
-                                <span id='joined-date'><?php echo $language_config[$lang]['joined']; ?>: 25/10/2022</span>
+                                <span id='joined-date'><?php echo $language_config[$lang]['joined']; ?>: <?php echo $data[0]['registration_date']; ?></span>
                             </div>
                         </div>
                         <div id='mid'>
@@ -602,8 +602,14 @@
                                             
                                     echo "
                                     </div>
+                                    <div id='image-cropper-container'>
+                                        <button id='crop-result'>".$language_config[$lang]['crop']."</button>
+                                    </div>
                                 </div>
                             </div>
+                            <form id='upload-image-form'>
+                                <input type='file' id='image-file' name='image-file' style='visibility: hidden;'>
+                            </form>
                         </div>";
                     }
                 }

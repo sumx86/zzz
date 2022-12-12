@@ -142,7 +142,7 @@
                 self::$errors[$passcField] = '';
                 return false;
             }
-            self::$dbInstance->rawQuery("insert into users (username, email, password, image, user_rank, display_name) values (?, ?, ?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image'], 2, Util::random_number(10)], false);
+            self::$dbInstance->rawQuery("insert into users (username, email, password, image, user_rank, display_name, registration_date) values (?, ?, ?, ?, ?, ?, ?)", [$username, $usermail, password_hash($req[$passField], PASSWORD_BCRYPT), $config['default-image'], 2, Util::random_number(10), Util::get_current_date_and_time(false)], false);
             return true;
         }
 
@@ -529,5 +529,8 @@
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        public static function update_image($newImage, $userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("update users set image = ? where id = ?", [$newImage, $userID], false, false, false);
+        }
     }
 ?>

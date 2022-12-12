@@ -14,9 +14,9 @@
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
 
-    $platform   = Str::getstr(Server::get_param('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
-    $search     = Str::replace_all_quotes(Server::get_param('search-game'));
-    $pageID     = intval(Server::get_param('page'));
+    $platform = Str::getstr(Server::get_param('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
+    $search   = Str::replace_all_quotes(Server::get_param('search-game'));
+    $pageID   = intval(Server::get_param('page'));
 
     $db         = new DB(false);
     $pagination = new Pagination([
