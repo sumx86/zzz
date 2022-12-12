@@ -615,11 +615,13 @@ var Util = {
             var self = this;
             $(document).on('preview-comments-load', this._loadComments.bind(this));
             $(document).ready(function() {
+                $(document).on('keydown', function(e) {
+                    if(e.key.toLowerCase() == 'escape' && $(self._previewContainer).css('display') != 'none') {
+                        self._hidePreview();
+                    }
+                });
                 $(self._exitElement).click(function() {
-                    $(self._previewContainer).css('display', 'none');
-                    $('.comment-box, .comment-edit-box, #scrolltop-caret').remove();
-                    $('#comment-section').css('display', 'none');
-                    $('#no-comments').css('display', 'none');
+                    self._hidePreview();
                 });
                 
                 $('.collection-item').click(function() {
@@ -665,6 +667,12 @@ var Util = {
                     $('#comment-submit').attr('data-item', id);
                 });
             });
+        },
+        _hidePreview: function() {
+            $(this._previewContainer).css('display', 'none');
+            $('.comment-box, .comment-edit-box, #scrolltop-caret').remove();
+            $('#comment-section').css('display', 'none');
+            $('#no-comments').css('display', 'none');
         },
         _loadComments: function(event, data) {
             var self = this;
@@ -966,7 +974,7 @@ var Util = {
         },
         _handleFileUpload: function() {
             var _self = this;
-            $(':file').on('change', function() {
+            $('#game-cover-file').on('change', function() {
                 _self._files = this.files;
                 _self._checkIsLegitFile(this.files);
                 if(_self._lastError != '') {
@@ -1232,6 +1240,47 @@ var Util = {
                         $('#confirm-deletion').hide();
                     });
                 });
+            });
+        }
+    });
+})(jQuery);
+(function($) {
+    $.initCall('update-user-image', {
+        initialize: function() {
+            var _self = this;
+            $(document).ready(function() {
+                $('#picture-section > #edit > i').click(function() {
+                    $('#image-file').click();
+                });
+                _self._handleFileUpload();
+                var imageCrop = $('#image-cropper-container').croppie({
+                    enableExif: true,
+                    viewport: { width: 300, height: 300 },
+                    boundary: { width: 500, height: 500 },
+                    showZoomer: true
+                });
+                imageCrop.croppie('bind', {
+                    url: '\\ps-classics\\img\\NicePng_halloween-png_46141.png'
+                });
+                $('#crop-result').click(function() {
+                    imageCrop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function(response) {
+                        _self._uploadImage(response);
+                    });
+                });
+            });
+        },
+        _handleFileUpload: function() {
+            $('#image-file').on('change', function() {
+                console.log('nice');
+            });
+        },
+        _uploadImage: function(data) {
+            $.doAjax({url: '/ajax/update-image', data: data}, true, null)
+            .done(function(jqXHR, status, req) {
+                
             });
         }
     });
