@@ -149,7 +149,15 @@
             'unblock-user'      => 'Отблокирай',
             'delete-account-confirmation' => 'Изтриване за постоянно ?',
             'profile-picture-update' => 'Смяна на профилната',
-            'crop' => 'Изрежи'
+            'crop' => 'Изрежи',
+            
+            'new-display-name'     => 'Ново показно име',
+
+            'current-password'     => 'Текуща парола',
+            'new-password'         => 'Нова парола',
+            'confirm-new-password' => 'Потвърди новата парола',
+
+            'new-email' => 'Нов имейл'
         ],
         'en' => [
             'home'    => 'Home',
@@ -300,7 +308,15 @@
             'unblock-user'      => 'Unblock user',
             'delete-account-confirmation' => 'Delete account permanently ?',
             'profile-picture-update' => 'Update profile picture',
-            'crop' => 'Crop image'
+            'crop' => 'Crop image',
+            
+            'new-display-name'     => 'New display name',
+
+            'current-password'     => 'Current password',
+            'new-password'         => 'New password',
+            'confirm-new-password' => 'Confirm new password',
+
+            'new-email' => 'New e-mail'
         ]
     );
 ?>

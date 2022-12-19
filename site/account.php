@@ -418,7 +418,7 @@
                                                     <span>".$language_config[$lang]['display-name-info']."</span>
                                                 </div>
                                                 <div id='display-name-field-container' class='cnt'>
-                                                    <span>Ново показно име</span>
+                                                    <span>".$language_config[$lang]['new-display-name']."</span>
                                                     <input type='text' name='display_name' id='display-name-field' class='overall-info-field' value='".$displayName."'>
                                                 </div>
                                             </div>
@@ -433,13 +433,13 @@
                                                     <span>".$language_config[$lang]['password-info']."</span>
                                                 </div>
                                                 <div id='password-update-field-container' class='cnt'>
-                                                    <span id='current-password-text'>Текуща парола</span>
+                                                    <span id='current-password-text'>".$language_config[$lang]['current-password']."</span>
                                                     <input type='password' name='current_password' id='password-update-field' class='overall-info-field'>
             
-                                                    <span id='new-password-text'>Нова парола</span>
+                                                    <span id='new-password-text'>".$language_config[$lang]['new-password']."</span>
                                                     <input type='password' name='new_password_update' id='new-password-update-field' class='overall-info-field'>
             
-                                                    <span id='new-password-confirm-text'>Потвърди новата парола</span>
+                                                    <span id='new-password-confirm-text'>".$language_config[$lang]['confirm-new-password']."</span>
                                                     <input type='password' name='confirm_password_update' id='confirm-password-update-field' class='overall-info-field'>
                                                 </div>
                                                 <div id='password-error'>
@@ -457,7 +457,7 @@
                                                     <span>".$language_config[$lang]['email-info']."</span>
                                                 </div>
                                                 <div id='email-field-container' class='cnt'>
-                                                    <span>Нов имейл</span>
+                                                    <span>".$language_config[$lang]['new-email']."</span>
                                                     <input type='text' name='emaill' id='emaill-field' class='overall-info-field' placeholder='email@mail.com' value='".$email."'>
                                                 </div>
                                                 <div id='email-error'>
@@ -475,7 +475,7 @@
                                                     <span>".$language_config[$lang]['location-info']."</span>
                                                 </div>
                                                 <div id='location-field-container' class='cnt'>
-                                                    <span>Местоположение</span>
+                                                    <span>".$language_config[$lang]['location']."</span>
                                                     <input type='text' name='location' id='location-field' class='overall-info-field' placeholder='Sofia, Bulgaria' value='".$location."'>
                                                 </div>
                                             </div>
