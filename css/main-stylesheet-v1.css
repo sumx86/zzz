@@ -5385,6 +5385,7 @@ footer {
 
 #image-cropper-container {
     position: absolute;
+    display: none;
     width: 75%;
     height: 95%;
     top: 3%;

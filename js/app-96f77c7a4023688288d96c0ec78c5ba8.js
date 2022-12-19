@@ -1278,9 +1278,9 @@ var Util = {
             });
         },
         _uploadImage: function(data) {
-            $.doAjax({url: '/ajax/update-image', data: data}, true, null)
+            $.doAjax({url: '/ajax/update-image', data: 'data=' + data}, true, null)
             .done(function(jqXHR, status, req) {
-                
+                console.log(jqXHR);
             });
         }
     });
