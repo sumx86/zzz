@@ -17,7 +17,7 @@
          * Initialize an associative array $dest with keys - the keys from the $src array
          * but with empty string values
          */
-        public static function initAssoc($src, &$dest) {
+        public static function init_assoc($src, &$dest) {
             if( sizeof($src, self::ARRAY_ASSOC) > 0 ) {
                 foreach( array_values($src) as $value ) {
                     $dest[$value] = '';
@@ -26,7 +26,7 @@
         }
 
         /***/
-        public static function assocLoop() {
+        public static function assoc_loop() {
 
         }
     }

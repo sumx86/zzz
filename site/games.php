@@ -16,16 +16,20 @@
 
     $platform = Str::getstr(Server::get_param('platform'), ['ps1', 'ps2', 'ps3'], 'ps2');
     $search   = Str::replace_all_quotes(Server::get_param('search-game'));
-    $pageID   = intval(Server::get_param('page'));
+    
+    $pageID = intval(Server::get_param('page'));
+    if($pageID <= 0) {
+        $pageID = 1;
+    }
 
     $db         = new DB(false);
     $pagination = new Pagination([
         'max-page-links' => 5,
         'max-page-items' => 27,
-        'current-page' => $pageID,
-        'table' => 'games',
-        'platform' => $platform,
-        'db' => $db
+        'current-page'   => $pageID,
+        'table'          => 'games',
+        'platform'       => $platform,
+        'db'             => $db
     ]);
     //UserCP::setDB($db);
     //UserCP::move_game('Tomb Raider 2013');

@@ -10,7 +10,7 @@ define('zdbname', 'psclassics');
 define('zuser', 'root');
 
 // database password
-define('zpassword', 'killua');
+define('zpassword', '');
 
 // database character set
 define('zcharset', 'utf8');

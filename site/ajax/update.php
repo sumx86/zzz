@@ -66,11 +66,11 @@
             case "game":
                 $userID = intval(Server::retrieve_session('user', 'id'));
                 $gameID = intval($data->item);
-                if(!UserCP::hasRatedGame($userID, $gameID, 'like')) {
-                    UserCP::rateGame($userID, $gameID, 'like');
+                if(!UserCP::has_rated_game($userID, $gameID, 'like')) {
+                    UserCP::rate_game($userID, $gameID, 'like');
                     UserCP::increment_likes($userID);
                 } else {
-                    UserCP::unrateGame($userID, $gameID, 'like');
+                    UserCP::unrate_game($userID, $gameID, 'like');
                     UserCP::decrement_likes($userID);
                 }
                 $successData['item_type'] = 'game';
@@ -83,10 +83,10 @@
             case "comment":
                 $userID    = intval(Server::retrieve_session('user', 'id'));
                 $commentID = intval($data->item);
-                if(!UserCP::hasRatedComment($userID, $commentID)) {
-                    UserCP::rateComment($userID, $commentID);
+                if(!UserCP::has_rated_comment($userID, $commentID)) {
+                    UserCP::rate_comment($userID, $commentID);
                 } else {
-                    UserCP::unrateComment($userID, $commentID);
+                    UserCP::unrate_comment($userID, $commentID);
                 }
                 $successData['item_type'] = 'comment';
                 $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select comment_likes from comments where comment_id = ? limit 1", [$commentID], true, DB::ALL_ROWS, true);
@@ -106,10 +106,10 @@
         if($data->item_type == 'game') {
             $userID = intval(Server::retrieve_session('user', 'id'));
             $gameID = intval($data->item);
-            if(!UserCP::hasRatedGame($userID, $gameID, 'favourite')) {
-                UserCP::rateGame($userID, $gameID, 'favourite');
+            if(!UserCP::has_rated_game($userID, $gameID, 'favourite')) {
+                UserCP::rate_game($userID, $gameID, 'favourite');
             } else {
-                UserCP::unrateGame($userID, $gameID, 'favourite');
+                UserCP::unrate_game($userID, $gameID, 'favourite');
             }
             $successData['item_type'] = 'game';
             $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select favourited from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
@@ -129,8 +129,8 @@
             $userID = intval(Server::retrieve_session('user', 'id'));
             $gameID = intval($data->item);
 
-            if(!UserCP::hasViewedGame($userID, $gameID)) {
-                UserCP::updateViews($userID, $gameID);
+            if(!UserCP::has_viewed_game($userID, $gameID)) {
+                UserCP::update_views($userID, $gameID);
                 $successData['item_type'] = 'game';
                 $successData['result'] = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select views from games where id = ?", [$gameID], true, DB::ALL_ROWS, true);
                 $successData['action'] = 'view';

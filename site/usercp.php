@@ -53,7 +53,7 @@
         /*
          * Validate that the user with id $userID has password $password
          */
-        public static function validatePassword($password, $userID) {
+        public static function validate_password($password, $userID) {
             global $language_config;
             global $lang;
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select password from users where id = ?", [$userID], true, DB::ALL_ROWS);
@@ -69,7 +69,7 @@
         /*
          * Determine if the provided email exists
          */
-        public static function validateEmail($req, $data) {
+        public static function validate_email($req, $data) {
             $emailField = $data['email'];
             global $language_config;
             global $lang;
@@ -226,7 +226,7 @@
         /*
          * Check if a $userId has rated (liked or favourited) a $gameID
          */
-        public static function hasRatedGame($userId, $gameID, $type) {
+        public static function has_rated_game($userId, $gameID, $type) {
             switch($type) {
                 case 'like':
                     $query = "select id from rated_games where liked_by_user_id=? and game_id=?";
@@ -242,7 +242,7 @@
         /*
          * Like / Favourite a game
          */
-        public static function rateGame($userId, $gameID, $type) {
+        public static function rate_game($userId, $gameID, $type) {
             switch($type) {
                 case 'like':
                     $query = "update games set likes=likes+1 where id=?; insert into rated_games (game_id, liked_by_user_id) values (?, ?)";
@@ -257,7 +257,7 @@
         /*
          * Remove a like / favourite for a game
          */
-        public static function unrateGame($userId, $gameID, $type) {
+        public static function unrate_game($userId, $gameID, $type) {
             switch($type) {
                 case 'like':
                     $query = "update games set likes=likes-1 where id=? and likes > 0; delete from rated_games where game_id=? and liked_by_user_id=?";
@@ -335,7 +335,7 @@
         /*
          * Check if a $userId has liked a $commentID
          */
-        public static function hasRatedComment($userId, $commentID) {
+        public static function has_rated_comment($userId, $commentID) {
             $query = "select id from rated_comments where liked_by_user_id=? and comment_id=?";
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$userId, $commentID], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
@@ -344,14 +344,14 @@
         /*
          * Give like to a comment
          */
-        public static function rateComment($userId, $commentID) {
+        public static function rate_comment($userId, $commentID) {
             self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes+1 where comment_id=?; insert into rated_comments (comment_id, liked_by_user_id) values (?, ?)", [$commentID, $commentID, $userId], false, false, true);
         }
 
         /*
          * Remove a like / favourite for a game
          */
-        public static function unrateComment($userId, $commentID) {
+        public static function unrate_comment($userId, $commentID) {
             self::$dbInstance->rawQuery("update comments set comment_likes=comment_likes-1 where comment_id=?; delete from rated_comments where comment_id=? and liked_by_user_id=?", [$commentID, $commentID, $userId], false, false, true);
         }
 
@@ -403,14 +403,14 @@
         /*
          * Increment the views count for a $gameID
          */
-        public static function updateViews($userID, $gameID) {
+        public static function update_views($userID, $gameID) {
             self::$dbInstance->rawQuery("update games set views=views+1 where id = ?; insert into viewed_games (game_id, viewed_by_user_id) values (?, ?)", [$gameID, $gameID, $userID], false, false, true);
         }
 
         /*
          * Check if the user has already viewed the game
          */
-        public static function hasViewedGame($userID, $gameID) {
+        public static function has_viewed_game($userID, $gameID) {
             $query = "select id from viewed_games where viewed_by_user_id=? and game_id=?";
             $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery($query, [$userID, $gameID], true, DB::ALL_ROWS);
             return _Array::size($result) > 0;
@@ -421,7 +421,7 @@
         /*
          * Add the information about the pending upload
          */
-        public static function addPendingUpload($filename, $metadata) {
+        public static function add_pending_upload($filename, $metadata) {
             $name          = utf8_encode(Str::replace_all_quotes($metadata['game-name']));
             $genres        = utf8_encode(Str::replace_all_quotes($metadata['game-genre']));
             $platforms     = utf8_encode(Str::replace_all_quotes($metadata['game-pltf']));
@@ -447,7 +447,7 @@
         /*
          * 
          */
-        public static function getLastUploadDate($username) {
+        public static function get_last_upload_date($username) {
             $date = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select max(date) as date from pending_uploads where uploader = ?", [$username], true, DB::ALL_ROWS);
             return $date;
         }
@@ -455,8 +455,8 @@
         /*
          * Check if 24 hours have passed since last upload by $username
          */
-        public static function expiredUploadTime($username) {
-            $uploadDate = self::getLastUploadDate($username)[0]['date'];
+        public static function expired_upload_time($username) {
+            $uploadDate = self::get_last_upload_date($username)[0]['date'];
             return (!is_null($uploadDate) && $uploadDate > 0) ? strtotime(Util::get_current_date_and_time(true)) - strtotime($uploadDate) >= 86400 : true;
         }
 

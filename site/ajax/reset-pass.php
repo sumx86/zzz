@@ -24,7 +24,7 @@
     } else {
         $db = new DB(false);
         UserCP::setDB($db);
-        if( !UserCP::validateEmail($_POST, $config['reset-pass-fields']) ) {
+        if( !UserCP::validate_email($_POST, $config['reset-pass-fields']) ) {
             Response::throw_json_string(
                 ['input-error' => UserCP::$errors]
             );

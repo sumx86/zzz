@@ -27,7 +27,7 @@
     $db = new DB(false);
     UserCP::setDB($db);
     // Check if 24 hours have passed since the last upload by this user
-    if(!UserCP::expiredUploadTime(Server::retrieve_session('user', 'username'))) {
+    if(!UserCP::expired_upload_time(Server::retrieve_session('user', 'username'))) {
         Response::throw_json_string(["error" => $language_config[$lang]['upload-time']]);
         return;
     }
@@ -65,7 +65,7 @@
         return;
     }
     // only one upload every 24 hours
-    UserCP::addPendingUpload(basename($engine->getUploadedFileName()), $metadata);
+    UserCP::add_pending_upload(basename($engine->get_uploaded_filename()), $metadata);
     Response::throw_json_string(['success' => $language_config[$lang]['upload-success']]);
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

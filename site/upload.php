@@ -63,7 +63,7 @@
             global $language_config;
             global $lang;
 
-            if(move_uploaded_file($this->file['tmp_name'], $this->generateNewFileName(20))) {
+            if(move_uploaded_file($this->file['tmp_name'], $this->generate_new_filename(20))) {
                 return true;
             }
             $this->error = $language_config[$lang]['upload-error'];
@@ -99,7 +99,7 @@
         /*
          * Generate the new file name
          */
-        public static function generateNewFileName($length) {
+        public static function generate_new_filename($length) {
             self::$filename = self::$destination . Crypt::generate_nonce(true, $length) . "." . self::$fileExtension;
             return self::$filename;
         }
@@ -156,7 +156,7 @@
         /*
          * Get the name of the uploaded file
          */
-        public function getUploadedFileName() {
+        public function get_uploaded_filename() {
             return self::$filename;
         }
     }
