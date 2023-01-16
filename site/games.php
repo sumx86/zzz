@@ -10,6 +10,22 @@
     require_once "pagination.php";
     require_once "usercp.php";
 
+    
+
+    //use \ConvertApi\ConvertApi;
+    //require_once "ConvertApi/ConvertApi.php";
+    // API Secret -> 6VF88dRM8PJ9EczW
+    // API Key    -> 686354341
+    //ConvertApi::setApiSecret('6VF88dRM8PJ9EczW');
+    //$result = ConvertApi::convert('jpg', [
+    //    'File' => '64_4x.webp',
+    //    ], 'webp'
+    //);
+    //$result->saveFiles('/ajax');
+
+
+
+
     $lang    = Server::get_request_cookie('lang',  ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
