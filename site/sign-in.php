@@ -50,6 +50,22 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#moon-img').css({'top': '10px'});
+
+            $._on('.input-field', null, {
+                'focus' : function(e) {
+                    var field = $(e.target);
+                    field.css('border-color', '#00cd89');
+                },
+                'blur' : function(e) {
+                    var field = $(e.target);
+                    var error = $('#' + field.attr('name') + '-error');
+                    if(error.css('display') == 'block') {
+                        field.css('border-color', 'rgb(161, 20, 67)');
+                    } else {
+                        field.css('border-color', '#738399'); 
+                    }
+                }
+            }, null);
         });
     </script>
 </head>

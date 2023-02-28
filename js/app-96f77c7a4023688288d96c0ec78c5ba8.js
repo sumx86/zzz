@@ -393,7 +393,11 @@ var Util = {
         },
         _handleError: function() {
             $("html, body").animate({scrollTop: 0}, "slow").promise().done(function() {
-                $('#comment-rate-warning').css('display', 'flex').delay(2000).hide('fast');
+                $('#comment-rate-warning').css('display', 'flex').delay(3000).hide('fast');
+
+                $('#comment-rate-warning').find('i:first').click(function() {
+                    $('#comment-rate-warning').stop().hide('fast');
+                });
             });
         }
     });
@@ -415,7 +419,11 @@ var Util = {
         },
         _handleError: function() {
             $("html, body").animate({scrollTop: 0}, "slow").promise().done(function() {
-                $('#comment-rate-warning').css('display', 'flex').delay(2000).hide('fast');
+                $('#comment-rate-warning').css('display', 'flex').delay(3000).hide('fast');
+
+                $('#comment-rate-warning').find('i:first').click(function() {
+                    $('#comment-rate-warning').stop().hide('fast');
+                });
             });
         }
     });
@@ -840,7 +848,11 @@ var Util = {
         _handleError: function(event, data) {
             var error = data.response.error;
             if(error == 'login') {
-                $('#account-login-first').css('display', 'flex').delay(2000).hide('fast');
+                $('#account-login-first').css('display', 'flex').delay(3000).hide('fast');
+                
+                $('#account-login-first').find('i:first').click(function() {
+                    $('#account-login-first').stop().hide('fast');
+                });
             }
         }
     });

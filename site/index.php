@@ -42,7 +42,10 @@
     <meta property="og:title" content="ps-classics" />
     <meta property="og:type" content="website" />
 
+
     <meta name="author" content="Antonio Drandarov - sumx86" />
+
+
     <!-- <meta name="description" content="" />
     <meta property="og:description" content="" />
     <link rel="canonical" href="https://" />
@@ -92,16 +95,34 @@
                     if(field.attr('id') == 'password-field') {
                         $('#password-requirements-tooltip').show('fast');
                     }
+                    field.css('border-color', '#00cd89');
                 },
                 'blur' : function(e) {
                     var field = $(e.target);
                     if(field.attr('id') == 'password-field') {
                         $('#password-requirements-tooltip').hide('fast');
                     }
+                    var error = $('#' + field.attr('name') + '-error');
+                    if(error.css('display') == 'flex') {
+                        field.css('border-color', 'rgb(161, 20, 67)');
+                    } else {
+                        field.css('border-color', '#738399'); 
+                    }
                 }
             }, null);
-            $('#moon-img').animate({'top': '15px'}, 1000);
+            
+            $._on('#search-game', null, {
+                'focus' : function(e) {
+                    var field = $(e.target);
+                    field.css('border-color', '#00cd89');
+                },
+                'blur' : function(e) {
+                    var field = $(e.target);
+                    field.css('border-color', '#738399'); 
+                }
+            }, null);
 
+            $('#moon-img').animate({'top': '15px'}, 1000);
             $('#collection-redirect-container, #members-redirect').animate({'opacity': '1'}, 800);
         });
     </script>

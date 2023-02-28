@@ -186,9 +186,6 @@
                         </div>";
                 }
             ?>
-            
-            
-
             <?php
                 $userData    = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select username, email, image, display_name, followers, following, user_rank, location from users where id = ?", [$userID], true, DB::ALL_ROWS);
                 $username    = Str::htmlEnt(Str::replace_all_quotes($userData[0]['username'], true));

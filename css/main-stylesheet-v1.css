@@ -377,7 +377,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #login-username-field-error {
@@ -402,7 +402,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #login-password-field-error {
@@ -515,7 +515,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #reset-pass-field-error {
@@ -567,6 +567,11 @@ body {
     background-color: transparent;
 }
 
+
+
+
+
+
 #sign-up-errors-container {
     position: absolute;
     display: flex;
@@ -580,7 +585,7 @@ body {
 
 #sign-up-errors-container > .error > i {
     position: absolute;
-    color: whitesmoke;
+    color: white;
     margin-left: 90%;
     margin-top: 11px;
     cursor: pointer;
@@ -607,23 +612,26 @@ body {
 #sign-up-errors-container > .error:nth-child(2) {
     position: absolute;
     top: 23%;
-    background-color: #cd002f;
     border-radius: 5px;
 }
 
 #sign-up-errors-container > .error:nth-child(3) {
     position: absolute;
     top: 46%;
-    background-color: #cd002f;
     border-radius: 5px;
 }
 
 #sign-up-errors-container > .error:nth-child(4) {
     position: absolute;
     top: 69%;
-    background-color: #cd002f;
     border-radius: 5px;
 }
+
+
+
+
+
+
 
 #sign-up-main-container > #top {
     display: flex;
@@ -689,7 +697,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #email-field {
@@ -705,7 +713,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #password-field {
@@ -721,7 +729,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #password-confirmation-field {
@@ -737,7 +745,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #submit-registration-data {
@@ -926,7 +934,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #search-game-index-container > #search-game-icon {
@@ -1254,7 +1262,7 @@ body {
     outline: none;
     border: 1px solid #738399;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #search-game-container > #search-game-icon {
@@ -1638,22 +1646,25 @@ body {
 }
 
 
+
+
+
 #account-login-first {
     position: absolute;
     display: none;
     justify-content: center;
     width: 20%;
-    height: 5%;
+    height: 4.3%;
     top: 81%;
     left: 18%;
     border-radius: 5px;
-    background-color: #cd002f;
+    background-color: #00cd89;
 }
 
 #account-login-first > span {
     position: absolute;
     top: 20%;
-    color: white;
+    color: black;
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     -webkit-user-select: none;
@@ -1662,6 +1673,19 @@ body {
     -o-user-select: none;
     user-select: none;
 }
+
+#account-login-first > i {
+    position: absolute;
+    top: 20%;
+    left: 93%;
+    color: black;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+
+
+
 
 
 
@@ -1674,13 +1698,13 @@ body {
     top: 92.5%;
     left: 41%;
     border-radius: 5px;
-    background-color: #cd002f;
+    background-color: #00cd89;
 }
 
 #comment-rate-warning > span {
     position: absolute;
     top: 20%;
-    color: white;
+    color: black;
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     -webkit-user-select: none;
@@ -1689,6 +1713,17 @@ body {
     -o-user-select: none;
     user-select: none;
 }
+
+#comment-rate-warning > i {
+    position: absolute;
+    top: 20%;
+    left: 93%;
+    color: black;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+
 
 
 
@@ -3205,22 +3240,24 @@ footer {
 
 
 
+
+
 #upload-login-warn {
     position: absolute;
     display: none;
     justify-content: center;
     width: 16%;
-    height: 4%;
+    height: 3.5%;
     top: 15.5%;
     left: 77%;
     border-radius: 5px;
-    background-color: #cd002f;
+    background-color: #00cd89;
 }
 
 #upload-login-warn > span {
     position: absolute;
     top: 20%;
-    color: white;
+    color: black;
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     -webkit-user-select: none;
@@ -3229,6 +3266,18 @@ footer {
     -o-user-select: none;
     user-select: none;
 }
+
+#upload-login-warn > i {
+    position: absolute;
+    top: 20%;
+    left: 93%;
+    color: black;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+
+
 
 
 

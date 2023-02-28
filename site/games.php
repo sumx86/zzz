@@ -111,11 +111,26 @@
             }
             $('.file-upload-icon').click(function() {
                 if(!window._login) {
-                    $('#upload-login-warn').css('display', 'flex').delay(1500).hide('fast');
+                    $('#upload-login-warn').css('display', 'flex').delay(3000).hide('fast');
+                    $('#upload-login-warn').find('i:first').click(function() {
+                        $('#upload-login-warn').stop().hide('fast');
+                    });
                 } else {
                     $('#game-cover-file').click();
                 }
             });
+
+            $._on('#search-game', null, {
+                'focus' : function(e) {
+                    var field = $(e.target);
+                    field.css('border-color', '#00cd89');
+                },
+                'blur' : function(e) {
+                    var field = $(e.target);
+                    field.css('border-color', '#738399'); 
+                }
+            }, null);
+
             $('#moon-img').css({'top': '-120px'});
         });
     </script>
@@ -234,6 +249,7 @@
 
             <div id='upload-login-warn'>
                 <span><?php echo $language_config[$lang]['account-first']; ?></span>
+                <i class='fa fa-times'></i>
             </div>
 
             <div class='collection-container'>
@@ -375,6 +391,7 @@
                     </div>
                     <div id='account-login-first'>
                         <span class=''><?php echo $language_config[$lang]['account-first']; ?></span>
+                        <i class='fa fa-times'></i>
                     </div>
                     <div id='item-information'>
                         <div id='inner'>
@@ -443,6 +460,7 @@
                     </div>
                     <div id='comment-rate-warning'>
                         <span><?php echo $language_config[$lang]['account-first']; ?></span>
+                        <i class='fa fa-times'></i>
                     </div>
                     <div id='emoji-container' data-gr>
                         <div id='top' data-gr>
