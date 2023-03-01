@@ -40,6 +40,6 @@
                 ]
             ]
         ],
-        'default-image' => '\\ps-classics\\img\\wFz5XPWb79QpekP-Pennywise-PNG-Clipart.png'
+        'default-image' => '\\ps-classics\\img\\pngegg.png'
     );
 ?>

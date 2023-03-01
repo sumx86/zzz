@@ -6,10 +6,15 @@
     require_once "helpers/string.php";
     require_once "helpers/array.php";
     require_once "db/db.php";
+    require_once "http/response.php";
     
     $lang    = Server::get_request_cookie('lang', ['en', 'bg'], 'bg');
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
+
+    if($isLogin) {
+        Response::include_header("Location", "/");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,15 +59,15 @@
             $._on('.input-field', null, {
                 'focus' : function(e) {
                     var field = $(e.target);
-                    field.css('border-color', '#00cd89');
+                    field.css({'border-color':'#00cd89', 'box-shadow':'0 0 7px 2px #48abe0'});
                 },
                 'blur' : function(e) {
                     var field = $(e.target);
                     var error = $('#' + field.attr('name') + '-error');
                     if(error.css('display') == 'block') {
-                        field.css('border-color', 'rgb(161, 20, 67)');
+                        field.css({'border-color':'rgb(161, 20, 67)', 'box-shadow':'none'});
                     } else {
-                        field.css('border-color', '#738399'); 
+                        field.css({'border-color':'#738399', 'box-shadow':'none'});
                     }
                 }
             }, null);

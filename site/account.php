@@ -550,7 +550,7 @@
                                                 <div class='display-name'>
                                                     <span>Alucard</span>
                                                 </div>
-                                                <button class='unblock'>".$language_config[$lang]['unblock-user']."</button>
+                                                <button class='unblock unblock-button x-c-3'>".$language_config[$lang]['unblock-user']."</button>
                                             </div>
                                             <div class='blocked-user'>
                                                 <div class='image'>
@@ -559,7 +559,7 @@
                                                 <div class='display-name'>
                                                     <span>devArt98</span>
                                                 </div>
-                                                <button class='unblock'>".$language_config[$lang]['unblock-user']."</button>
+                                                <button class='unblock unblock-button x-c-3'>".$language_config[$lang]['unblock-user']."</button>
                                             </div>
                                             <div class='blocked-user'>
                                                 <div class='image'>
@@ -568,7 +568,7 @@
                                                 <div class='display-name'>
                                                     <span>Jason</span>
                                                 </div>
-                                                <button class='unblock'>".$language_config[$lang]['unblock-user']."</button>
+                                                <button class='unblock unblock-button x-c-3'>".$language_config[$lang]['unblock-user']."</button>
                                             </div>
                                         </div>";
             

@@ -95,7 +95,7 @@
                     if(field.attr('id') == 'password-field') {
                         $('#password-requirements-tooltip').show('fast');
                     }
-                    field.css('border-color', '#00cd89');
+                    field.css({'border-color':'#00cd89', 'box-shadow':'0 0 7px 2px #48abe0'}); 
                 },
                 'blur' : function(e) {
                     var field = $(e.target);
@@ -104,14 +104,14 @@
                     }
                     var error = $('#' + field.attr('name') + '-error');
                     if(error.css('display') == 'flex') {
-                        field.css('border-color', 'rgb(161, 20, 67)');
+                        field.css({'border-color':'rgb(161, 20, 67)', 'box-shadow':'none'});
                     } else {
-                        field.css('border-color', '#738399'); 
+                        field.css({'border-color':'#738399', 'box-shadow':'none'}); 
                     }
                 }
             }, null);
             
-            $._on('#search-game', null, {
+            /* $._on('#search-game', null, {
                 'focus' : function(e) {
                     var field = $(e.target);
                     field.css('border-color', '#00cd89');
@@ -120,7 +120,7 @@
                     var field = $(e.target);
                     field.css('border-color', '#738399'); 
                 }
-            }, null);
+            }, null); */
 
             $('#moon-img').animate({'top': '15px'}, 1000);
             $('#collection-redirect-container, #members-redirect').animate({'opacity': '1'}, 800);
