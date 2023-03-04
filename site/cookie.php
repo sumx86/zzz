@@ -141,7 +141,7 @@
         /*
         * Add the current cookie to the jar
         */
-        public function Add(){
+        public function Add() {
             if ( !$this->CookieReady() ) {
                 return False;
             }

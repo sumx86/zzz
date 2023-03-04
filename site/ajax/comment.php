@@ -138,7 +138,7 @@
                     UserCP::update_comment($comment, $commentID, $userID, Util::get_current_date_and_time(false));
                     Response::throw_json_string(
                         ["success" => [
-                            "text" => Str::htmlEnt(utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true))),
+                            "text" => utf8_decode(Str::replace_all_quotes(Str::reassemble($comment), true)),
                             'item' => $commentID]
                         ]
                     );
@@ -157,7 +157,7 @@
         // push the blueprint to $result (that makes a whole comment)
         $commentBluePrint = [
             'comment'  => [
-                'text' => '',
+                'text'       => '',
                 'username'   => '',
                 'user_id'    => 0,
                 'likes'      => '',
@@ -166,8 +166,8 @@
                 'comment_id' => 0,
                 'image'      => '',
                 'reply-meta' => $language_config[$lang]['reply'],
-                'delete' => false,
-                'edit'   => false
+                'delete'     => false,
+                'edit'       => false
             ]
         ];
 
@@ -205,7 +205,7 @@
                         }
                     }
                 }
-                $commentBluePrint['comment']['text'] = Util::transform_links(Str::htmlEnt(Str::replace_all_quotes(utf8_decode($commentBluePrint['comment']['text']), true)));
+                $commentBluePrint['comment']['text'] = Str::transform_newlines(Util::transform_links(Str::htmlEnt(Str::replace_all_quotes(utf8_decode($commentBluePrint['comment']['text']), true))));
                 array_push($result, $commentBluePrint);
                 
                 $commentBluePrint['comment']['text']   = '';

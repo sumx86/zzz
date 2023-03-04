@@ -147,6 +147,7 @@
             'account-deletion'  => 'Изтриването на акаунта е необратима стъпка и всички данни ще бъдат изтрити',
 
             'unblock-user'      => 'Отблокирай',
+            'block-user'        => 'Блокирай',
             'delete-account-confirmation' => 'Изтриване за постоянно ?',
             'profile-picture-update' => 'Смяна на профилната',
             'crop' => 'Изрежи',
@@ -157,8 +158,13 @@
             'new-password'         => 'Нова парола',
             'confirm-new-password' => 'Потвърди новата парола',
 
-            'new-email' => 'Нов имейл'
+            'new-email' => 'Нов имейл',
+            'block-user-success'     => 'Блокирахте потребител ',
+            'unblock-user-success'   => 'Отблокирахте потребител ',
+            'no-blocked-users-found' => 'Няма блокирани потребители.',
+            'block-success'          => 'Потребителят е блокиран!'
         ],
+        
         'en' => [
             'home'    => 'Home',
             'profile' => 'Profile',
@@ -305,7 +311,8 @@
             'skype-info'        => 'Your skype username',
             'account-deletion'  => 'Once you delete your account, there is no going back. Please be certain.',
 
-            'unblock-user'      => 'Unblock user',
+            'unblock-user'      => 'Unblock',
+            'block-user'        => 'Block',
             'delete-account-confirmation' => 'Delete account permanently ?',
             'profile-picture-update' => 'Update profile picture',
             'crop' => 'Crop image',
@@ -316,7 +323,11 @@
             'new-password'         => 'New password',
             'confirm-new-password' => 'Confirm new password',
 
-            'new-email' => 'New e-mail'
+            'new-email' => 'New e-mail',
+            'block-user-success'   => 'You have blocked user  ',
+            'unblock-user-success' => 'You have unblocked user  ',
+            'no-blocked-users-found' => 'No blocked users found.',
+            'block-success' => 'User has been blocked!'
         ]
     );
 ?>

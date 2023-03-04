@@ -31,15 +31,20 @@
     $lang = Server::get_request_cookie('lang', ['en', 'bg'], 'en');
     // initialize database object
     $db = new DB(false);
-    UserCP::setDB($db);
-    UserCP::delete_account($ajaxUID);
-    UserCP::delete_uploads($ajaxUID);
-    UserCP::delete_followings($ajaxUID);
-    UserCP::delete_comments($ajaxUID);
-    UserCP::delete_rated_games($ajaxUID);
-    UserCP::delete_rated_comments($ajaxUID);
-    
-    Server::destroy_session('user');
-    Response::throw_json_string(["success" => ""]);
+
+    $userData = UserCP::get_user_data_by_id($ajaxUID);
+    if(_Array::size($userData) > 0) {
+        UserCP::setDB($db);
+        UserCP::delete_account($ajaxUID);
+        UserCP::delete_uploads($ajaxUID);
+        UserCP::delete_followings($ajaxUID);
+        UserCP::delete_comments($ajaxUID);
+        UserCP::delete_rated_games($ajaxUID);
+        UserCP::delete_rated_comments($ajaxUID);
+        UserCP::delete_blocked_users($ajaxUID);
+
+        Server::destroy_session('user');
+        Response::throw_json_string(["success" => ""]);
+    }
     //////////////////////////////////////////////////////////////////////////////////////
 ?>

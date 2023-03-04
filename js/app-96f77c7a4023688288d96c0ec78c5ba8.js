@@ -1115,12 +1115,41 @@ var Util = {
 (function($) {
     $.initCall('user-blocking-module', {
         initialize: function() {
+            var _self = this;
             $(document).ready(function() {
-                $('.block-user-button, .unblock-user-button').click(function() {
-                    $.doAjax({url: '/ajax/block', data: 'data=' + JSON.stringify({'id':$(this).attr('class').split('-').pop()})}, true, null)
+                $('.block-button, .unblock-button').click(function() {
+                    var _id = $(this).attr('class').split('-').pop();
+
+                    $.doAjax({url: '/ajax/block', data: 'data=' + JSON.stringify({'id':_id})}, true, null)
                     .done(function(jqXHR, status, req) {
-                        console.log(jqXHR);
+                        var response = $.parseJSON(jqXHR);
+                        if(response.hasOwnProperty('success-block')) {
+                            $.redirect('/account/uid/' + window._ourID + '/blocked_uid/' + window._uid);
+                        }
+                        else if(response.hasOwnProperty('success-unblock')) {
+                            _self._removeSectionWithID(_id);
+                            $('#spinner').hide();
+                        }
+                        else {}
                     });
+                });
+                $('#exit-blocked-user-preview').click(function() {
+                    _self._hideBlockedUserPreview();
+                });
+            });
+        },
+        _removeSectionWithID: function(id) {
+            $('.blocked-user').each(function(index, element) {
+                var cls = $(element).attr('class');
+                if(cls == 'blocked-user ' + id) {
+                    $(element).css('display', 'none');
+                }
+            });
+        },
+        _hideBlockedUserPreview: function() {
+            $('#blocked-user-preview-container > #inner').stop().animate({'top': '-70%'}, 300).promise().done(function () {
+                $('#blocked-user-preview-container').fadeOut('fast').promise().done(function() {
+                    $.redirect('/account/uid/' + window._ourID);
                 });
             });
         }

@@ -487,7 +487,7 @@
         }
 
         public static function delete_followings($userID) {
-            //self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from followings where followed_by_id = ?", [$userID], false, false);
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from followings where followed_user_id = ? or followed_by_user_id = ?", [$userID, $userID], false, false);
         }
 
         public static function delete_comments($userID) {
@@ -499,7 +499,11 @@
         }
 
         public static function delete_rated_comments($userID) {
-            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from rated_comments where liked_by_user_id = ? or favourited_by_user_id = ?", [$userID, $userID], false, false);
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from rated_comments where liked_by_user_id = ?", [$userID], false, false);
+        }
+
+        public static function delete_blocked_users($userID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from blocked_users where blocked_user_id = ? or blocked_by_user_id = ?", [$userID, $userID], false, false);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -523,14 +527,54 @@
             self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from followings where followed_user_id = ? and followed_by_user_id = ?", [$followedUserID, $followerID], true, DB::ALL_ROWS);
         }
 
+        /*
+         * Get username of user with id $userID
+         */
         public static function get_username_by_id($userID) {
             $data = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select username from users where id = ?", [$userID], true, DB::ALL_ROWS);
-            return $data[0]['username'];
+            if(_Array::size($data) > 0) {
+                return $data[0]['username'];
+            } else {
+                return '';
+            }
+        }
+
+        /*
+         * Get all data about user with id $userID
+         */
+        public static function get_user_data_by_id($userID) {
+            $data = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from users where id = ?", [$userID], true, DB::ALL_ROWS);
+            return $data;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public static function update_image($newImage, $userID) {
             self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("update users set image = ? where id = ?", [$newImage, $userID], false, false, false);
+        }
+
+
+        /*
+         * Check if user with id $blockedID is blocked by user with id $blockerID
+         */
+        public static function is_user_blocked($blockedID, $blockerID) {
+            $result = self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("select * from blocked_users where blocked_user_id = ? and blocked_by_user_id = ?", [$blockedID, $blockerID], true, DB::ALL_ROWS);
+            return _Array::size($result) > 0;
+        }
+
+        /*
+         * Block user with id $blockedID by user $blockerID
+         */
+        public static function block_user($blockedID, $blockedUserData, $blockerID) {
+            $blockedUserImage       = Str::replace_all_quotes($blockedUserData[0]['image']);
+            $blockedUserDisplayName = Str::replace_all_quotes($blockedUserData[0]['display_name']);
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("insert into blocked_users (blocked_user_id, blocked_user_image, blocked_user_displayname, blocked_by_user_id) values (?, ?, ?, ?)", [$blockedID, $blockedUserImage, $blockedUserDisplayName, $blockerID], false, false, false);
+        }
+
+        /*
+         * Unblock user with id $blockedID by user $blockerID
+         */
+        public static function unblock_user($blockedID, $blockerID) {
+            self::$dbInstance->setFetchMode(PDO::FETCH_ASSOC)->rawQuery("delete from blocked_users where blocked_user_id = ? and blocked_by_user_id = ?", [$blockedID, $blockerID], false, false, false);
         }
     }
 ?>

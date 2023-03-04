@@ -15,12 +15,23 @@
     $theme   = Server::get_request_cookie('theme', ['halloween', 'none'], 'none');
     $isLogin = Server::is_active_session('user');
     $userID  = intval(Server::get_param('uid'));
+    $blockedUID = intval(Server::get_param('blocked_uid'));
 
     $db = new DB(false);
     UserCP::setDB($db);
     
+    // First check if user with id $userID exists
     if(!UserCP::user_exists($userID)) {
         Response::throw_http_error(404);
+    }
+    
+    if(Server::is_active_session('user')) {
+        $ourID = intval(Server::retrieve_session('user', 'id'));
+        // Then, if we've previously blocked the user we're going to redirect to our account page but with some message to tell us
+        // that we've already blocked the user
+        if(UserCP::is_user_blocked($userID, $ourID)) {
+            Response::include_header('Location', '/account/uid/' . $ourID . '/blocked_uid/' . $userID);
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -36,6 +47,7 @@
     <link rel="icon" href="\ps-classics\img\logo\Asset A.png" type="image/x-icon" id='site-ico' />
 
     <link rel="stylesheet" href="\ps-classics\css\font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="\ps-classics\css\main-stylesheet-v1.css">
     <link rel="stylesheet" href="\ps-classics\css\croppie.css">
@@ -97,9 +109,18 @@
                 Util.clearFields('.social-media-input-field');
                 $('#settings-container-section').hide();
             });
-            window._uid  = <?php echo $userID; ?>;
-            window._lang = '<?php echo $lang; ?>';
+            window._uid   = <?php echo $userID; ?>;
+            <?php
+                if($isLogin) {
+                    echo "window._ourID = " . $ourID . ";\n";
+                }
+            ?>
+            window._lang  = '<?php echo $lang; ?>';
             window._isLogin = <?php echo $isLogin ? 1 : 0; ?>;
+
+            if(!window._ourID) {
+                $('#bottom-navbar > .follow-button').css('left', '93%');
+            }
 
             var followersInner = $('#followers > #inner');
             if(followersInner.find('#no-followers').length > 0) {
@@ -111,6 +132,35 @@
 </head>
 <body id="bodyy">
     <div id='main-container'>
+        <?php
+            if($blockedUID > 0) {
+                $data = UserCP::get_user_data_by_id($blockedUID);
+                $displayName = Str::htmlEnt(Str::replace_all_quotes($data[0]['display_name'], true));
+                $userImage   = Str::replace_all_quotes($data[0]['image'], true);
+                echo "<div id='blocked-user-preview-container'>
+                        <div id='inner' data-gr>
+                            <div id='top' data-gr>
+                                <div id='exit-blocked-user-preview'>
+                                    <i class='fa fa-times'></i>
+                                </div>
+                            </div>
+                            <div id='blocked-user-preview' data-gr>
+                                <div id='user-info'>
+                                    <div id='image'>
+                                        <img src='".$userImage."'>
+                                    </div>
+                                    <div id='display-name'>
+                                        <span>".$displayName."</span>
+                                    </div>
+                                </div>
+                                <div id='success-blocked-message'>
+                                    <span class='multilang'>".$language_config[$lang]['block-success']."</span>
+                                </div>
+                            </div>
+                        </div>
+                      </div>";
+            }
+        ?>
         <?php
             if($theme == 'halloween') {
                 echo "<div id='moon-img'>
@@ -148,12 +198,12 @@
                     <span class='multilang' data-theme data-fontsize='1.5em' data-mgtop='-7%'>".$language_config[$lang]['sign-in']."</span>
                 </div>";
                 } else {
-                    $userData  = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select image from users where id = ?", [intval(Server::retrieve_session('user', 'id'))], true, DB::ALL_ROWS);
+                    $userData  = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select image from users where id = ?", [$ourID], true, DB::ALL_ROWS);
                     $userImage = Str::htmlEnt($userData[0]['image']);
 
                     $username  = Str::truncate(Str::replace_all_quotes(Server::retrieve_session('user', 'username'), true), 9);
                     echo "<div id='login-success-container'>
-                        <div id='account-info' data-uid='".intval(Server::retrieve_session('user', 'id'))."' data-acc>
+                        <div id='account-info' data-uid='".$ourID."' data-acc>
                             <div id='image'>
                                 <img src='".$userImage."'>
                             </div>
@@ -220,8 +270,8 @@
                 <div id='bottom-navbar'>
                     <?php
                         if($isLogin) {
-                            if($userID != Server::retrieve_session('user', 'id')) {
-                                if(UserCP::is_followed_by_user($userID, Server::retrieve_session('user', 'id'))) {
+                            if($userID != $ourID) {
+                                if(UserCP::is_followed_by_user($userID, $ourID)) {
                                     echo "<div class='unfollow cx-x-".$userID."'>
                                               <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['unfollow']."</span>
                                           </div>";
@@ -230,6 +280,13 @@
                                             <span class='multilang'><i class='fa fa-user'></i> ".$language_config[$lang]['follow']."</span>
                                         </div>";
                                 }
+
+                                if(!UserCP::is_user_blocked($userID, $ourID)) {
+                                    echo "<div class='block-button x-c-".$userID."'>
+                                              <span class='multilang'><i class='fa fa-times'></i> ".$language_config[$lang]['block-user']."</span>
+                                          </div>";
+                                }
+                                      
                             } else {
                                 echo "<div id='inbox-button'>
                                         <span><i class='fa fa-envelope-o'></i> Inbox</span>
@@ -325,7 +382,7 @@
 
                                         $text = $language_config[$lang]['follow'];
                                         if($isLogin) {
-                                            if(UserCP::is_followed_by_user($followerID, Server::retrieve_session('user', 'id'))) {
+                                            if(UserCP::is_followed_by_user($followerID, $ourID)) {
                                                 $text = $language_config[$lang]['unfollow'];
                                             } else {
                                                 $text = $language_config[$lang]['follow'];
@@ -374,7 +431,7 @@
 
             <?php
                 if($isLogin) {
-                    if($userID == Server::retrieve_session('user', 'id')) {
+                    if($userID == $ourID) {
                         echo "<div id='settings-container-section' data-gr>
                             <div id='exit-section'>
                                 <i class='fa fa-times'></i>
@@ -521,6 +578,23 @@
                                                     <span>Twitter</span>
                                                     <input type='text' name='twitter'   id='twitter'   class='social-media-input-field' placeholder='".$language_config[$lang]['twitter-info']."'>
                                                 </div>
+
+                                                <div id='twitch'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-twitch'></i>
+                                                    </div>
+                                                    <span>Twitch</span>
+                                                    <input type='text' name='twitch'  id='twitch' class='social-media-input-field' placeholder='".$language_config[$lang]['facebook-info']."'>
+                                                </div>
+
+                                                <div id='steam'>
+                                                    <div class='icon'>
+                                                        <i class='fa fa-steam'></i>
+                                                    </div>
+                                                    <span>Steam</span>
+                                                    <input type='text' name='steam'  id='steam' class='social-media-input-field' placeholder='".$language_config[$lang]['facebook-info']."'>
+                                                </div>
+                                                
             
                                                 <div id='youtube'>
                                                     <div class='icon'>
@@ -539,42 +613,43 @@
                                                 </div>
                                             </form>
                                         </div>
+
+
                                         <div id='blocked-users'>
                                             <div id='top'>
                                                 <span>".$language_config[$lang]['blocked-users']."</span>
-                                            </div>
-                                            <div class='blocked-user'>
-                                                <div class='image'>
-                                                    <img src='\ps-classics\img\alucard.png'>
-                                                </div>
-                                                <div class='display-name'>
-                                                    <span>Alucard</span>
-                                                </div>
-                                                <button class='unblock unblock-button x-c-3'>".$language_config[$lang]['unblock-user']."</button>
-                                            </div>
-                                            <div class='blocked-user'>
-                                                <div class='image'>
-                                                    <img src='\ps-classics\img\wFz5XPWb79QpekP-Pennywise-PNG-Clipart.png'>
-                                                </div>
-                                                <div class='display-name'>
-                                                    <span>devArt98</span>
-                                                </div>
-                                                <button class='unblock unblock-button x-c-3'>".$language_config[$lang]['unblock-user']."</button>
-                                            </div>
-                                            <div class='blocked-user'>
-                                                <div class='image'>
-                                                    <img src='\ps-classics\img\artworks-GEC8JGrX2MWmll8j-yWVYsQ-t500x500.jpg'>
-                                                </div>
-                                                <div class='display-name'>
-                                                    <span>Jason</span>
-                                                </div>
-                                                <button class='unblock unblock-button x-c-3'>".$language_config[$lang]['unblock-user']."</button>
-                                            </div>
-                                        </div>";
-            
-                                        
+                                            </div>";
+                                            
+                                            $blockedUsers = $db->setFetchMode(FetchModes::$modes['assoc'])->rawQuery("select * from blocked_users where blocked_by_user_id = ?", [$userID], true, DB::ALL_ROWS);
+                                            if(_Array::size($blockedUsers) > 0) {
+                                                foreach($blockedUsers as $blockedUser) {
+                                                    $blockedUserID          = intval($blockedUser['blocked_user_id']);
+                                                    $blockedUserImage       = Str::htmlEnt(Str::replace_all_quotes($blockedUser['blocked_user_image'], true));
+                                                    $blockedUserDisplayName = Str::htmlEnt(Str::replace_all_quotes($blockedUser['blocked_user_displayname'], true));
+                                                    
+                                                    echo "<div class='blocked-user ".$blockedUserID."'>
+                                                            <div class='image'>
+                                                                <img src='".$blockedUserImage."'>
+                                                            </div>
+                                                            <div class='display-name'>
+                                                                <span>".$blockedUserDisplayName."</span>
+                                                            </div>
+                                                            <button class='unblock unblock-button x-c-$blockedUserID'>".$language_config[$lang]['unblock-user']."</button>
+                                                        </div>";
+                                                }
+                                            } else {
+                                                echo "<div id='no-blocked-users'>
+                                                          <div id='inner'>
+                                                              <span>".$language_config[$lang]['no-blocked-users-found']."</span>
+                                                          </div>
+                                                      </div>";
+                                            }
+
+                                   echo "</div>";
+
+
                                             if($isLogin) {
-                                                if(Server::retrieve_session('user', 'id') == $userID) {
+                                                if($ourID == $userID) {
                                                     echo "<div id='delete-account'>
                                                             <div id='top'>
                                                                 <span>".$language_config[$lang]['delete-account']."</span>
@@ -636,9 +711,14 @@
             if( (/[\u0400-\u04FF]+/).test(text) ){element.css('font-weight', 'bold');}
         });
     });
+
+
+    /* ==== PROFILE PICTURE BORDER COLOR HANDLING ==== */
     var picBorderColor = cookieUtil.get('pic-border-color');
     if(picBorderColor) {
         $('#user-image').css('border', '3px solid ' + picBorderColor);
+    } else {
+        $('#user-image').css('border', '3px solid #0af0ca');
     }
     $('input[type="color"]').on('change', function() {
         $('#user-image').css('border', '3px solid ' + $(this).val());
@@ -650,6 +730,10 @@
             }
         );
     });
+    /* ==== PROFILE PICTURE BORDER COLOR HANDLING ==== */
+
+
+
     $('#bottom-navbar > #stats > .stat').click(function(e) {
         var self = $(this);
         $('#bottom-navbar > #stats > .stat').each(function(index, element) {

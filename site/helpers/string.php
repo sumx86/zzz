@@ -1,5 +1,5 @@
 <?php
-    class Str {
+    final class Str {
 
         /*
          * Check if a string starts with a certain string
@@ -157,6 +157,16 @@
         public static function replace_all_quotes($string, $inverse = false) {
             return $inverse ? self::replace_all($string, ['[quot1]' => '\'', '[quot2]' => '"', '[colon]' => ';'])
                             : self::replace_all($string, ['\'' => '[quot1]', '"' => '[quot2]', ';' => '[colon]']);
+        }
+
+        /*
+         * Replace all newline characters with <br />
+         */
+        public static function transform_newlines($text) {
+            if(function_exists('nl2br')) {
+                return nl2br($text);
+            }
+            return str_replace("\n", "<br />", $text);
         }
 
         /*
