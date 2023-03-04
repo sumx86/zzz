@@ -3513,17 +3513,43 @@ footer {
     justify-content: center;
     width: 6.5%;
     height: 61%;
-    left: 90%;
+    left: 85%;
     top: 18%;
     border-radius: 3px;
-    background-color: #96afff;
+    background-color: #222f58;
     cursor: pointer;
 }
 
 #bottom-navbar > .follow-button > span {
     position: absolute;
     top: 15%;
-    color: black;
+    color: #96afff;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.unfollow {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 6.5%;
+    height: 61%;
+    left: 85%;
+    top: 18%;
+    border-radius: 3px;
+    background-color: #1b3146; /* #96afff */
+    cursor: pointer;
+}
+
+.unfollow > span {
+    position: absolute;
+    top: 15%;
+    color: rgb(252, 86, 3);
     font-size: 1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     -webkit-user-select: none;
@@ -3539,25 +3565,184 @@ footer {
 
 
 
-
-.unfollow {
+#bottom-navbar > .block-button {
     position: absolute;
     display: flex;
     justify-content: center;
     width: 6.5%;
     height: 61%;
-    left: 90%;
+    left: 93%;
+    top: 18%;
+    border-radius: 3px;
+    background-color: #222f58;
+    cursor: pointer;
+}
+
+#bottom-navbar > .block-button > span {
+    position: absolute;
+    top: 15%;
+    color: #96afff;
+    font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#bottom-navbar > .unblock-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 6.5%;
+    height: 61%;
+    left: 93%;
     top: 18%;
     border-radius: 3px;
     background-color: #1b3146; /* #96afff */
     cursor: pointer;
 }
 
-.unfollow > span {
+#bottom-navbar > .unblock-button > span {
     position: absolute;
     top: 15%;
     color: rgb(252, 86, 3);
     font-size: 1em;
+    font-family: 'prototype', 'Jura-Bold', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#blocked-user-preview-container {
+    position: absolute;
+    width: 100%;
+    height: 91%;
+    top: 9%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 6;
+}
+
+#blocked-user-preview-container > i {
+    position: absolute;
+    color: white;
+    font-size: 1.7em;
+    top: 5%;
+    left: 94%;
+    cursor: pointer;
+}
+
+#blocked-user-preview-container > #inner {
+    position: absolute;
+    width: 30%;
+    height: 60%;
+    top: 14%;
+    left: 35%;
+    background-color: rgb(24, 26, 27);
+}
+
+#blocked-user-preview-container > #inner > #top {
+    position: relative;
+    width: 100%;
+    height: 7%;
+    border-bottom: 1px solid rgb(42, 61, 77);
+    background-color: transparent;
+}
+
+#blocked-user-preview-container > #inner > #top > #exit-blocked-user-preview {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 6%;
+    height: 90%;
+    left: 92%;
+    background-color: transparent;
+}
+
+#blocked-user-preview-container > #inner > #top > #exit-blocked-user-preview > i {
+    position: absolute;
+    top: 15%;
+    font-size: 1.3em;
+    color: white;
+    cursor: pointer;
+}
+
+#blocked-user-preview {
+    position: relative;
+    width: 100%;
+    height: 93%;
+    background-color: transparent;
+}
+
+#blocked-user-preview > #user-info {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    height: 70%;
+    left: 15%;
+    top: 10%;
+    background-color: transparent;
+}
+
+#blocked-user-preview > #user-info > #image {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 230px;
+    height: 230px;
+    background-color: transparent;
+    border-radius: 100%;
+}
+
+#blocked-user-preview > #user-info > #image > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+
+
+#blocked-user-preview > #user-info > #display-name {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 12%;
+    top: 72%;
+    background-color: transparent;
+}
+
+#blocked-user-preview > #user-info > #display-name > span {
+    position: absolute;
+    font-size: 1.7em;
+    font-family: 'prototype', 'Jura-Bold', Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+
+
+#blocked-user-preview > #success-blocked-message {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 8%;
+    top: 73%;
+    left: 10%;
+    border-radius: 5px;
+    background-color: #00cd89;
+}
+
+#blocked-user-preview > #success-blocked-message > span {
+    position: absolute;
+    top: 20%;
+    color: black;
+    font-size: 1.1em;
     font-family: 'prototype', 'Jura-Bold', sans-serif;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -4152,7 +4337,7 @@ footer {
     color: white;
     background-color: #090c10;
     outline: none;
-    border: 1px solid #2a3649;
+    border: none; /* 1px solid #2a3649 */
     border-radius: 3px;
 }
 
@@ -4268,6 +4453,33 @@ footer {
 
 .unblock:hover {
     color: white;
+}
+
+
+
+
+
+#no-blocked-users {
+    width: 100%;
+    height: 120px;
+    background-color: transparent;
+}
+
+#no-blocked-users > #inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#no-blocked-users > #inner > span {
+    position: absolute;
+    top: 30%;
+    color: white;
+    font-family: 'prototype', 'Jura-Bold', Arial, Helvetica, sans-serif;
+    font-size: 2em;
 }
 
 
@@ -5468,6 +5680,15 @@ footer {
     background-color: #10151d;
 }
 
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+
+}
 
 ::-webkit-scrollbar { width: 10px;}
 ::-webkit-scrollbar-track { background: #555; }
